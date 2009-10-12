@@ -576,8 +576,9 @@ void R_RenderFace(msurface_t * fa, int clipflags)
 					    &&
 					    (((edge_t *) ((unsigned long)r_edges
 							  +
-							  r_pedge->cachededgeoffset))->owner
-					     == r_pedge)) {
+							  r_pedge->
+							  cachededgeoffset))->
+					     owner == r_pedge)) {
 						R_EmitCachedEdge();
 						r_lastvertvalid = false;
 						continue;
@@ -618,8 +619,9 @@ void R_RenderFace(msurface_t * fa, int clipflags)
 					    &&
 					    (((edge_t *) ((unsigned long)r_edges
 							  +
-							  r_pedge->cachededgeoffset))->owner
-					     == r_pedge)) {
+							  r_pedge->
+							  cachededgeoffset))->
+					     owner == r_pedge)) {
 						R_EmitCachedEdge();
 						r_lastvertvalid = false;
 						continue;

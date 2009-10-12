@@ -355,9 +355,8 @@ void CTFAssignSkin(edict_t * ent, char *s)
 	switch (ent->client->resp.ctf_team) {
 	case CTF_TEAM1:
 		gi.configstring(CS_PLAYERSKINS + playernum, va("%s\\%s%s",
-							       ent->
-							       client->pers.
-							       netname, t,
+							       ent->client->
+							       pers.netname, t,
 							       CTF_TEAM1_SKIN));
 		break;
 	case CTF_TEAM2:
@@ -610,13 +609,13 @@ void CTFFragBonuses(edict_t * targ, edict_t * inflictor, edict_t * attacker)
 		if (flag->solid == SOLID_NOT)
 			gi.bprintf(PRINT_MEDIUM, "%s defends the %s base.\n",
 				   attacker->client->pers.netname,
-				   CTFTeamName(attacker->client->
-					       resp.ctf_team));
+				   CTFTeamName(attacker->client->resp.
+					       ctf_team));
 		else
 			gi.bprintf(PRINT_MEDIUM, "%s defends the %s flag.\n",
 				   attacker->client->pers.netname,
-				   CTFTeamName(attacker->client->
-					       resp.ctf_team));
+				   CTFTeamName(attacker->client->resp.
+					       ctf_team));
 		if (attacker->client->resp.ghost)
 			attacker->client->resp.ghost->basedef++;
 		return;
@@ -635,8 +634,8 @@ void CTFFragBonuses(edict_t * targ, edict_t * inflictor, edict_t * attacker)
 			gi.bprintf(PRINT_MEDIUM,
 				   "%s defends the %s's flag carrier.\n",
 				   attacker->client->pers.netname,
-				   CTFTeamName(attacker->client->
-					       resp.ctf_team));
+				   CTFTeamName(attacker->client->resp.
+					       ctf_team));
 			if (attacker->client->resp.ghost)
 				attacker->client->resp.ghost->carrierdef++;
 			return;
@@ -731,14 +730,14 @@ qboolean CTFPickup_Flag(edict_t * ent, edict_t * other)
 			// the flag is at home base.  if the player has the enemy
 			// flag, he's just won!
 
-			if (other->client->
-			    pers.inventory[ITEM_INDEX(enemy_flag_item)]) {
+			if (other->client->pers.
+			    inventory[ITEM_INDEX(enemy_flag_item)]) {
 				gi.bprintf(PRINT_HIGH,
 					   "%s captured the %s flag!\n",
 					   other->client->pers.netname,
 					   CTFOtherTeamName(ctf_team));
-				other->client->
-				    pers.inventory[ITEM_INDEX(enemy_flag_item)]
+				other->client->pers.
+				    inventory[ITEM_INDEX(enemy_flag_item)]
 				    = 0;
 
 				ctfgame.last_flag_capture = level.time;
@@ -767,40 +766,40 @@ qboolean CTFPickup_Flag(edict_t * ent, edict_t * other)
 
 					if (player->client->resp.ctf_team !=
 					    other->client->resp.ctf_team)
-						player->client->
-						    resp.ctf_lasthurtcarrier =
-						    -5;
-					else if (player->client->
-						 resp.ctf_team ==
+						player->client->resp.
+						    ctf_lasthurtcarrier = -5;
+					else if (player->client->resp.
+						 ctf_team ==
 						 other->client->resp.ctf_team) {
 						if (player != other)
-							player->client->
-							    resp.score +=
+							player->client->resp.
+							    score +=
 							    CTF_TEAM_BONUS;
 						// award extra points for capture assists
-						if (player->client->
-						    resp.ctf_lastreturnedflag +
+						if (player->client->resp.
+						    ctf_lastreturnedflag +
 						    CTF_RETURN_FLAG_ASSIST_TIMEOUT
 						    > level.time) {
 							gi.bprintf(PRINT_HIGH,
 								   "%s gets an assist for returning the flag!\n",
-								   player->client->
-								   pers.netname);
-							player->client->
-							    resp.score +=
+								   player->
+								   client->pers.
+								   netname);
+							player->client->resp.
+							    score +=
 							    CTF_RETURN_FLAG_ASSIST_BONUS;
 						}
-						if (player->client->
-						    resp.ctf_lastfraggedcarrier
-						    +
+						if (player->client->resp.
+						    ctf_lastfraggedcarrier +
 						    CTF_FRAG_CARRIER_ASSIST_TIMEOUT
 						    > level.time) {
 							gi.bprintf(PRINT_HIGH,
 								   "%s gets an assist for fragging the flag carrier!\n",
-								   player->client->
-								   pers.netname);
-							player->client->
-							    resp.score +=
+								   player->
+								   client->pers.
+								   netname);
+							player->client->resp.
+							    score +=
 							    CTF_FRAG_CARRIER_ASSIST_BONUS;
 						}
 					}
@@ -1125,8 +1124,8 @@ void SetCTFStats(edict_t * ent)
 			p1 = imageindex_i_ctf1d;	// default to dropped
 			for (i = 1; i <= maxclients->value; i++)
 				if (g_edicts[i].inuse &&
-				    g_edicts[i].client->
-				    pers.inventory[ITEM_INDEX(flag1_item)]) {
+				    g_edicts[i].client->pers.
+				    inventory[ITEM_INDEX(flag1_item)]) {
 					// enemy has it
 					p1 = imageindex_i_ctf1t;
 					break;
@@ -1145,8 +1144,8 @@ void SetCTFStats(edict_t * ent)
 			p2 = imageindex_i_ctf2d;	// default to dropped
 			for (i = 1; i <= maxclients->value; i++)
 				if (g_edicts[i].inuse &&
-				    g_edicts[i].client->
-				    pers.inventory[ITEM_INDEX(flag2_item)]) {
+				    g_edicts[i].client->pers.
+				    inventory[ITEM_INDEX(flag2_item)]) {
 					// enemy has it
 					p2 = imageindex_i_ctf2t;
 					break;
@@ -1741,8 +1740,8 @@ void CTFScoreboardMessage(edict_t * ent, edict_t * killer)
 				(cl->ping > 999) ? 999 : cl->ping,
 				cl->pers.netname);
 
-			if (cl_ent->client->
-			    pers.inventory[ITEM_INDEX(flag2_item)])
+			if (cl_ent->client->pers.
+			    inventory[ITEM_INDEX(flag2_item)])
 				strcat(entry, "xv 56 picn sbfctf2 ");
 #else
 			sprintf(entry + strlen(entry),
@@ -1752,8 +1751,8 @@ void CTFScoreboardMessage(edict_t * ent, edict_t * killer)
 				cl->resp.score,
 				cl->ping > 999 ? 999 : cl->ping);
 
-			if (cl_ent->client->
-			    pers.inventory[ITEM_INDEX(flag2_item)])
+			if (cl_ent->client->pers.
+			    inventory[ITEM_INDEX(flag2_item)])
 				sprintf(entry + strlen(entry),
 					"xv 56 yv %d picn sbfctf2 ",
 					42 + i * 8);
@@ -1778,8 +1777,8 @@ void CTFScoreboardMessage(edict_t * ent, edict_t * killer)
 				(cl->ping > 999) ? 999 : cl->ping,
 				cl->pers.netname);
 
-			if (cl_ent->client->
-			    pers.inventory[ITEM_INDEX(flag1_item)])
+			if (cl_ent->client->pers.
+			    inventory[ITEM_INDEX(flag1_item)])
 				strcat(entry, "xv 216 picn sbfctf1 ");
 
 #else
@@ -1791,8 +1790,8 @@ void CTFScoreboardMessage(edict_t * ent, edict_t * killer)
 				cl->resp.score,
 				cl->ping > 999 ? 999 : cl->ping);
 
-			if (cl_ent->client->
-			    pers.inventory[ITEM_INDEX(flag1_item)])
+			if (cl_ent->client->pers.
+			    inventory[ITEM_INDEX(flag1_item)])
 				sprintf(entry + strlen(entry),
 					"xv 216 yv %d picn sbfctf1 ",
 					42 + i * 8);
@@ -4190,8 +4189,8 @@ void CTFPlayerList(edict_t * ent)
 			    e2->client->ping, e2->client->resp.score,
 			    (ctfgame.match == MATCH_SETUP
 			     || ctfgame.match ==
-			     MATCH_PREGAME) ? (e2->client->
-					       resp.ready ? " (ready)" :
+			     MATCH_PREGAME) ? (e2->client->resp.
+					       ready ? " (ready)" :
 					       " (notready)") : "",
 			    e2->client->resp.admin ? " (admin)" : "");
 

@@ -360,18 +360,25 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 						     RF_TRANS_ADDITIVE)) {
 							float thisalpha = alpha;
 
-							if (currententity->renderfx & RF2_CAMERAMODEL && currententity->flags & RF_TRANSLUCENT) {
+							if (currententity->
+							    renderfx &
+							    RF2_CAMERAMODEL
+							    && currententity->
+							    flags &
+							    RF_TRANSLUCENT) {
 								vec3_t vert_len;
 
 								VectorSubtract
-								    (r_newrefdef.vieworg,
+								    (r_newrefdef.
+								     vieworg,
 								     s_lerped
 								     [index_xyz],
 								     vert_len);
 								thisalpha *=
 								    VectorLength
 								    (vert_len) /
-								    cl_3dcam_dist->value;
+								    cl_3dcam_dist->
+								    value;
 
 								if (thisalpha >
 								    alpha)
@@ -406,7 +413,8 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 
 						// normals and vertexes come from the frame list
 						l = shadedots[verts
-							      [index_xyz].lightnormalindex];
+							      [index_xyz].
+							      lightnormalindex];
 
 						VectorScale(shadelight, l,
 							    lightcolor);
@@ -416,18 +424,25 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 						     RF_TRANS_ADDITIVE)) {
 							float thisalpha = alpha;
 
-							if (currententity->renderfx & RF2_CAMERAMODEL && currententity->flags & RF_TRANSLUCENT) {
+							if (currententity->
+							    renderfx &
+							    RF2_CAMERAMODEL
+							    && currententity->
+							    flags &
+							    RF_TRANSLUCENT) {
 								vec3_t vert_len;
 
 								VectorSubtract
-								    (r_newrefdef.vieworg,
+								    (r_newrefdef.
+								     vieworg,
 								     s_lerped
 								     [index_xyz],
 								     vert_len);
 								thisalpha *=
 								    VectorLength
 								    (vert_len) /
-								    cl_3dcam_dist->value;
+								    cl_3dcam_dist->
+								    value;
 
 								if (thisalpha >
 								    alpha)
@@ -439,9 +454,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 							if (r_cellshading->value
 							    &&
 							    !
-							    (currententity->flags
-							     & RF_TRANSLUCENT))
-							{
+							    (currententity->
+							     flags &
+							     RF_TRANSLUCENT)) {
 								float highest =
 								    0;
 								float
@@ -1204,7 +1219,8 @@ void R_DrawAliasModel(entity_t * e)
 					    RF_TRANSLUCENT)
 						qglColor4f(0, 0, 0,
 							   0.3 *
-							   currententity->alpha);
+							   currententity->
+							   alpha);
 					else
 						qglColor4f(0, 0, 0, 0.3);
 

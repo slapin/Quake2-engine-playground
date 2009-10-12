@@ -411,13 +411,15 @@ void R_BlendLightmaps(void)
 				     drawsurf = drawsurf->lightmapchain) {
 					if (drawsurf->polys)
 						DrawGLPolyChain(drawsurf->polys,
-								(drawsurf->light_s
-								 -
-								 drawsurf->dlight_s)
+								(drawsurf->
+								 light_s -
+								 drawsurf->
+								 dlight_s)
 								* (1.0 / 128.0),
-								(drawsurf->light_t
-								 -
-								 drawsurf->dlight_t)
+								(drawsurf->
+								 light_t -
+								 drawsurf->
+								 dlight_t)
 								* (1.0 /
 								   128.0));
 				}

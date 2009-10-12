@@ -1095,7 +1095,8 @@ void GL_DrawParticles(int num_particles, qboolean inWater)
 						    ang_forward;
 
 						VectorSubtract(p->origin,
-							       r_newrefdef.vieworg,
+							       r_newrefdef.
+							       vieworg,
 							       angl_coord[0]);
 
 						vectoanglerolled(angl_coord[0],

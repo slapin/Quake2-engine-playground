@@ -1128,9 +1128,8 @@ void CL_AddPacketEntities(frame_t * frame)
 						ent.model = ci->weaponmodel[0];
 					if (!ent.model)
 						ent.model =
-						    cl.
-						    baseclientinfo.weaponmodel
-						    [0];
+						    cl.baseclientinfo.
+						    weaponmodel[0];
 				}
 			} else
 				ent.model = cl.model_draw[s1->modelindex2];

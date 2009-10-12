@@ -622,8 +622,8 @@ void SV_ExecuteClientMessage(client_t * cl)
 						     checksumIndex + 1,
 						     net_message.readcount -
 						     checksumIndex - 1,
-						     cl->
-						     netchan.incoming_sequence);
+						     cl->netchan.
+						     incoming_sequence);
 
 			if (calculatedChecksum != checksum) {
 				Com_DPrintf

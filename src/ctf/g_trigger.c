@@ -224,8 +224,8 @@ void trigger_key_use(edict_t * self, edict_t * other, edict_t * activator)
 			int cube;
 
 			for (cube = 0; cube < 8; cube++)
-				if (activator->client->
-				    pers.power_cubes & (1 << cube))
+				if (activator->client->pers.
+				    power_cubes & (1 << cube))
 					break;
 			for (player = 1; player <= game.maxclients; player++) {
 				ent = &g_edicts[player];

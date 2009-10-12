@@ -210,8 +210,8 @@ void CL_PredictMovement(void)
 		for (i = 0; i < 3; i++) {
 			cl.predicted_angles[i] =
 			    cl.viewangles[i] +
-			    SHORT2ANGLE(cl.frame.playerstate.
-					pmove.delta_angles[i]);
+			    SHORT2ANGLE(cl.frame.playerstate.pmove.
+					delta_angles[i]);
 		}
 		return;
 	}

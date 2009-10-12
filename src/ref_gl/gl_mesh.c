@@ -277,7 +277,8 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 
 					// normals and vertexes come from the frame list
 					l = shadedots[verts
-						      [index_xyz].lightnormalindex];
+						      [index_xyz].
+						      lightnormalindex];
 
 					qglColor4f(l * shadelight[0],
 						   l * shadelight[1],

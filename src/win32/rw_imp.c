@@ -190,61 +190,58 @@ void SWimp_EndFrame(void)
 		r.right = vid.width;
 		r.bottom = vid.height;
 
-		sww_state.lpddsOffScreenBuffer->lpVtbl->
-		    Unlock(sww_state.lpddsOffScreenBuffer, vid.buffer);
+		sww_state.lpddsOffScreenBuffer->lpVtbl->Unlock(sww_state.
+							       lpddsOffScreenBuffer,
+							       vid.buffer);
 
 		if (sww_state.modex) {
 			if ((rval =
-			     sww_state.lpddsBackBuffer->
-			     lpVtbl->BltFast(sww_state.lpddsBackBuffer, 0, 0,
-					     sww_state.lpddsOffScreenBuffer, &r,
-					     DDBLTFAST_WAIT)) ==
-			    DDERR_SURFACELOST) {
-				sww_state.lpddsBackBuffer->
-				    lpVtbl->Restore(sww_state.lpddsBackBuffer);
-				sww_state.lpddsBackBuffer->
-				    lpVtbl->BltFast(sww_state.lpddsBackBuffer,
-						    0, 0,
-						    sww_state.
-						    lpddsOffScreenBuffer, &r,
-						    DDBLTFAST_WAIT);
+			     sww_state.lpddsBackBuffer->lpVtbl->
+			     BltFast(sww_state.lpddsBackBuffer, 0, 0,
+				     sww_state.lpddsOffScreenBuffer, &r,
+				     DDBLTFAST_WAIT)) == DDERR_SURFACELOST) {
+				sww_state.lpddsBackBuffer->lpVtbl->
+				    Restore(sww_state.lpddsBackBuffer);
+				sww_state.lpddsBackBuffer->lpVtbl->
+				    BltFast(sww_state.lpddsBackBuffer, 0, 0,
+					    sww_state.lpddsOffScreenBuffer, &r,
+					    DDBLTFAST_WAIT);
 			}
 
 			if ((rval =
-			     sww_state.lpddsFrontBuffer->lpVtbl->
-			     Flip(sww_state.lpddsFrontBuffer, NULL,
-				  DDFLIP_WAIT))
+			     sww_state.lpddsFrontBuffer->lpVtbl->Flip(sww_state.
+								      lpddsFrontBuffer,
+								      NULL,
+								      DDFLIP_WAIT))
 			    == DDERR_SURFACELOST) {
-				sww_state.lpddsFrontBuffer->
-				    lpVtbl->Restore(sww_state.lpddsFrontBuffer);
-				sww_state.lpddsFrontBuffer->
-				    lpVtbl->Flip(sww_state.lpddsFrontBuffer,
-						 NULL, DDFLIP_WAIT);
+				sww_state.lpddsFrontBuffer->lpVtbl->
+				    Restore(sww_state.lpddsFrontBuffer);
+				sww_state.lpddsFrontBuffer->lpVtbl->
+				    Flip(sww_state.lpddsFrontBuffer, NULL,
+					 DDFLIP_WAIT);
 			}
 		} else {
 			if ((rval =
-			     sww_state.lpddsBackBuffer->
-			     lpVtbl->BltFast(sww_state.lpddsFrontBuffer, 0, 0,
-					     sww_state.lpddsOffScreenBuffer, &r,
-					     DDBLTFAST_WAIT)) ==
-			    DDERR_SURFACELOST) {
-				sww_state.lpddsBackBuffer->
-				    lpVtbl->Restore(sww_state.lpddsFrontBuffer);
-				sww_state.lpddsBackBuffer->
-				    lpVtbl->BltFast(sww_state.lpddsFrontBuffer,
-						    0, 0,
-						    sww_state.
-						    lpddsOffScreenBuffer, &r,
-						    DDBLTFAST_WAIT);
+			     sww_state.lpddsBackBuffer->lpVtbl->
+			     BltFast(sww_state.lpddsFrontBuffer, 0, 0,
+				     sww_state.lpddsOffScreenBuffer, &r,
+				     DDBLTFAST_WAIT)) == DDERR_SURFACELOST) {
+				sww_state.lpddsBackBuffer->lpVtbl->
+				    Restore(sww_state.lpddsFrontBuffer);
+				sww_state.lpddsBackBuffer->lpVtbl->
+				    BltFast(sww_state.lpddsFrontBuffer, 0, 0,
+					    sww_state.lpddsOffScreenBuffer, &r,
+					    DDBLTFAST_WAIT);
 			}
 		}
 
 		memset(&ddsd, 0, sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
 
-		sww_state.lpddsOffScreenBuffer->lpVtbl->
-		    Lock(sww_state.lpddsOffScreenBuffer, NULL, &ddsd,
-			 DDLOCK_WAIT, NULL);
+		sww_state.lpddsOffScreenBuffer->lpVtbl->Lock(sww_state.
+							     lpddsOffScreenBuffer,
+							     NULL, &ddsd,
+							     DDLOCK_WAIT, NULL);
 
 		vid.buffer = ddsd.lpSurface;
 		vid.rowbytes = ddsd.lPitch;

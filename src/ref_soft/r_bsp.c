@@ -289,8 +289,8 @@ void R_RecursiveClipBPoly(bedge_t * pedges, mnode_t * pnode, msurface_t * psurf)
 							area = ((mleaf_t *)
 								pn)->area;
 							if (!
-							    (r_newrefdef.areabits
-							     [area >> 3]
+							    (r_newrefdef.
+							     areabits[area >> 3]
 							     & (1 <<
 								(area & 7))))
 								continue;	// not visible

@@ -222,8 +222,8 @@ void NoAmmoWeaponChange(edict_t * ent)
 		return;
 	}
 	if (ent->client->pers.inventory[ITEM_INDEX(FindItem("cells"))]
-	    && ent->client->
-	    pers.inventory[ITEM_INDEX(FindItem("hyperblaster"))]) {
+	    && ent->client->pers.
+	    inventory[ITEM_INDEX(FindItem("hyperblaster"))]) {
 		ent->client->newweapon = FindItem("hyperblaster");
 		return;
 	}
@@ -238,8 +238,8 @@ void NoAmmoWeaponChange(edict_t * ent)
 		return;
 	}
 	if (ent->client->pers.inventory[ITEM_INDEX(FindItem("shells"))] > 1
-	    && ent->client->
-	    pers.inventory[ITEM_INDEX(FindItem("super shotgun"))]) {
+	    && ent->client->pers.
+	    inventory[ITEM_INDEX(FindItem("super shotgun"))]) {
 		ent->client->newweapon = FindItem("super shotgun");
 		return;
 	}
@@ -412,12 +412,12 @@ void Weapon_Generic(edict_t * ent, int FRAME_ACTIVATE_LAST, int FRAME_FIRE_LAST,
 	}
 
 	if (ent->client->weaponstate == WEAPON_READY) {
-		if (((ent->client->latched_buttons | ent->
-		      client->buttons) & BUTTON_ATTACK)) {
+		if (((ent->client->latched_buttons | ent->client->
+		      buttons) & BUTTON_ATTACK)) {
 			ent->client->latched_buttons &= ~BUTTON_ATTACK;
 			if ((!ent->client->ammo_index) ||
-			    (ent->client->
-			     pers.inventory[ent->client->ammo_index] >=
+			    (ent->client->pers.
+			     inventory[ent->client->ammo_index] >=
 			     ent->client->pers.weapon->quantity)) {
 				ent->client->ps.gunframe = FRAME_FIRE_FIRST;
 				ent->client->weaponstate = WEAPON_FIRING;
@@ -562,11 +562,11 @@ void Weapon_Grenade(edict_t * ent)
 	}
 
 	if (ent->client->weaponstate == WEAPON_READY) {
-		if (((ent->client->latched_buttons | ent->
-		      client->buttons) & BUTTON_ATTACK)) {
+		if (((ent->client->latched_buttons | ent->client->
+		      buttons) & BUTTON_ATTACK)) {
 			ent->client->latched_buttons &= ~BUTTON_ATTACK;
-			if (ent->client->
-			    pers.inventory[ent->client->ammo_index]) {
+			if (ent->client->pers.
+			    inventory[ent->client->ammo_index]) {
 				ent->client->ps.gunframe = 1;
 				ent->client->weaponstate = WEAPON_FIRING;
 				ent->client->grenade_time = 0;
@@ -858,8 +858,8 @@ void Weapon_HyperBlaster_Fire(edict_t * ent)
 				damage = 20;
 			Blaster_Fire(ent, offset, damage, true, effect);
 			if (!((int)dmflags->value & DF_INFINITE_AMMO))
-				ent->client->pers.inventory[ent->
-							    client->ammo_index]--;
+				ent->client->pers.inventory[ent->client->
+							    ammo_index]--;
 
 			ent->client->anim_priority = ANIM_ATTACK;
 			if (ent->client->ps.pmove.pm_flags & PMF_DUCKED) {

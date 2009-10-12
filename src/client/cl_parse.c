@@ -320,9 +320,11 @@ void CL_ParseServerData(void)
 	     && (!fs_gamedirvar->string || !*fs_gamedirvar->string
 		 || strcmp(fs_gamedirvar->string, str))) || (!*str
 							     &&
-							     (fs_gamedirvar->string
+							     (fs_gamedirvar->
+							      string
 							      ||
-							      *fs_gamedirvar->string)))
+							      *fs_gamedirvar->
+							      string)))
 		Cvar_Set("game", str);
 
 	// parse player entity number

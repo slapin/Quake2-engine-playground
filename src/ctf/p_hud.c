@@ -103,8 +103,8 @@ void BeginIntermission(edict_t * targ)
 				// strip players of all keys between units
 				for (n = 0; n < MAX_ITEMS; n++) {
 					if (itemlist[n].flags & IT_KEY)
-						client->client->
-						    pers.inventory[n] = 0;
+						client->client->pers.
+						    inventory[n] = 0;
 				}
 			}
 		}
@@ -472,8 +472,8 @@ void G_SetStats(edict_t * ent)
 		ent->client->ps.stats[STAT_SELECTED_ICON] = 0;
 	else
 		ent->client->ps.stats[STAT_SELECTED_ICON] =
-		    gi.
-		    imageindex(itemlist[ent->client->pers.selected_item].icon);
+		    gi.imageindex(itemlist[ent->client->pers.selected_item].
+				  icon);
 
 	ent->client->ps.stats[STAT_SELECTED_ITEM] =
 	    ent->client->pers.selected_item;

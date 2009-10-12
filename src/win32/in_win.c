@@ -747,13 +747,15 @@ void IN_JoyMove(usercmd_t * cmd)
 					if (m_pitch->value < 0.0) {
 						cl.viewangles[PITCH] -=
 						    (fAxisValue *
-						     joy_pitchsensitivity->value)
+						     joy_pitchsensitivity->
+						     value)
 						    * aspeed *
 						    cl_pitchspeed->value;
 					} else {
 						cl.viewangles[PITCH] +=
 						    (fAxisValue *
-						     joy_pitchsensitivity->value)
+						     joy_pitchsensitivity->
+						     value)
 						    * aspeed *
 						    cl_pitchspeed->value;
 					}
@@ -826,13 +828,15 @@ void IN_JoyMove(usercmd_t * cmd)
 					    JOY_ABSOLUTE_AXIS) {
 						cl.viewangles[PITCH] +=
 						    (fAxisValue *
-						     joy_pitchsensitivity->value)
+						     joy_pitchsensitivity->
+						     value)
 						    * aspeed *
 						    cl_pitchspeed->value;
 					} else {
 						cl.viewangles[PITCH] +=
 						    (fAxisValue *
-						     joy_pitchsensitivity->value)
+						     joy_pitchsensitivity->
+						     value)
 						    * speed * 180.0;
 					}
 				}
