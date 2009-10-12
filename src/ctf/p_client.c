@@ -50,8 +50,7 @@ static void SP_FixCoopSpots(edict_t * self)
 		VectorSubtract(self->s.origin, spot->s.origin, d);
 		if (VectorLength(d) < 384) {
 			if ((!self->targetname)
-			    || stricmp(self->targetname,
-				       spot->targetname) != 0) {
+			    || stricmp(self->targetname, spot->targetname) != 0) {
 //                              gi.dprintf("FixCoopSpots changed %s at %s targetname from %s to %s\n", self->classname, vtos(self->s.origin), self->targetname, spot->targetname);
 				self->targetname = spot->targetname;
 			}
@@ -561,10 +560,10 @@ void player_die(edict_t * self, edict_t * inflictor, edict_t * attacker,
 					break;
 				}
 			gi.sound(self, CHAN_VOICE,
-				 gi.
-				 soundindex(va
-					    ("*death%i.wav", (rand() % 4) + 1)),
-				 1, ATTN_NORM, 0);
+				 gi.soundindex(va
+					       ("*death%i.wav",
+						(rand() % 4) + 1)), 1,
+				 ATTN_NORM, 0);
 		}
 	}
 
@@ -1323,7 +1322,6 @@ qboolean ClientConnect(edict_t * ent, char *userinfo)
 		Info_SetValueForKey(userinfo, "rejmsg", "Banned.");
 		return false;
 	}
-
 	// check for a password
 	value = Info_ValueForKey(userinfo, "password");
 	if (*password->string && strcmp(password->string, "none") &&

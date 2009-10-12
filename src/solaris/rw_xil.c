@@ -820,7 +820,6 @@ int SWimp_Init(void *hInstance, void *wndProc)
 			Sys_Error("VID: Could not open local display\n");
 		}
 	}
-
 	// catch signals so i can turn on auto-repeat
 
 	{
@@ -912,9 +911,8 @@ static qboolean SWimp_InitGraphics(qboolean fullscreen)
 		window_height = vid.height;
 
 		tmpcmap = XCreateColormap(x_disp, XRootWindow(x_disp,
-							      x_visinfo->
-							      screen), x_vis,
-					  AllocNone);
+							      x_visinfo->screen),
+					  x_vis, AllocNone);
 
 		attribs.event_mask = STD_EVENT_MASK;
 		attribs.border_pixel = 0;

@@ -83,9 +83,11 @@ mframe_t berserk_frames_stand_fidget[] = {
 	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL}
 };
+
 mmove_t berserk_move_stand_fidget =
     { FRAME_standb1, FRAME_standb20, berserk_frames_stand_fidget,
-berserk_stand };
+	berserk_stand
+};
 
 void berserk_fidget(edict_t * self)
 {

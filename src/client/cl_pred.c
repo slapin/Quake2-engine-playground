@@ -210,8 +210,8 @@ void CL_PredictMovement(void)
 		for (i = 0; i < 3; i++) {
 			cl.predicted_angles[i] =
 			    cl.viewangles[i] +
-			    SHORT2ANGLE(cl.frame.playerstate.pmove.
-					delta_angles[i]);
+			    SHORT2ANGLE(cl.frame.playerstate.
+					pmove.delta_angles[i]);
 		}
 		return;
 	}
@@ -257,7 +257,6 @@ void CL_PredictMovement(void)
 		cl.predicted_step = step * 0.125;
 		cl.predicted_step_time = cls.realtime - cls.frametime * 500;
 	}
-
 	// copy results out for rendering
 	cl.predicted_origin[0] = pm.s.origin[0] * 0.125;
 	cl.predicted_origin[1] = pm.s.origin[1] * 0.125;

@@ -1045,9 +1045,8 @@ void D_DrawSurfaces(void)
 			r_drawnpolycount++;
 
 			if (!
-			    (s->
-			     flags & (SURF_DRAWSKYBOX | SURF_DRAWBACKGROUND |
-				      SURF_DRAWTURB)))
+			    (s->flags & (SURF_DRAWSKYBOX | SURF_DRAWBACKGROUND |
+					 SURF_DRAWTURB)))
 				D_SolidSurf(s);
 			else if (s->flags & SURF_DRAWSKYBOX)
 				D_SkySurf(s);

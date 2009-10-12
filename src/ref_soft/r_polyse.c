@@ -437,7 +437,7 @@ void R_PolysetCalcGradients(int skinwidth)
 	     */
 	 __asm fldcw word ptr[fpu_sp24_ceil_cw]
 //      __asm fldcw word ptr [fpu_ceil_cw]
-	 __asm fild dword ptr d_xdenom;
+	__asm fild dword ptr d_xdenom;
 	d_xdenom __asm fdivr one;
 	1 / d_xdenom __asm fst xstepdenominv;
 	__asm fmul negative_one;
@@ -646,7 +646,7 @@ void R_PolysetCalcGradients(int skinwidth)
 //#if id386ALIAS
 	 __asm shl eax, 16 __asm shl ebx, 16 __asm jmp done_with_steps
 //#else
-	 translucent: __asm and eax, 0f fffh __asm and ebx, 0f fffh
+	 translucent:__asm and eax, 0f fffh __asm and ebx, 0f fffh
 //#endif
 	 done_with_steps:
 	    __asm mov a_sstepxfrac, eax __asm mov a_tstepxfrac, ebx
@@ -767,11 +767,12 @@ void R_PolysetDrawThreshSpans8(spanpackage_t * pspanpackage)
 
 					if (rand1k[rand1k_index] <=
 					    r_affinetridesc.vis_thresh) {
-						*lpdest =
-						    ((byte *) vid.
-						     colormap)[*lptex +
-							       (llight &
-								0xFF00)];
+						*lpdest = ((byte *)
+							   vid.colormap)[*lptex
+									 +
+									 (llight
+									  &
+									  0xFF00)];
 						*lpz = lzi >> 16;
 					}
 				}
@@ -1034,17 +1035,18 @@ void R_PolysetDrawSpans8_Opaque(spanpackage_t * pspanpackage)
 				if ((lzi >> 16) >= *lpz) {
 //PGM
 					if (r_newrefdef.rdflags & RDF_IRGOGGLES
-					    && currententity->
-					    flags & RF_IR_VISIBLE)
-						*lpdest =
-						    ((byte *) vid.
-						     colormap)[irtable[*lptex]];
+					    && currententity->flags &
+					    RF_IR_VISIBLE)
+						*lpdest = ((byte *)
+							   vid.colormap)[irtable
+									 [*lptex]];
 					else
-						*lpdest =
-						    ((byte *) vid.
-						     colormap)[*lptex +
-							       (llight &
-								0xFF00)];
+						*lpdest = ((byte *)
+							   vid.colormap)[*lptex
+									 +
+									 (llight
+									  &
+									  0xFF00)];
 //PGM
 					*lpz = lzi >> 16;
 				}

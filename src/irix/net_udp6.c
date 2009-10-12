@@ -292,9 +292,8 @@ char *NET_BaseAdrToString(netadr_t a)
 		else {
 
 			if (a.type == NA_MULTICAST6 ||
-			    IN6_IS_ADDR_LINKLOCAL(&
-						  ((struct sockaddr_in6 *)&ss)->
-						  sin6_addr)) {
+			    IN6_IS_ADDR_LINKLOCAL(&((struct sockaddr_in6 *)
+						    &ss)->sin6_addr)) {
 				/* If the address is multicast (link) or a
 				 * link-local, need to carry the scope. The string
 				 * format of the IPv6 address is used by the

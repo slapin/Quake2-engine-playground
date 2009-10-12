@@ -472,10 +472,7 @@ void R_DrawEntitiesOnList(qboolean inWater, qboolean solids)
 			if (!
 			    (currententity->flags & RF_TRANSLUCENT
 			     || currententity->flags & RF_VIEWERMODEL)
-			    || (inWater && !theents[i].inwater) || (!inWater
-								    &&
-								    theents[i].
-								    inwater))
+|| (inWater && !theents[i].inwater) || (!inWater && theents[i].inwater))
 				continue;	// solid
 		} else if (inWater) {
 			currententity = &r_newrefdef.entities[i];
@@ -1040,10 +1037,9 @@ void GL_DrawParticles(int num_particles, qboolean inWater)
 				qglDisable(GL_CULL_FACE);
 				qglPushMatrix();
 				{
-					if (p->
-					    flags & (PART_DEPTHHACK_SHORT |
-						     PART_DEPTHHACK_MID |
-						     PART_DEPTHHACK_LONG)) {
+					if (p->flags & (PART_DEPTHHACK_SHORT |
+							PART_DEPTHHACK_MID |
+							PART_DEPTHHACK_LONG)) {
 						VectorMA(p->origin, size,
 							 angl_coord[0],
 							 angl_coord[0]);
@@ -1099,8 +1095,7 @@ void GL_DrawParticles(int num_particles, qboolean inWater)
 						    ang_forward;
 
 						VectorSubtract(p->origin,
-							       r_newrefdef.
-							       vieworg,
+							       r_newrefdef.vieworg,
 							       angl_coord[0]);
 
 						vectoanglerolled(angl_coord[0],
@@ -1449,7 +1444,6 @@ void R_SetupGL(void)
 		// edge of skybox - not total size of skybox
 		ri.Con_Printf(PRINT_DEVELOPER, "farz now set to %g\n", farz);
 	}
-
 	//
 	// set up projection matrix
 	//
@@ -2069,8 +2063,7 @@ int R_Init(void *hinstance, void *hWnd)
 			    (void *)qwglGetProcAddress("glMultiTexCoord2fARB");
 			qglActiveTextureARB =
 			    (void *)qwglGetProcAddress("glActiveTextureARB");
-			qglClientActiveTextureARB =
-			    (void *)
+			qglClientActiveTextureARB = (void *)
 			    qwglGetProcAddress("glClientActiveTextureARB");
 			QGL_TEXTURE0 = GL_TEXTURE0_ARB;
 			QGL_TEXTURE1 = GL_TEXTURE1_ARB;

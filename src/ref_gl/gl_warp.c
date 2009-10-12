@@ -176,12 +176,12 @@ void GL_SubdivideSurface(msurface_t * fa)
 
 		if (lindex > 0)
 			vec =
-			    loadmodel->vertexes[loadmodel->edges[lindex].v[0]].
-			    position;
+			    loadmodel->vertexes[loadmodel->edges[lindex].
+						v[0]].position;
 		else
 			vec =
-			    loadmodel->vertexes[loadmodel->edges[-lindex].v[1]].
-			    position;
+			    loadmodel->vertexes[loadmodel->edges[-lindex].
+						v[1]].position;
 		VectorCopy(vec, verts[numverts]);
 		numverts++;
 	}
@@ -230,10 +230,10 @@ void EmitWaterPolys(msurface_t * fa)
 			ot = v[4];
 
 #if !id386
-			s = os +
-			    r_turbsin[(int)
-				      ((ot * 0.125 +
-					r_newrefdef.time) * TURBSCALE) & 255];
+			s = os + r_turbsin[(int)
+					   ((ot * 0.125 +
+					     r_newrefdef.time) *
+					    TURBSCALE) & 255];
 #else
 			s = os +
 			    r_turbsin[Q_ftol(((ot * 0.125 + rdt) * TURBSCALE)) &

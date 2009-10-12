@@ -531,10 +531,12 @@ NET
 
 #ifdef HAVE_IPV6
 typedef enum { NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX,
-	    NA_IP6, NA_MULTICAST6 } netadrtype_t;
+	NA_IP6, NA_MULTICAST6
+} netadrtype_t;
 #else
 typedef enum { NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX,
-	    NA_BROADCAST_IPX } netadrtype_t;
+	NA_BROADCAST_IPX
+} netadrtype_t;
 #endif
 
 typedef enum { NS_CLIENT, NS_SERVER } netsrc_t;

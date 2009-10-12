@@ -193,8 +193,8 @@ int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 			     maps++) {
 				samp = *lightmap * /* 0.5 * */ (1.0 / 255);	// adjust for gl scale
 				scales =
-				    r_newrefdef.lightstyles[surf->styles[maps]].
-				    rgb;
+				    r_newrefdef.lightstyles[surf->
+							    styles[maps]].rgb;
 				VectorMA(pointcolor, samp, scales, pointcolor);
 				lightmap += ((surf->extents[0] >> 4) + 1) *
 				    ((surf->extents[1] >> 4) + 1);

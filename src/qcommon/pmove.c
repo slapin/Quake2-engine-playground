@@ -436,7 +436,6 @@ void PM_AddCurrents(vec3_t wishvel)
 		else if (wishvel[1] > 25)
 			wishvel[1] = 25;
 	}
-
 	//
 	// add water currents
 	//

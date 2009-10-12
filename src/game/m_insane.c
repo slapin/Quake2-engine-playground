@@ -344,9 +344,11 @@ mframe_t insane_frames_stand_death[] = {
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL}
 };
+
 mmove_t insane_move_stand_death =
     { FRAME_st_death2, FRAME_st_death18, insane_frames_stand_death,
-insane_dead };
+	insane_dead
+};
 
 mframe_t insane_frames_crawl[] = {
 	{ai_walk, 0, insane_scream},
@@ -387,9 +389,11 @@ mframe_t insane_frames_crawl_death[] = {
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL}
 };
+
 mmove_t insane_move_crawl_death =
     { FRAME_cr_death10, FRAME_cr_death16, insane_frames_crawl_death,
-insane_dead };
+	insane_dead
+};
 
 mframe_t insane_frames_cross[] = {
 	{ai_move, 0, insane_moan},
@@ -428,9 +432,11 @@ mframe_t insane_frames_struggle_cross[] = {
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL}
 };
+
 mmove_t insane_move_struggle_cross =
     { FRAME_cross16, FRAME_cross30, insane_frames_struggle_cross,
-insane_cross };
+	insane_cross
+};
 
 void insane_cross(edict_t * self)
 {

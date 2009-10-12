@@ -874,9 +874,8 @@ void SV_Physics_Step(edict_t * ent)
 			if (!wasonground)
 				if (hitsound)
 					gi.sound(ent, 0,
-						 gi.
-						 soundindex("world/land.wav"),
-						 1, 1, 0);
+						 gi.soundindex
+						 ("world/land.wav"), 1, 1, 0);
 	}
 // regular thinking
 	SV_RunThink(ent);

@@ -765,9 +765,9 @@ void R_AliasTransformFinalVerts(int numpoints, finalvert_t * fv,
 		plightnormal = r_avertexnormals[newv->lightnormalindex];
 
 		// PMM - added double damage shell
-		if (currententity->
-		    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-			     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+		if (currententity->flags &
+		    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
+		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
 			lerped_vert[0] += plightnormal[0] * POWERSUIT_SCALE;
 			lerped_vert[1] += plightnormal[1] * POWERSUIT_SCALE;
 			lerped_vert[2] += plightnormal[2] * POWERSUIT_SCALE;
@@ -1094,16 +1094,16 @@ void R_AliasDrawModel(void)
 	 */
 	// PMM - added double damage shell
 	// PMM - reordered to handle blending
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM)) {
 		int color;
 
 		// PMM - added double
 		color =
-		    currententity->
-		    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-			     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM);
+		    currententity->flags & (RF_SHELL_RED | RF_SHELL_GREEN |
+					    RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+					    RF_SHELL_HALF_DAM);
 		// PMM - reordered, new shells after old shells (so they get overriden)
 
 		if (color == RF_SHELL_RED)

@@ -1280,8 +1280,7 @@ int R_Init(void *hinstance, void *hWnd)
 		if (gl_ext_palettedtexture->value) {
 			ri.Con_Printf(PRINT_ALL,
 				      "...using 3DFX_set_global_palette\n");
-			qgl3DfxSetPaletteEXT =
-			    (void (APIENTRY *) (GLuint *))
+			qgl3DfxSetPaletteEXT = (void (APIENTRY *) (GLuint *))
 			    qwglGetProcAddress("gl3DfxSetPaletteEXT");
 			qglColorTableEXT = Fake_glColorTableEXT;
 		} else {
@@ -1301,10 +1300,9 @@ int R_Init(void *hinstance, void *hWnd)
 		if (gl_ext_palettedtexture->value) {
 			ri.Con_Printf(PRINT_ALL,
 				      "...using GL_EXT_shared_texture_palette\n");
-			qglColorTableEXT =
-			    (void (APIENTRY *)
-			     (GLenum, GLenum, GLsizei, GLenum, GLenum,
-			      const GLvoid *))
+			qglColorTableEXT = (void (APIENTRY *)
+					    (GLenum, GLenum, GLsizei, GLenum,
+					     GLenum, const GLvoid *))
 			    qwglGetProcAddress("glColorTableEXT");
 		} else {
 			ri.Con_Printf(PRINT_ALL,
@@ -1323,8 +1321,7 @@ int R_Init(void *hinstance, void *hWnd)
 			    (void *)qwglGetProcAddress("glMultiTexCoord2fARB");
 			qglActiveTextureARB =
 			    (void *)qwglGetProcAddress("glActiveTextureARB");
-			qglClientActiveTextureARB =
-			    (void *)
+			qglClientActiveTextureARB = (void *)
 			    qwglGetProcAddress("glClientActiveTextureARB");
 			QGL_TEXTURE0 = GL_TEXTURE0_ARB;
 			QGL_TEXTURE1 = GL_TEXTURE1_ARB;

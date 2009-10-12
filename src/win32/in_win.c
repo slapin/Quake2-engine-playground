@@ -43,7 +43,7 @@ enum _ControlList {
 
 DWORD dwAxisFlags[JOY_MAX_AXES] = {
 	JOY_RETURNX, JOY_RETURNY, JOY_RETURNZ, JOY_RETURNR, JOY_RETURNU,
-	    JOY_RETURNV
+	JOY_RETURNV
 };
 
 DWORD dwAxisMap[JOY_MAX_AXES];
@@ -621,7 +621,6 @@ void IN_Commands(void)
 	if (!joy_avail) {
 		return;
 	}
-
 	// loop through the joystick buttons
 	// key a joystick event or auxillary event for higher number buttons for each state change
 	buttonstate = ji.dwButtons;
@@ -748,14 +747,14 @@ void IN_JoyMove(usercmd_t * cmd)
 					if (m_pitch->value < 0.0) {
 						cl.viewangles[PITCH] -=
 						    (fAxisValue *
-						     joy_pitchsensitivity->
-						     value) * aspeed *
+						     joy_pitchsensitivity->value)
+						    * aspeed *
 						    cl_pitchspeed->value;
 					} else {
 						cl.viewangles[PITCH] +=
 						    (fAxisValue *
-						     joy_pitchsensitivity->
-						     value) * aspeed *
+						     joy_pitchsensitivity->value)
+						    * aspeed *
 						    cl_pitchspeed->value;
 					}
 				}
@@ -804,14 +803,14 @@ void IN_JoyMove(usercmd_t * cmd)
 					    JOY_ABSOLUTE_AXIS) {
 						cl.viewangles[YAW] +=
 						    (fAxisValue *
-						     joy_yawsensitivity->
-						     value) * aspeed *
+						     joy_yawsensitivity->value)
+						    * aspeed *
 						    cl_yawspeed->value;
 					} else {
 						cl.viewangles[YAW] +=
 						    (fAxisValue *
-						     joy_yawsensitivity->
-						     value) * speed * 180.0;
+						     joy_yawsensitivity->value)
+						    * speed * 180.0;
 					}
 
 				}
@@ -827,14 +826,14 @@ void IN_JoyMove(usercmd_t * cmd)
 					    JOY_ABSOLUTE_AXIS) {
 						cl.viewangles[PITCH] +=
 						    (fAxisValue *
-						     joy_pitchsensitivity->
-						     value) * aspeed *
+						     joy_pitchsensitivity->value)
+						    * aspeed *
 						    cl_pitchspeed->value;
 					} else {
 						cl.viewangles[PITCH] +=
 						    (fAxisValue *
-						     joy_pitchsensitivity->
-						     value) * speed * 180.0;
+						     joy_pitchsensitivity->value)
+						    * speed * 180.0;
 					}
 				}
 			}

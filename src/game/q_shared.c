@@ -440,13 +440,13 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		    mov Ljmptab[5 * 4], offset Lcase5
 		    mov Ljmptab[6 * 4], offset Lcase6
 		    mov Ljmptab[7 * 4], offset Lcase7
-		    initialized: mov edx, ds:dword ptr[4 + 12 + esp]
+		    initialized:mov edx, ds:dword ptr[4 + 12 + esp]
 		mov ecx, ds:dword ptr[4 + 4 + esp]
 		xor eax, eax mov ebx, ds:dword ptr[4 + 8 + esp]
 		mov al, ds:byte ptr[17 + edx]
 		cmp al, 8 jge Lerror fld ds:dword ptr[0 + edx]
 		fld st(0)
-		jmp dword ptr[Ljmptab + eax * 4] Lcase0: fmul ds:dword ptr[ebx]
+		jmp dword ptr[Ljmptab + eax * 4] Lcase0:fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -466,7 +466,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase1: fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase1:fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -486,7 +486,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase2: fmul ds:dword ptr[ebx]
+		jmp LSetSides Lcase2:fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -506,7 +506,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase3: fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase3:fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -526,7 +526,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase4: fmul ds:dword ptr[ebx]
+		jmp LSetSides Lcase4:fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -546,7 +546,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase5: fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase5:fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -566,7 +566,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase6: fmul ds:dword ptr[ebx]
+		jmp LSetSides Lcase6:fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -586,7 +586,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase7: fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase7:fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -605,7 +605,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		fxch st(1)
 		faddp st(3), st(0)
 		fxch st(3)
-		faddp st(2), st(0) LSetSides: faddp st(2), st(0)
+		faddp st(2), st(0) LSetSides:faddp st(2), st(0)
 		fcomp ds:dword ptr[12 + edx]
 		xor ecx, ecx fnstsw ax fcomp ds:dword ptr[12 + edx]
 and ah, 1
@@ -614,7 +614,7 @@ and ah, 1
 		    fnstsw ax
 		    and ah, 1
 		    add ah, ah
-		    add cl, ah pop ebx mov eax, ecx ret Lerror: int 3}}
+		    add cl, ah pop ebx mov eax, ecx ret Lerror:int 3}}
 #pragma warning( default: 4035 )
 #endif
 void ClearBounds(vec3_t mins, vec3_t maxs)

@@ -104,7 +104,6 @@ void InitConProc(int argc, char **argv)
 		if (t < argc)
 			heventChild = (HANDLE) atoi(ccom_argv[t + 1]);
 	}
-
 // ignore if we don't have all the events.
 	if (!hFile || !heventParent || !heventChild) {
 		printf("Qhost not present.\n");

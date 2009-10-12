@@ -160,10 +160,9 @@ void SV_EmitPacketEntities(client_frame_t * from, client_frame_t * to,
 			oldnum = 9999;
 		else {
 			oldent =
-			    &svs.
-			    client_entities[(from->first_entity +
-					     oldindex) %
-					    svs.num_client_entities];
+			    &svs.client_entities[(from->first_entity +
+						  oldindex) %
+						 svs.num_client_entities];
 			oldnum = oldent->number;
 		}
 

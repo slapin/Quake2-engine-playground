@@ -60,9 +60,9 @@ void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov,
 	int i;
 
 	//PMM -- added RF_SHELL_DOUBLE, RF_SHELL_HALF_DAM
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM)) {
 		for (i = 0; i < nverts; i++, v++, ov++, lerp += 4) {
 			float *normal =
 			    r_avertexnormals[verts[i].lightnormalindex];
@@ -135,9 +135,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 		alpha = 1.0;
 
 	// PMM - added double shell
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM))
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM))
 		qglDisable(GL_TEXTURE_2D);
 
 	frontlerp = 1.0 - backlerp;
@@ -174,9 +174,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 
 //              if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE ) )
 		// PMM - added double damage shell
-		if (currententity->
-		    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-			     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+		if (currententity->flags &
+		    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
+		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
 			qglColor4f(shadelight[0], shadelight[1], shadelight[2],
 				   alpha);
 		} else {
@@ -211,10 +211,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 			}
 
 			// PMM - added double damage shell
-			if (currententity->
-			    flags & (RF_SHELL_RED | RF_SHELL_GREEN |
-				     RF_SHELL_BLUE | RF_SHELL_DOUBLE |
-				     RF_SHELL_HALF_DAM)) {
+			if (currententity->flags &
+			    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
+			     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
 				do {
 					index_xyz = order[2];
 					order += 3;
@@ -257,9 +256,8 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 				qglBegin(GL_TRIANGLE_STRIP);
 			}
 
-			if (currententity->
-			    flags & (RF_SHELL_RED | RF_SHELL_GREEN |
-				     RF_SHELL_BLUE)) {
+			if (currententity->flags &
+			    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE)) {
 				do {
 					index_xyz = order[2];
 					order += 3;
@@ -278,8 +276,8 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 					order += 3;
 
 					// normals and vertexes come from the frame list
-					l = shadedots[verts[index_xyz].
-						      lightnormalindex];
+					l = shadedots[verts
+						      [index_xyz].lightnormalindex];
 
 					qglColor4f(l * shadelight[0],
 						   l * shadelight[1],
@@ -294,9 +292,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 
 //      if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE ) )
 	// PMM - added double damage shell
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM))
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM))
 		qglEnable(GL_TEXTURE_2D);
 }
 
@@ -547,9 +545,9 @@ void R_DrawAliasModel(entity_t * e)
 	// PMM - rewrote, reordered to handle new shells & mixing
 	// PMM - 3.20 code .. replaced with original way of doing it to keep mod authors happy
 	//
-	if (currententity->
-	    flags & (RF_SHELL_HALF_DAM | RF_SHELL_GREEN | RF_SHELL_RED |
-		     RF_SHELL_BLUE | RF_SHELL_DOUBLE)) {
+	if (currententity->flags &
+	    (RF_SHELL_HALF_DAM | RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE |
+	     RF_SHELL_DOUBLE)) {
 		VectorClear(shadelight);
 		if (currententity->flags & RF_SHELL_HALF_DAM) {
 			shadelight[0] = 0.56;
@@ -708,11 +706,10 @@ void R_DrawAliasModel(entity_t * e)
 // PGM  
 // =================
 
-	shadedots =
-	    r_avertexnormal_dots[((int)
-				  (currententity->angles[1] *
-				   (SHADEDOT_QUANT /
-				    360.0))) & (SHADEDOT_QUANT - 1)];
+	shadedots = r_avertexnormal_dots[((int)
+					  (currententity->angles[1] *
+					   (SHADEDOT_QUANT /
+					    360.0))) & (SHADEDOT_QUANT - 1)];
 
 	an = currententity->angles[1] / 180 * M_PI;
 	shadevector[0] = cos(-an);
@@ -838,8 +835,8 @@ void R_DrawAliasModel(entity_t * e)
 
 //#if 1
 	if (gl_shadows->value &&
-	    !(currententity->
-	      flags & (RF_TRANSLUCENT | RF_WEAPONMODEL | RF_NOSHADOW))) {
+	    !(currententity->flags &
+	      (RF_TRANSLUCENT | RF_WEAPONMODEL | RF_NOSHADOW))) {
 		qglPushMatrix();
 
 		/* don't rotate shadows on ungodly axes */

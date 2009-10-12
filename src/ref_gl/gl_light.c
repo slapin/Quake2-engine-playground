@@ -265,10 +265,9 @@ int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 				for (i = 0; i < 3; i++)
 					scale[i] =
 					    gl_modulate->value *
-					    r_newrefdef.lightstyles[surf->
-								    styles
-								    [maps]].
-					    rgb[i];
+					    r_newrefdef.lightstyles[surf->styles
+								    [maps]].rgb
+					    [i];
 
 				pointcolor[0] +=
 				    lightmap[0] * scale[0] * (1.0 / 255);
@@ -457,8 +456,8 @@ void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
 	lightstyle_t *style;
 	int monolightmap;
 
-	if (surf->texinfo->
-	    flags & (SURF_SKY | SURF_TRANS33 | SURF_TRANS66 | SURF_WARP))
+	if (surf->texinfo->flags & (SURF_SKY | SURF_TRANS33 | SURF_TRANS66 |
+				    SURF_WARP))
 		ri.Sys_Error(ERR_DROP,
 			     "R_BuildLightMap called for non-lit surface");
 
@@ -498,8 +497,9 @@ void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
 			for (i = 0; i < 3; i++)
 				scale[i] =
 				    gl_modulate->value *
-				    r_newrefdef.lightstyles[surf->styles[maps]].
-				    rgb[i];
+				    r_newrefdef.lightstyles[surf->
+							    styles[maps]].rgb
+				    [i];
 
 			if (scale[0] == 1.0F &&
 			    scale[1] == 1.0F && scale[2] == 1.0F) {
@@ -529,8 +529,9 @@ void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
 			for (i = 0; i < 3; i++)
 				scale[i] =
 				    gl_modulate->value *
-				    r_newrefdef.lightstyles[surf->styles[maps]].
-				    rgb[i];
+				    r_newrefdef.lightstyles[surf->
+							    styles[maps]].rgb
+				    [i];
 
 			if (scale[0] == 1.0F &&
 			    scale[1] == 1.0F && scale[2] == 1.0F) {

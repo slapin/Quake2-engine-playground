@@ -874,9 +874,9 @@ void HandleEvents(void)
 		case KeyRelease:
 			if (!X11_KeyRepeat(dpy, &event)) {
 				if (in_state && in_state->Key_Event_fp)
-					in_state->
-					    Key_Event_fp(XLateKey(&event.xkey),
-							 false);
+					in_state->Key_Event_fp(XLateKey
+							       (&event.xkey),
+							       false);
 			}
 			break;
 
@@ -1035,7 +1035,6 @@ int SWimp_Init(void *hInstance, void *wndProc)
 			Sys_Error("VID: Could not open local display\n");
 		}
 	}
-
 	// catch signals so i can turn on auto-repeat
 
 	{

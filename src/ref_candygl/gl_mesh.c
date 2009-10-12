@@ -58,9 +58,9 @@ void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov,
 	int i;
 
 	//PMM -- added RF_SHELL_DOUBLE, RF_SHELL_HALF_DAM
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM)) {
 		for (i = 0; i < nverts; i++, v++, ov++, lerp += 4) {
 			float *normal =
 			    r_avertexnormals[verts[i].lightnormalindex];
@@ -215,9 +215,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 		alpha = 1.0;
 
 	// PMM - added double shell
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM)) {
 		qglDisable(GL_TEXTURE_2D);
 		if (gl_shellstencil->value)
 			GL_Stencil(true);
@@ -256,10 +256,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 			qglEnableClientState(GL_VERTEX_ARRAY);
 			qglVertexPointer(3, GL_FLOAT, 16, s_lerped);	// padded for SIMD
 
-			if (currententity->
-			    flags & (RF_SHELL_RED | RF_SHELL_GREEN |
-				     RF_SHELL_BLUE | RF_SHELL_DOUBLE |
-				     RF_SHELL_HALF_DAM)) {
+			if (currententity->flags &
+			    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
+			     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
 				if (!(currententity->flags & RF_TRANS_ADDITIVE))
 					qglColor4f(shadelight[0], shadelight[1],
 						   shadelight[2], alpha);
@@ -272,8 +271,8 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 				//
 				for (i = 0; i < paliashdr->num_xyz; i++) {
 					float l =
-					    shadedots[verts[i].
-						      lightnormalindex];
+					    shadedots[verts
+						      [i].lightnormalindex];
 
 					colorArray[i * 3 + 0] =
 					    l * shadelight[0];
@@ -300,10 +299,10 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 				}
 
 				// PMM - added double damage shell
-				if (currententity->
-				    flags & (RF_SHELL_RED | RF_SHELL_GREEN |
-					     RF_SHELL_BLUE | RF_SHELL_DOUBLE |
-					     RF_SHELL_HALF_DAM)) {
+				if (currententity->flags &
+				    (RF_SHELL_RED | RF_SHELL_GREEN |
+				     RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+				     RF_SHELL_HALF_DAM)) {
 					do {
 						index_xyz = order[2];
 						order += 3;
@@ -349,38 +348,30 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 					qglBegin(GL_TRIANGLE_STRIP);
 				}
 
-				if (currententity->
-				    flags & (RF_SHELL_RED | RF_SHELL_GREEN |
-					     RF_SHELL_BLUE)) {
+				if (currententity->flags &
+				    (RF_SHELL_RED | RF_SHELL_GREEN |
+				     RF_SHELL_BLUE)) {
 					do {
 						index_xyz = order[2];
 						order += 3;
 
 						if (!
-						    (currententity->
-						     flags & RF_TRANS_ADDITIVE))
-						{
+						    (currententity->flags &
+						     RF_TRANS_ADDITIVE)) {
 							float thisalpha = alpha;
 
-							if (currententity->
-							    renderfx &
-							    RF2_CAMERAMODEL
-							    && currententity->
-							    flags &
-							    RF_TRANSLUCENT) {
+							if (currententity->renderfx & RF2_CAMERAMODEL && currententity->flags & RF_TRANSLUCENT) {
 								vec3_t vert_len;
 
 								VectorSubtract
-								    (r_newrefdef.
-								     vieworg,
+								    (r_newrefdef.vieworg,
 								     s_lerped
 								     [index_xyz],
 								     vert_len);
 								thisalpha *=
 								    VectorLength
 								    (vert_len) /
-								    cl_3dcam_dist->
-								    value;
+								    cl_3dcam_dist->value;
 
 								if (thisalpha >
 								    alpha)
@@ -414,37 +405,29 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 						order += 3;
 
 						// normals and vertexes come from the frame list
-						l = shadedots[verts[index_xyz].
-							      lightnormalindex];
+						l = shadedots[verts
+							      [index_xyz].lightnormalindex];
 
 						VectorScale(shadelight, l,
 							    lightcolor);
 
 						if (!
-						    (currententity->
-						     flags & RF_TRANS_ADDITIVE))
-						{
+						    (currententity->flags &
+						     RF_TRANS_ADDITIVE)) {
 							float thisalpha = alpha;
 
-							if (currententity->
-							    renderfx &
-							    RF2_CAMERAMODEL
-							    && currententity->
-							    flags &
-							    RF_TRANSLUCENT) {
+							if (currententity->renderfx & RF2_CAMERAMODEL && currententity->flags & RF_TRANSLUCENT) {
 								vec3_t vert_len;
 
 								VectorSubtract
-								    (r_newrefdef.
-								     vieworg,
+								    (r_newrefdef.vieworg,
 								     s_lerped
 								     [index_xyz],
 								     vert_len);
 								thisalpha *=
 								    VectorLength
 								    (vert_len) /
-								    cl_3dcam_dist->
-								    value;
+								    cl_3dcam_dist->value;
 
 								if (thisalpha >
 								    alpha)
@@ -454,9 +437,10 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 							}
 
 							if (r_cellshading->value
-							    && !(currententity->
-								 flags &
-								 RF_TRANSLUCENT))
+							    &&
+							    !
+							    (currententity->flags
+							     & RF_TRANSLUCENT))
 							{
 								float highest =
 								    0;
@@ -515,9 +499,9 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp)
 				       r_cellshading_width->value);
 	}
 
-	if (currententity->
-	    flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE |
-		     RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM)) {
+	if (currententity->flags &
+	    (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE |
+	     RF_SHELL_HALF_DAM)) {
 		qglEnable(GL_TEXTURE_2D);
 		if (gl_shellstencil->value)
 			GL_Stencil(false);
@@ -925,9 +909,9 @@ void R_DrawAliasModel(entity_t * e)
 	// PMM - rewrote, reordered to handle new shells & mixing
 	// PMM - 3.20 code .. replaced with original way of doing it to keep mod authors happy
 	//
-	if (currententity->
-	    flags & (RF_SHELL_HALF_DAM | RF_SHELL_GREEN | RF_SHELL_RED |
-		     RF_SHELL_BLUE | RF_SHELL_DOUBLE)) {
+	if (currententity->flags &
+	    (RF_SHELL_HALF_DAM | RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE |
+	     RF_SHELL_DOUBLE)) {
 		VectorClear(shadelight);
 		if (currententity->flags & RF_SHELL_HALF_DAM) {
 			shadelight[0] = 0.56;
@@ -1086,11 +1070,10 @@ void R_DrawAliasModel(entity_t * e)
 // PGM  
 // =================
 
-	shadedots =
-	    r_avertexnormal_dots[((int)
-				  (currententity->angles[1] *
-				   (SHADEDOT_QUANT /
-				    360.0))) & (SHADEDOT_QUANT - 1)];
+	shadedots = r_avertexnormal_dots[((int)
+					  (currententity->angles[1] *
+					   (SHADEDOT_QUANT /
+					    360.0))) & (SHADEDOT_QUANT - 1)];
 
 	an = currententity->angles[1] / 180 * M_PI;
 	shadevector[0] = cos(-an);
@@ -1205,8 +1188,8 @@ void R_DrawAliasModel(entity_t * e)
 	if (!(r_newrefdef.rdflags & RDF_NOWORLDMODEL))	// no shadows
 		if (!(currententity->renderfx & RF2_NOSHADOW) &&
 		    ((currententity->renderfx & RF2_FORCE_SHADOW)
-		     || !(currententity->
-			  flags & (RF_TRANSLUCENT | RF_WEAPONMODEL)))
+		     || !(currententity->flags &
+			  (RF_TRANSLUCENT | RF_WEAPONMODEL)))
 		    ) {
 			switch ((int)(gl_shadows->value)) {
 			case 0:
@@ -1217,12 +1200,11 @@ void R_DrawAliasModel(entity_t * e)
 					      shadevector);
 			default:
 				{
-					if (currententity->
-					    flags & RF_TRANSLUCENT)
+					if (currententity->flags &
+					    RF_TRANSLUCENT)
 						qglColor4f(0, 0, 0,
 							   0.3 *
-							   currententity->
-							   alpha);
+							   currententity->alpha);
 					else
 						qglColor4f(0, 0, 0, 0.3);
 

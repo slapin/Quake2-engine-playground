@@ -138,9 +138,8 @@ qboolean SV_movestep(edict_t * ent, vec3_t move, qboolean relink)
 				if (ent->goalentity->client) {
 					if (dz > 40)
 						neworg[2] -= 8;
-					if (!
-					    ((ent->flags & FL_SWIM)
-					     && (ent->waterlevel < 2)))
+					if (!((ent->flags & FL_SWIM)
+					      && (ent->waterlevel < 2)))
 						if (dz < 30)
 							neworg[2] += 8;
 				} else {
@@ -222,7 +221,6 @@ qboolean SV_movestep(edict_t * ent, vec3_t move, qboolean relink)
 		if (trace.allsolid || trace.startsolid)
 			return false;
 	}
-
 	// don't go in to water
 	if (ent->waterlevel == 0) {
 		test[0] = trace.endpos[0];

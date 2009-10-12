@@ -130,8 +130,8 @@ void CL_ParseProjectiles(void)
 				if (cl_projectiles[j].num == pr.num) {
 					// already present, set up oldorigin for interpolation
 					if (!old)
-						VectorCopy(cl_projectiles[j].
-							   origin,
+						VectorCopy(cl_projectiles
+							   [j].origin,
 							   pr.oldorigin);
 					cl_projectiles[j] = pr;
 					break;
@@ -428,8 +428,8 @@ void CL_ParsePacketEntities(frame_t * oldframe, frame_t * newframe)
 				oldnum = 99999;
 			else {
 				oldstate =
-				    &cl_parse_entities[(oldframe->
-							parse_entities +
+				    &cl_parse_entities[(oldframe->parse_entities
+							+
 							oldindex) &
 						       (MAX_PARSE_ENTITIES -
 							1)];
@@ -449,8 +449,8 @@ void CL_ParsePacketEntities(frame_t * oldframe, frame_t * newframe)
 				oldnum = 99999;
 			else {
 				oldstate =
-				    &cl_parse_entities[(oldframe->
-							parse_entities +
+				    &cl_parse_entities[(oldframe->parse_entities
+							+
 							oldindex) &
 						       (MAX_PARSE_ENTITIES -
 							1)];
@@ -470,8 +470,8 @@ void CL_ParsePacketEntities(frame_t * oldframe, frame_t * newframe)
 				oldnum = 99999;
 			else {
 				oldstate =
-				    &cl_parse_entities[(oldframe->
-							parse_entities +
+				    &cl_parse_entities[(oldframe->parse_entities
+							+
 							oldindex) &
 						       (MAX_PARSE_ENTITIES -
 							1)];
@@ -944,36 +944,30 @@ void CL_AddPacketEntities(frame_t * frame)
 					    ((char *)ent.skin, "players/male",
 					     12)) {
 						ent.skin =
-						    re.
-						    RegisterSkin
+						    re.RegisterSkin
 						    ("players/male/disguise.pcx");
 						ent.model =
-						    re.
-						    RegisterModel
+						    re.RegisterModel
 						    ("players/male/tris.md2");
 					} else
 					    if (!strncmp
 						((char *)ent.skin,
 						 "players/female", 14)) {
 						ent.skin =
-						    re.
-						    RegisterSkin
+						    re.RegisterSkin
 						    ("players/female/disguise.pcx");
 						ent.model =
-						    re.
-						    RegisterModel
+						    re.RegisterModel
 						    ("players/female/tris.md2");
 					} else
 					    if (!strncmp
 						((char *)ent.skin,
 						 "players/cyborg", 14)) {
 						ent.skin =
-						    re.
-						    RegisterSkin
+						    re.RegisterSkin
 						    ("players/cyborg/disguise.pcx");
 						ent.model =
-						    re.
-						    RegisterModel
+						    re.RegisterModel
 						    ("players/cyborg/tris.md2");
 					}
 				}
@@ -1134,8 +1128,9 @@ void CL_AddPacketEntities(frame_t * frame)
 						ent.model = ci->weaponmodel[0];
 					if (!ent.model)
 						ent.model =
-						    cl.baseclientinfo.
-						    weaponmodel[0];
+						    cl.
+						    baseclientinfo.weaponmodel
+						    [0];
 				}
 			} else
 				ent.model = cl.model_draw[s1->modelindex2];

@@ -646,14 +646,12 @@ void P_WorldEffects(void)
 			      level.framenum) % 25) == 0) {
 				if (!current_client->breather_sound)
 					gi.sound(current_player, CHAN_AUTO,
-						 gi.
-						 soundindex
+						 gi.soundindex
 						 ("player/u_breath1.wav"), 1,
 						 ATTN_NORM, 0);
 				else
 					gi.sound(current_player, CHAN_AUTO,
-						 gi.
-						 soundindex
+						 gi.soundindex
 						 ("player/u_breath2.wav"), 1,
 						 ATTN_NORM, 0);
 				current_client->breather_sound ^= 1;
@@ -679,8 +677,7 @@ void P_WorldEffects(void)
 				if (current_player->health <=
 				    current_player->dmg)
 					gi.sound(current_player, CHAN_VOICE,
-						 gi.
-						 soundindex
+						 gi.soundindex
 						 ("player/drown1.wav"), 1,
 						 ATTN_NORM, 0);
 				else if (rand() & 1)
@@ -717,14 +714,14 @@ void P_WorldEffects(void)
 			    level.framenum) {
 				if (rand() & 1)
 					gi.sound(current_player, CHAN_VOICE,
-						 gi.
-						 soundindex("player/burn1.wav"),
-						 1, ATTN_NORM, 0);
+						 gi.soundindex
+						 ("player/burn1.wav"), 1,
+						 ATTN_NORM, 0);
 				else
 					gi.sound(current_player, CHAN_VOICE,
-						 gi.
-						 soundindex("player/burn2.wav"),
-						 1, ATTN_NORM, 0);
+						 gi.soundindex
+						 ("player/burn2.wav"), 1,
+						 ATTN_NORM, 0);
 				current_player->pain_debounce_time =
 				    level.time + 1;
 			}

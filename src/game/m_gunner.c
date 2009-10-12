@@ -529,9 +529,11 @@ mframe_t gunner_frames_attack_chain[] = {
 	,
 	{ai_charge, 0, NULL}
 };
+
 mmove_t gunner_move_attack_chain =
     { FRAME_attak209, FRAME_attak215, gunner_frames_attack_chain,
-gunner_fire_chain };
+	gunner_fire_chain
+};
 
 mframe_t gunner_frames_fire_chain[] = {
 	{ai_charge, 0, GunnerFire}
@@ -550,9 +552,11 @@ mframe_t gunner_frames_fire_chain[] = {
 	,
 	{ai_charge, 0, GunnerFire}
 };
+
 mmove_t gunner_move_fire_chain =
     { FRAME_attak216, FRAME_attak223, gunner_frames_fire_chain,
-gunner_refire_chain };
+	gunner_refire_chain
+};
 
 mframe_t gunner_frames_endfire_chain[] = {
 	{ai_charge, 0, NULL}
@@ -615,9 +619,11 @@ mframe_t gunner_frames_attack_grenade[] = {
 	,
 	{ai_charge, 0, NULL}
 };
+
 mmove_t gunner_move_attack_grenade =
     { FRAME_attak101, FRAME_attak121, gunner_frames_attack_grenade,
-gunner_run };
+	gunner_run
+};
 
 void gunner_attack(edict_t * self)
 {

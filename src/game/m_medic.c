@@ -548,9 +548,11 @@ mframe_t medic_frames_attackHyperBlaster[] = {
 	,
 	{ai_charge, 0, medic_fire_blaster}
 };
+
 mmove_t medic_move_attackHyperBlaster =
     { FRAME_attack15, FRAME_attack30, medic_frames_attackHyperBlaster,
-medic_run };
+	medic_run
+};
 
 void medic_continue(edict_t * self)
 {

@@ -97,9 +97,11 @@ mframe_t flipper_frames_run_start[] = {
 	{ai_run, 8, NULL},
 	{ai_run, 8, NULL}
 };
+
 mmove_t flipper_move_run_start =
     { FRAME_flpver01, FRAME_flpver06, flipper_frames_run_start,
-flipper_run_loop };
+	flipper_run_loop
+};
 
 void flipper_run(edict_t * self)
 {

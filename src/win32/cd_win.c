@@ -461,8 +461,8 @@ void CDAudio_RandomPlay(void)
 					// go to the ambient track
 					if (++loopcounter >=
 					    cd_loopcount->value)
-						CDAudio_Play2(cd_looptrack->
-							      value, true);
+						CDAudio_Play2
+						    (cd_looptrack->value, true);
 					else
 						CDAudio_Play2(playTrack, true);
 				}

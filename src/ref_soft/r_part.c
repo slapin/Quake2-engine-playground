@@ -193,7 +193,7 @@ void R_DrawParticle(void)
 	    //      blendparticle = BlendParticle66;
 	    //else 
 	    //      blendparticle = BlendParticle100;
-	 __asm cmp partparms.level, PARTICLE_66
+	__asm cmp partparms.level, PARTICLE_66
 	    __asm je blendfunc_66
 	    __asm jl blendfunc_33
 	    __asm lea ebx, BlendParticle100
@@ -203,7 +203,7 @@ void R_DrawParticle(void)
 	    __asm jmp done_selecting_blend_func
 	    blendfunc_66:
 	    __asm lea ebx, BlendParticle66
-	    done_selecting_blend_func: __asm mov blendfunc, ebx
+	    done_selecting_blend_func:__asm mov blendfunc, ebx
 	    // prefetch the next particle
 	 __asm mov ebp, s_prefetch_address __asm mov ebp,[ebp]
 	    // finish the above divide
@@ -526,8 +526,8 @@ void R_DrawParticles(void)
 #if id386 && !defined __linux__ && !defined __FreeBSD__
 	__asm fldcw word ptr[fpu_sp24_cw]
 #endif
-	 for (p = r_newrefdef.particles, i = 0; i < r_newrefdef.num_particles;
-	      i++, p++) {
+	for (p = r_newrefdef.particles, i = 0; i < r_newrefdef.num_particles;
+	     i++, p++) {
 
 		if (p->alpha > 0.66)
 			partparms.level = PARTICLE_OPAQUE;

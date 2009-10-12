@@ -167,9 +167,11 @@ mframe_t gladiator_frames_attack_melee[] = {
 	,
 	{ai_charge, 0, NULL}
 };
+
 mmove_t gladiator_move_attack_melee =
     { FRAME_melee1, FRAME_melee17, gladiator_frames_attack_melee,
-gladiator_run };
+	gladiator_run
+};
 
 void gladiator_melee(edict_t * self)
 {
@@ -206,9 +208,11 @@ mframe_t gladiator_frames_attack_gun[] = {
 	{ai_charge, 0, NULL},
 	{ai_charge, 0, NULL}
 };
+
 mmove_t gladiator_move_attack_gun =
     { FRAME_attack1, FRAME_attack9, gladiator_frames_attack_gun,
-gladiator_run };
+	gladiator_run
+};
 
 void gladiator_attack(edict_t * self)
 {

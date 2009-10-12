@@ -701,12 +701,12 @@ void R_PolygonDrawSpans(espan_t * pspan, int iswater)
 
 				s_spanletvars.sstep =
 				    (snext -
-				     s_spanletvars.
-				     s) >> AFFINE_SPANLET_SIZE_BITS;
+				     s_spanletvars.s) >>
+				    AFFINE_SPANLET_SIZE_BITS;
 				s_spanletvars.tstep =
 				    (tnext -
-				     s_spanletvars.
-				     t) >> AFFINE_SPANLET_SIZE_BITS;
+				     s_spanletvars.t) >>
+				    AFFINE_SPANLET_SIZE_BITS;
 			} else {
 				// calculate s/z, t/z, zi->fixed s and t at last pixel in span (so
 				// can't step off polygon), clamp, calculate s and t steps across
@@ -1223,13 +1223,13 @@ void R_DrawAlphaSurfaces(void)
 		// PGM - pass down all the texinfo flags, not just SURF_WARP.
 		if (s->texinfo->flags & SURF_TRANS66)
 			R_ClipAndDrawPoly(0.60f,
-					  (s->texinfo->
-					   flags & (SURF_WARP | SURF_FLOWING)),
+					  (s->texinfo->flags & (SURF_WARP |
+								SURF_FLOWING)),
 					  true);
 		else
 			R_ClipAndDrawPoly(0.30f,
-					  (s->texinfo->
-					   flags & (SURF_WARP | SURF_FLOWING)),
+					  (s->texinfo->flags & (SURF_WARP |
+								SURF_FLOWING)),
 					  true);
 //PGM
 //=======

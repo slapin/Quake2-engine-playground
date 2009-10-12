@@ -538,7 +538,6 @@ void NET_OpenIP(void)
 			Com_Error(ERR_FATAL,
 				  "Couldn't allocate dedicated server IP port");
 	}
-
 	// dedicated servers don't need client ports
 	if (dedicated)
 		return;

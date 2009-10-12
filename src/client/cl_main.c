@@ -1099,8 +1099,8 @@ void CL_RequestNextDownload(void)
 				}
 				if (precache_model_skin == 0) {
 					if (!CL_CheckOrDownloadFile
-					    (cl.
-					     configstrings[precache_check])) {
+					    (cl.configstrings[precache_check]))
+					{
 						precache_model_skin = 1;
 						return;	// started a download
 					}
@@ -1109,8 +1109,7 @@ void CL_RequestNextDownload(void)
 				// checking for skins in the model
 				if (!precache_model) {
 
-					FS_LoadFile(cl.
-						    configstrings
+					FS_LoadFile(cl.configstrings
 						    [precache_check],
 						    (void **)&precache_model);
 					if (!precache_model) {
@@ -1217,8 +1216,8 @@ void CL_RequestNextDownload(void)
 				}
 
 				if ((p =
-				     strchr(cl.
-					    configstrings[CS_PLAYERSKINS + i],
+				     strchr(cl.configstrings
+					    [CS_PLAYERSKINS + i],
 					    '\\')) != NULL)
 					p++;
 				else

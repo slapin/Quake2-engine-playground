@@ -110,8 +110,8 @@ void ai_stand(edict_t * self, float dist)
 				       v);
 			self->ideal_yaw = vectoyaw(v);
 			if (self->s.angles[YAW] != self->ideal_yaw
-			    && self->monsterinfo.
-			    aiflags & AI_TEMP_STAND_GROUND) {
+			    && self->
+			    monsterinfo.aiflags & AI_TEMP_STAND_GROUND) {
 				self->monsterinfo.aiflags &=
 				    ~(AI_STAND_GROUND | AI_TEMP_STAND_GROUND);
 				self->monsterinfo.run(self);
@@ -724,8 +724,8 @@ qboolean ai_checkattack(edict_t * self, float dist)
 						self->goalentity = NULL;
 				}
 				self->monsterinfo.aiflags &= ~AI_SOUND_TARGET;
-				if (self->monsterinfo.
-				    aiflags & AI_TEMP_STAND_GROUND)
+				if (self->
+				    monsterinfo.aiflags & AI_TEMP_STAND_GROUND)
 					self->monsterinfo.aiflags &=
 					    ~(AI_STAND_GROUND |
 					      AI_TEMP_STAND_GROUND);

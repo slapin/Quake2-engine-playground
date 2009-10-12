@@ -559,10 +559,10 @@ void player_die(edict_t * self, edict_t * inflictor, edict_t * attacker,
 					break;
 				}
 			gi.sound(self, CHAN_VOICE,
-				 gi.
-				 soundindex(va
-					    ("*death%i.wav", (rand() % 4) + 1)),
-				 1, ATTN_NORM, 0);
+				 gi.soundindex(va
+					       ("*death%i.wav",
+						(rand() % 4) + 1)), 1,
+				 ATTN_NORM, 0);
 		}
 	}
 

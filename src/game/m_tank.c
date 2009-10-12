@@ -467,9 +467,11 @@ mframe_t tank_frames_attack_blast[] = {
 	,
 	{ai_charge, 0, TankBlaster}	// 16
 };
+
 mmove_t tank_move_attack_blast =
     { FRAME_attak101, FRAME_attak116, tank_frames_attack_blast,
-tank_reattack_blaster };
+	tank_reattack_blaster
+};
 
 mframe_t tank_frames_reattack_blast[] = {
 	{ai_charge, 0, NULL}
@@ -484,9 +486,11 @@ mframe_t tank_frames_reattack_blast[] = {
 	,
 	{ai_charge, 0, TankBlaster}	// 16
 };
+
 mmove_t tank_move_reattack_blast =
     { FRAME_attak111, FRAME_attak116, tank_frames_reattack_blast,
-tank_reattack_blaster };
+	tank_reattack_blaster
+};
 
 mframe_t tank_frames_attack_post_blast[] = {
 	{ai_move, 0, NULL}
@@ -563,9 +567,11 @@ mframe_t tank_frames_attack_strike[] = {
 	{ai_move, -3, NULL},
 	{ai_move, -2, tank_footstep}
 };
+
 mmove_t tank_move_attack_strike =
     { FRAME_attak201, FRAME_attak238, tank_frames_attack_strike,
-tank_poststrike };
+	tank_poststrike
+};
 
 mframe_t tank_frames_attack_pre_rocket[] = {
 	{ai_charge, 0, NULL},
@@ -592,9 +598,11 @@ mframe_t tank_frames_attack_pre_rocket[] = {
 
 	{ai_charge, -3, NULL}
 };
+
 mmove_t tank_move_attack_pre_rocket =
     { FRAME_attak301, FRAME_attak321, tank_frames_attack_pre_rocket,
-tank_doattack_rocket };
+	tank_doattack_rocket
+};
 
 mframe_t tank_frames_attack_fire_rocket[] = {
 	{ai_charge, -3, NULL},	// Loop Start   22 
@@ -607,9 +615,11 @@ mframe_t tank_frames_attack_fire_rocket[] = {
 	{ai_charge, 0, NULL},
 	{ai_charge, -1, TankRocket}	// 30   Loop End
 };
+
 mmove_t tank_move_attack_fire_rocket =
     { FRAME_attak322, FRAME_attak330, tank_frames_attack_fire_rocket,
-tank_refire_rocket };
+	tank_refire_rocket
+};
 
 mframe_t tank_frames_attack_post_rocket[] = {
 	{ai_charge, 0, NULL},	// 31
@@ -638,9 +648,11 @@ mframe_t tank_frames_attack_post_rocket[] = {
 	{ai_charge, 0, NULL},
 	{ai_charge, 0, NULL}
 };
+
 mmove_t tank_move_attack_post_rocket =
     { FRAME_attak331, FRAME_attak353, tank_frames_attack_post_rocket,
-tank_run };
+	tank_run
+};
 
 mframe_t tank_frames_attack_chain[] = {
 	{ai_charge, 0, NULL},

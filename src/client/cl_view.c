@@ -342,9 +342,8 @@ void CL_PrepRefresh(void)
 			    re.RegisterModel(cl.configstrings[CS_MODELS + i]);
 			if (name[0] == '*')
 				cl.model_clip[i] =
-				    CM_InlineModel(cl.
-						   configstrings[CS_MODELS +
-								 i]);
+				    CM_InlineModel(cl.configstrings[CS_MODELS +
+								    i]);
 			else
 				cl.model_clip[i] = NULL;
 		}

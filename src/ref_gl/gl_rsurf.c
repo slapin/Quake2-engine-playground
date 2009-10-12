@@ -417,16 +417,15 @@ void R_BlendLightmaps(void)
 				     drawsurf = drawsurf->lightmapchain) {
 					if (drawsurf->polys)
 						DrawGLPolyChain(drawsurf->polys,
-								(drawsurf->
-								 light_s -
-								 drawsurf->
-								 dlight_s) *
-								(1.0 / 128.0),
-								(drawsurf->
-								 light_t -
-								 drawsurf->
-								 dlight_t) *
-								(1.0 / 128.0));
+								(drawsurf->light_s
+								 -
+								 drawsurf->dlight_s)
+								* (1.0 / 128.0),
+								(drawsurf->light_t
+								 -
+								 drawsurf->dlight_t)
+								* (1.0 /
+								   128.0));
 				}
 
 				newdrawsurf = drawsurf;
@@ -535,9 +534,8 @@ void R_RenderBrushPoly(msurface_t * fa)
  dynamic:
 		if (gl_dynamic->value) {
 			if (!
-			    (fa->texinfo->
-			     flags & (SURF_SKY | SURF_TRANS33 | SURF_TRANS66 |
-				      SURF_WARP))) {
+			    (fa->texinfo->flags & (SURF_SKY | SURF_TRANS33 |
+						   SURF_TRANS66 | SURF_WARP))) {
 				is_dynamic = true;
 			}
 		}
@@ -713,9 +711,9 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
  dynamic:
 		if (gl_dynamic->value) {
 			if (!
-			    (surf->texinfo->
-			     flags & (SURF_SKY | SURF_TRANS33 | SURF_TRANS66 |
-				      SURF_WARP))) {
+			    (surf->texinfo->flags & (SURF_SKY | SURF_TRANS33 |
+						     SURF_TRANS66 | SURF_WARP)))
+			{
 				is_dynamic = true;
 			}
 		}
@@ -1032,9 +1030,8 @@ void R_RecursiveWorldNode(mnode_t * node)
 		// check for door connected areas
 		if (r_newrefdef.areabits) {
 			if (!
-			    (r_newrefdef.
-			     areabits[pleaf->
-				      area >> 3] & (1 << (pleaf->area & 7))))
+			    (r_newrefdef.areabits[pleaf->area >> 3] &
+			     (1 << (pleaf->area & 7))))
 				return;	// not visible
 		}
 

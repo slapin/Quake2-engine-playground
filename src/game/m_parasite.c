@@ -85,9 +85,11 @@ mframe_t parasite_frames_start_fidget[] = {
 	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL}
 };
+
 mmove_t parasite_move_start_fidget =
     { FRAME_stand18, FRAME_stand21, parasite_frames_start_fidget,
-parasite_do_fidget };
+	parasite_do_fidget
+};
 
 mframe_t parasite_frames_fidget[] = {
 	{ai_stand, 0, parasite_scratch},
@@ -110,9 +112,11 @@ mframe_t parasite_frames_end_fidget[] = {
 	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL}
 };
+
 mmove_t parasite_move_end_fidget =
     { FRAME_stand28, FRAME_stand35, parasite_frames_end_fidget,
-parasite_stand };
+	parasite_stand
+};
 
 void parasite_end_fidget(edict_t * self)
 {

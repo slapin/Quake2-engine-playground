@@ -228,14 +228,12 @@ void Netchan_Transmit(netchan_t * chan, int length, byte * data)
 		chan->message.cursize = 0;
 		chan->reliable_sequence ^= 1;
 	}
-
 // write the packet header
 	SZ_Init(&send, send_buf, sizeof(send_buf));
 
 	w1 = (chan->outgoing_sequence & ~(1 << 31)) | (send_reliable << 31);
-	w2 = (chan->incoming_sequence & ~(1 << 31)) | (chan->
-						       incoming_reliable_sequence
-						       << 31);
+	w2 = (chan->incoming_sequence & ~(1 << 31)) |
+	    (chan->incoming_reliable_sequence << 31);
 
 	chan->outgoing_sequence++;
 	chan->last_sent = curtime;

@@ -238,9 +238,11 @@ mframe_t supertank_frames_turn_right[] = {
 	,
 	{ai_move, 0, NULL}
 };
+
 mmove_t supertank_move_turn_right =
     { FRAME_right_1, FRAME_right_18, supertank_frames_turn_right,
-supertank_run };
+	supertank_run
+};
 
 mframe_t supertank_frames_turn_left[] = {
 	{ai_move, 0, TreadSound}
@@ -481,9 +483,11 @@ mframe_t supertank_frames_attack3[] = {
 	,
 	{ai_move, 0, NULL}
 };
+
 mmove_t supertank_move_attack3 =
     { FRAME_attak3_1, FRAME_attak3_27, supertank_frames_attack3,
-supertank_run };
+	supertank_run
+};
 
 mframe_t supertank_frames_attack2[] = {
 	{ai_charge, 0, NULL}
@@ -540,9 +544,11 @@ mframe_t supertank_frames_attack2[] = {
 	,
 	{ai_move, 0, NULL}
 };
+
 mmove_t supertank_move_attack2 =
     { FRAME_attak2_1, FRAME_attak2_27, supertank_frames_attack2,
-supertank_run };
+	supertank_run
+};
 
 mframe_t supertank_frames_attack1[] = {
 	{ai_charge, 0, supertankMachineGun}
@@ -559,9 +565,11 @@ mframe_t supertank_frames_attack1[] = {
 	,
 
 };
+
 mmove_t supertank_move_attack1 =
     { FRAME_attak1_1, FRAME_attak1_6, supertank_frames_attack1,
-supertank_reattack1 };
+	supertank_reattack1
+};
 
 mframe_t supertank_frames_end_attack1[] = {
 	{ai_move, 0, NULL}
@@ -592,9 +600,11 @@ mframe_t supertank_frames_end_attack1[] = {
 	,
 	{ai_move, 0, NULL}
 };
+
 mmove_t supertank_move_end_attack1 =
     { FRAME_attak1_7, FRAME_attak1_20, supertank_frames_end_attack1,
-supertank_run };
+	supertank_run
+};
 
 void supertank_reattack1(edict_t * self)
 {

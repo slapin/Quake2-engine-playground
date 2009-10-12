@@ -286,12 +286,11 @@ void R_RecursiveClipBPoly(bedge_t * pedges, mnode_t * pnode, msurface_t * psurf)
 				if (pn->contents != CONTENTS_NODE) {
 					if (pn->contents != CONTENTS_SOLID) {
 						if (r_newrefdef.areabits) {
-							area =
-							    ((mleaf_t *) pn)->
-							    area;
+							area = ((mleaf_t *)
+								pn)->area;
 							if (!
-							    (r_newrefdef.
-							     areabits[area >> 3]
+							    (r_newrefdef.areabits
+							     [area >> 3]
 							     & (1 <<
 								(area & 7))))
 								continue;	// not visible
@@ -495,9 +494,8 @@ void R_RecursiveWorldNode(mnode_t * node, int clipflags)
 		// check for door connected areas
 		if (r_newrefdef.areabits) {
 			if (!
-			    (r_newrefdef.
-			     areabits[pleaf->
-				      area >> 3] & (1 << (pleaf->area & 7))))
+			    (r_newrefdef.areabits[pleaf->area >> 3] &
+			     (1 << (pleaf->area & 7))))
 				return;	// not visible
 		}
 

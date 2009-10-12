@@ -583,19 +583,15 @@ void SpawnEntities(char *mapname, char *entities, char *spawnpoint)
 			} else {
 				if (	/* ((coop->value) && (ent->spawnflags & SPAWNFLAG_NOT_COOP)) || */
 					   ((skill->value == 0)
-					    && (ent->
-						spawnflags &
+					    && (ent->spawnflags &
 						SPAWNFLAG_NOT_EASY))
 					   || ((skill->value == 1)
-					       && (ent->
-						   spawnflags &
+					       && (ent->spawnflags &
 						   SPAWNFLAG_NOT_MEDIUM))
-					   ||
-					   (((skill->value == 2)
-					     || (skill->value == 3))
-					    && (ent->
-						spawnflags &
-						SPAWNFLAG_NOT_HARD))
+					   || (((skill->value == 2)
+						|| (skill->value == 3))
+					       && (ent->spawnflags &
+						   SPAWNFLAG_NOT_HARD))
 				    ) {
 					G_FreeEdict(ent);
 					inhibit++;

@@ -441,9 +441,11 @@ mframe_t flyer_frames_start_melee[] = {
 	{ai_charge, 0, NULL},
 	{ai_charge, 0, NULL}
 };
+
 mmove_t flyer_move_start_melee =
     { FRAME_attak101, FRAME_attak106, flyer_frames_start_melee,
-flyer_loop_melee };
+	flyer_loop_melee
+};
 
 mframe_t flyer_frames_end_melee[] = {
 	{ai_charge, 0, NULL},
@@ -468,9 +470,11 @@ mframe_t flyer_frames_loop_melee[] = {
 	{ai_charge, 0, NULL}	// Loop Ends
 
 };
+
 mmove_t flyer_move_loop_melee =
     { FRAME_attak107, FRAME_attak118, flyer_frames_loop_melee,
-flyer_check_melee };
+	flyer_check_melee
+};
 
 void flyer_loop_melee(edict_t * self)
 {

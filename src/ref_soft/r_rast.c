@@ -561,10 +561,10 @@ void R_RenderFace(msurface_t * fa, int clipflags)
 
 			// if the edge is cached, we can just reuse the edge
 			if (!insubmodel) {
-				if (r_pedge->
-				    cachededgeoffset & FULLY_CLIPPED_CACHED) {
-					if ((r_pedge->
-					     cachededgeoffset & FRAMECOUNT_MASK)
+				if (r_pedge->cachededgeoffset &
+				    FULLY_CLIPPED_CACHED) {
+					if ((r_pedge->cachededgeoffset &
+					     FRAMECOUNT_MASK)
 					    == r_framecount) {
 						r_lastvertvalid = false;
 						continue;
@@ -576,9 +576,8 @@ void R_RenderFace(msurface_t * fa, int clipflags)
 					    &&
 					    (((edge_t *) ((unsigned long)r_edges
 							  +
-							  r_pedge->
-							  cachededgeoffset))->
-					     owner == r_pedge)) {
+							  r_pedge->cachededgeoffset))->owner
+					     == r_pedge)) {
 						R_EmitCachedEdge();
 						r_lastvertvalid = false;
 						continue;
@@ -602,10 +601,10 @@ void R_RenderFace(msurface_t * fa, int clipflags)
 			r_pedge = &pedges[lindex];
 			// if the edge is cached, we can just reuse the edge
 			if (!insubmodel) {
-				if (r_pedge->
-				    cachededgeoffset & FULLY_CLIPPED_CACHED) {
-					if ((r_pedge->
-					     cachededgeoffset & FRAMECOUNT_MASK)
+				if (r_pedge->cachededgeoffset &
+				    FULLY_CLIPPED_CACHED) {
+					if ((r_pedge->cachededgeoffset &
+					     FRAMECOUNT_MASK)
 					    == r_framecount) {
 						r_lastvertvalid = false;
 						continue;
@@ -619,9 +618,8 @@ void R_RenderFace(msurface_t * fa, int clipflags)
 					    &&
 					    (((edge_t *) ((unsigned long)r_edges
 							  +
-							  r_pedge->
-							  cachededgeoffset))->
-					     owner == r_pedge)) {
+							  r_pedge->cachededgeoffset))->owner
+					     == r_pedge)) {
 						R_EmitCachedEdge();
 						r_lastvertvalid = false;
 						continue;

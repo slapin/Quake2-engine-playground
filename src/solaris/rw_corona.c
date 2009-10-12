@@ -763,7 +763,6 @@ int SWimp_Init(void *hInstance, void *wndProc)
 			Sys_Error("VID: Could not open local display\n");
 		}
 	}
-
 	// catch signals so i can turn on auto-repeat
 
 	{

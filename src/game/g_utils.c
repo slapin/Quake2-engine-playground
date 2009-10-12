@@ -187,7 +187,6 @@ void G_UseTargets(edict_t * ent, edict_t * activator)
 		t->killtarget = ent->killtarget;
 		return;
 	}
-
 //
 // print the message
 //

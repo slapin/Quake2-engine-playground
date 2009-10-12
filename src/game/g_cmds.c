@@ -787,8 +787,7 @@ void Cmd_Say_f(edict_t * ent, qboolean team, qboolean arg0)
 			i = (sizeof(cl->flood_when) /
 			     sizeof(cl->flood_when[0])) + i;
 		if (cl->flood_when[i]
-		    && level.time - cl->flood_when[i] <
-		    flood_persecond->value) {
+		    && level.time - cl->flood_when[i] < flood_persecond->value) {
 			cl->flood_locktill =
 			    level.time + flood_waitdelay->value;
 			gi.cprintf(ent, PRINT_CHAT,

@@ -426,15 +426,16 @@ qboolean Pickup_Key(edict_t * ent, edict_t * other)
 {
 	if (coop->value) {
 		if (strcmp(ent->classname, "key_power_cube") == 0) {
-			if (other->client->pers.
-			    power_cubes & ((ent->spawnflags & 0x0000ff00) >> 8))
+			if (other->client->
+			    pers.power_cubes & ((ent->spawnflags & 0x0000ff00)
+						>> 8))
 				return false;
 			other->client->pers.inventory[ITEM_INDEX(ent->item)]++;
 			other->client->pers.power_cubes |=
 			    ((ent->spawnflags & 0x0000ff00) >> 8);
 		} else {
-			if (other->client->pers.
-			    inventory[ITEM_INDEX(ent->item)])
+			if (other->client->
+			    pers.inventory[ITEM_INDEX(ent->item)])
 				return false;
 			other->client->pers.inventory[ITEM_INDEX(ent->item)] =
 			    1;
@@ -1374,8 +1375,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "weapons/machgf1b.wav weapons/machgf2b.wav weapons/machgf3b.wav weapons/machgf4b.wav weapons/machgf5b.wav"
-	 }
+	 "weapons/machgf1b.wav weapons/machgf2b.wav weapons/machgf3b.wav weapons/machgf4b.wav weapons/machgf5b.wav"}
 	,
 
 /*QUAKED weapon_chaingun (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -1399,8 +1399,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "weapons/chngnu1a.wav weapons/chngnl1a.wav weapons/machgf3b.wav` weapons/chngnd1a.wav"
-	 }
+	 "weapons/chngnu1a.wav weapons/chngnl1a.wav weapons/machgf3b.wav` weapons/chngnd1a.wav"}
 	,
 
 /*QUAKED ammo_grenades (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -1424,8 +1423,7 @@ always owned, never in the world
 	 NULL,
 	 AMMO_GRENADES,
 /* precache */
-	 "weapons/hgrent1a.wav weapons/hgrena1b.wav weapons/hgrenc1b.wav weapons/hgrenb1a.wav weapons/hgrenb2a.wav "
-	 }
+	 "weapons/hgrent1a.wav weapons/hgrena1b.wav weapons/hgrenc1b.wav weapons/hgrenb1a.wav weapons/hgrenb2a.wav "}
 	,
 
 /*QUAKED weapon_grenadelauncher (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -1449,8 +1447,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "models/objects/grenade/tris.md2 weapons/grenlf1a.wav weapons/grenlr1b.wav weapons/grenlb1b.wav"
-	 }
+	 "models/objects/grenade/tris.md2 weapons/grenlf1a.wav weapons/grenlr1b.wav weapons/grenlb1b.wav"}
 	,
 
 /*QUAKED weapon_rocketlauncher (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -1474,8 +1471,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "models/objects/rocket/tris.md2 weapons/rockfly.wav weapons/rocklf1a.wav weapons/rocklr1b.wav models/objects/debris2/tris.md2"
-	 }
+	 "models/objects/rocket/tris.md2 weapons/rockfly.wav weapons/rocklf1a.wav weapons/rocklr1b.wav models/objects/debris2/tris.md2"}
 	,
 
 /*QUAKED weapon_hyperblaster (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -1499,8 +1495,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "weapons/hyprbu1a.wav weapons/hyprbl1a.wav weapons/hyprbf1a.wav weapons/hyprbd1a.wav misc/lasfly.wav"
-	 }
+	 "weapons/hyprbu1a.wav weapons/hyprbl1a.wav weapons/hyprbf1a.wav weapons/hyprbd1a.wav misc/lasfly.wav"}
 	,
 
 /*QUAKED weapon_railgun (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -1548,8 +1543,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "sprites/s_bfg1.sp2 sprites/s_bfg2.sp2 sprites/s_bfg3.sp2 weapons/bfg__f1y.wav weapons/bfg__l1a.wav weapons/bfg__x1b.wav weapons/bfg_hum.wav"
-	 }
+	 "sprites/s_bfg1.sp2 sprites/s_bfg2.sp2 sprites/s_bfg3.sp2 weapons/bfg__f1y.wav weapons/bfg__l1a.wav weapons/bfg__x1b.wav weapons/bfg_hum.wav"}
 	,
 
 	//
@@ -1724,8 +1718,7 @@ always owned, never in the world
 	 NULL,
 	 0,
 /* precache */
-	 "items/protect.wav items/protect2.wav items/protect4.wav"
-	 }
+	 "items/protect.wav items/protect2.wav items/protect4.wav"}
 	,
 
 /*QUAKED item_silencer (.3 .3 1) (-16 -16 -16) (16 16 16)
@@ -2145,8 +2138,7 @@ tank commander's head
 	 NULL,
 	 0,
 /* precache */
-	 "items/s_health.wav items/n_health.wav items/l_health.wav items/m_health.wav"
-	 }
+	 "items/s_health.wav items/n_health.wav items/l_health.wav items/m_health.wav"}
 	,
 
 	// end of list marker

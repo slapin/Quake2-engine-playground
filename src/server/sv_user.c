@@ -598,14 +598,12 @@ void SV_ExecuteClientMessage(client_t * cl)
 			if (lastframe != cl->lastframe) {
 				cl->lastframe = lastframe;
 				if (cl->lastframe > 0) {
-					cl->frame_latency[cl->
-							  lastframe &
+					cl->frame_latency[cl->lastframe &
 							  (LATENCY_COUNTS -
 							   1)] =
 					    svs.realtime -
-					    cl->frames[cl->
-						       lastframe & UPDATE_MASK].
-					    senttime;
+					    cl->frames[cl->lastframe &
+						       UPDATE_MASK].senttime;
 				}
 			}
 
@@ -624,8 +622,8 @@ void SV_ExecuteClientMessage(client_t * cl)
 						     checksumIndex + 1,
 						     net_message.readcount -
 						     checksumIndex - 1,
-						     cl->netchan.
-						     incoming_sequence);
+						     cl->
+						     netchan.incoming_sequence);
 
 			if (calculatedChecksum != checksum) {
 				Com_DPrintf

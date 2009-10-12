@@ -292,14 +292,14 @@ void M_WorldEffects(edict_t * ent)
 			if (ent->watertype & CONTENTS_LAVA)
 				if (random() <= 0.5)
 					gi.sound(ent, CHAN_BODY,
-						 gi.
-						 soundindex("player/lava1.wav"),
-						 1, ATTN_NORM, 0);
+						 gi.soundindex
+						 ("player/lava1.wav"), 1,
+						 ATTN_NORM, 0);
 				else
 					gi.sound(ent, CHAN_BODY,
-						 gi.
-						 soundindex("player/lava2.wav"),
-						 1, ATTN_NORM, 0);
+						 gi.soundindex
+						 ("player/lava2.wav"), 1,
+						 ATTN_NORM, 0);
 			else if (ent->watertype & CONTENTS_SLIME)
 				gi.sound(ent, CHAN_BODY,
 					 gi.soundindex("player/watr_in.wav"), 1,

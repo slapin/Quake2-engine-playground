@@ -313,8 +313,7 @@ qboolean Cbuf_AddLateCommands(void)
 		if (text[i] == '+') {
 			i++;
 
-			for (j = i;
-			     (text[j] != '+') && (text[j] != '-')
+			for (j = i; (text[j] != '+') && (text[j] != '-')
 			     && (text[j] != 0); j++) ;
 
 			c = text[j];
