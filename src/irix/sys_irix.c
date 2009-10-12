@@ -45,17 +45,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *nostdout;
 
-unsigned	sys_frame_time;
+unsigned sys_frame_time;
 
 uid_t saved_euid;
 qboolean stdin_active = true;
-char display_name[ 1024 ];
+char display_name[1024];
 
 // =======================================================================
 // General routines
 // =======================================================================
 
-void Sys_ConsoleOutput (char *string)
+void Sys_ConsoleOutput(char *string)
 {
 	if (nostdout && nostdout->value)
 		return;
@@ -63,21 +63,21 @@ void Sys_ConsoleOutput (char *string)
 	fputs(string, stdout);
 }
 
-void Sys_Printf (char *fmt, ...)
+void Sys_Printf(char *fmt, ...)
 {
-	va_list		argptr;
-	char		text[1024];
-	unsigned char		*p;
+	va_list argptr;
+	char text[1024];
+	unsigned char *p;
 
-	va_start (argptr,fmt);
-	vsnprintf (text,1024,fmt,argptr);
-	va_end (argptr);
+	va_start(argptr, fmt);
+	vsnprintf(text, 1024, fmt, argptr);
+	va_end(argptr);
 
 	if (strlen(text) > sizeof(text))
 		Sys_Error("memory overwrite in Sys_Printf");
 
-    if (nostdout && nostdout->value)
-        return;
+	if (nostdout && nostdout->value)
+		return;
 
 	for (p = (unsigned char *)text; *p; p++) {
 		*p &= 0x7f;
@@ -88,11 +88,11 @@ void Sys_Printf (char *fmt, ...)
 	}
 }
 
-void Sys_Quit (void)
+void Sys_Quit(void)
 {
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	CL_Shutdown();
+	Qcommon_Shutdown();
+	fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~FNDELAY);
 
 	_exit(0);
 }
@@ -100,44 +100,44 @@ void Sys_Quit (void)
 void Sys_Init(void)
 {
 #if id386
-//	Sys_SetFPCW();
+//      Sys_SetFPCW();
 #endif
 }
 
-void Sys_Error (char *error, ...)
-{ 
+void Sys_Error(char *error, ...)
+{
 	/* DEBUG: matt */
 	/* exit(0); */
 	/* DEBUG */
 
-    va_list     argptr;
-    char        string[1024];
+	va_list argptr;
+	char string[1024];
 
 // change stdin to non blocking
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-    
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
+	fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~FNDELAY);
 
-    va_start (argptr,error);
-	vsnprintf (string,1024,error,argptr);
-    va_end (argptr);
+	CL_Shutdown();
+	Qcommon_Shutdown();
+
+	va_start(argptr, error);
+	vsnprintf(string, 1024, error, argptr);
+	va_end(argptr);
 	fprintf(stderr, "Error: %s\n", string);
 
-	_exit (1);
+	_exit(1);
 
-} 
+}
 
-void Sys_Warn (char *warning, ...)
-{ 
-    va_list     argptr;
-    char        string[1024];
-    
-    va_start (argptr,warning);
-	vsnprintf (string,1024,warning,argptr);
-    va_end (argptr);
+void Sys_Warn(char *warning, ...)
+{
+	va_list argptr;
+	char string[1024];
+
+	va_start(argptr, warning);
+	vsnprintf(string, 1024, warning, argptr);
+	va_end(argptr);
 	fprintf(stderr, "Warning: %s", string);
-} 
+}
 
 /*
 ============
@@ -146,28 +146,28 @@ Sys_FileTime
 returns -1 if not present
 ============
 */
-int	Sys_FileTime (char *path)
+int Sys_FileTime(char *path)
 {
-	struct	stat	buf;
-	
-	if (stat (path,&buf) == -1)
+	struct stat buf;
+
+	if (stat(path, &buf) == -1)
 		return -1;
-	
+
 	return buf.st_mtime;
 }
 
 void floating_point_exception_handler(int whatever)
 {
-//	Sys_Warn("floating point exception\n");
+//      Sys_Warn("floating point exception\n");
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
 char *Sys_ConsoleInput(void)
 {
-    static char text[256];
-    int     len;
-	fd_set	fdset;
-    struct timeval timeout;
+	static char text[256];
+	int len;
+	fd_set fdset;
+	struct timeval timeout;
 
 	if (!dedicated || !dedicated->value)
 		return NULL;
@@ -176,21 +176,22 @@ char *Sys_ConsoleInput(void)
 		return NULL;
 
 	FD_ZERO(&fdset);
-	FD_SET(0, &fdset); // stdin
+	FD_SET(0, &fdset);	// stdin
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
-	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
+	if (select(1, &fdset, NULL, NULL, &timeout) == -1
+	    || !FD_ISSET(0, &fdset))
 		return NULL;
 
-	len = read (0, text, sizeof(text));
-	if (len == 0) { // eof!
+	len = read(0, text, sizeof(text));
+	if (len == 0) {		// eof!
 		stdin_active = false;
 		return NULL;
 	}
 
 	if (len < 1)
 		return NULL;
-	text[len-1] = 0;    // rip off the /n and terminate
+	text[len - 1] = 0;	// rip off the /n and terminate
 
 	return text;
 }
@@ -204,10 +205,10 @@ static void *game_library;
 Sys_UnloadGame
 =================
 */
-void Sys_UnloadGame (void)
+void Sys_UnloadGame(void)
 {
-	if (game_library) 
-		dlclose (game_library);
+	if (game_library)
+		dlclose(game_library);
 	game_library = NULL;
 }
 
@@ -218,16 +219,16 @@ Sys_GetGameAPI
 Loads the game dll
 =================
 */
-void *Sys_GetGameAPI (void *parms)
+void *Sys_GetGameAPI(void *parms)
 {
 #ifndef REF_HARD_LINKED
-	void	*(*GetGameAPI) (void *);
+	void *(*GetGameAPI) (void *);
 
-	FILE	*fp;
-	char	name[MAX_OSPATH];
-	char	curpath[MAX_OSPATH];
-	char	*path;
-	char	*str_p;
+	FILE *fp;
+	char name[MAX_OSPATH];
+	char curpath[MAX_OSPATH];
+	char *path;
+	char *str_p;
 #ifdef __sgi
 	const char *gamename = "gamemips.so";
 #else
@@ -238,7 +239,8 @@ void *Sys_GetGameAPI (void *parms)
 	setegid(getgid());
 
 	if (game_library)
-		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
+		Com_Error(ERR_FATAL,
+			  "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	getcwd(curpath, sizeof(curpath));
 
@@ -246,62 +248,58 @@ void *Sys_GetGameAPI (void *parms)
 
 	// now run through the search paths
 	path = NULL;
-	while (1)
-	{
-		path = FS_NextPath (path);
+	while (1) {
+		path = FS_NextPath(path);
 		if (!path)
-			return NULL;		// couldn't find one anywhere
-		snprintf (name, MAX_OSPATH, "%s/%s", path, gamename);
-		
+			return NULL;	// couldn't find one anywhere
+		snprintf(name, MAX_OSPATH, "%s/%s", path, gamename);
+
 		/* skip it if it just doesn't exist */
 		fp = fopen(name, "rb");
 		if (fp == NULL)
 			continue;
 		fclose(fp);
-		
-		game_library = dlopen (name, RTLD_NOW);
-		if (game_library)
-		{
-			Com_MDPrintf ("LoadLibrary (%s)\n",name);
+
+		game_library = dlopen(name, RTLD_NOW);
+		if (game_library) {
+			Com_MDPrintf("LoadLibrary (%s)\n", name);
 			break;
 		} else {
-			Com_MDPrintf ("LoadLibrary (%s)\n", name);
-			
-			str_p = strchr(dlerror(), ':'); // skip the path (already shown)
-			if (str_p != NULL)
-			{
+			Com_MDPrintf("LoadLibrary (%s)\n", name);
+
+			str_p = strchr(dlerror(), ':');	// skip the path (already shown)
+			if (str_p != NULL) {
 				str_p++;
-				
-				Com_MDPrintf (" **%s", str_p);
+
+				Com_MDPrintf(" **%s", str_p);
 				Com_MDPrintf("\n");
 			}
 		}
 	}
 
-	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
-	if (!GetGameAPI)
-	{
-		Sys_UnloadGame ();		
+	GetGameAPI = (void *)dlsym(game_library, "GetGameAPI");
+	if (!GetGameAPI) {
+		Sys_UnloadGame();
 		return NULL;
 	}
 
-	return GetGameAPI (parms);
+	return GetGameAPI(parms);
 #else
-	return (void *)GetGameAPI (parms);
+	return (void *)GetGameAPI(parms);
 #endif
 }
 
 /*****************************************************************************/
 
-void Sys_AppActivate (void)
+void Sys_AppActivate(void)
 {
 }
 
-void Sys_SendKeyEvents (void)
+void Sys_SendKeyEvents(void)
 {
 #ifndef DEDICATED_ONLY
-        if (KBD_Update_fp)
-                KBD_Update_fp();
+	if (KBD_Update_fp)
+		KBD_Update_fp();
 #endif
 
 	// grab frame time 
@@ -315,14 +313,14 @@ char *Sys_GetClipboardData(void)
 	return NULL;
 }
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
 #ifdef DEDICATED_ONLY
 	int newargc;
 	char **newargv;
 	int i;
 #endif
-	int 	time, oldtime, newtime;
+	int time, oldtime, newtime;
 
 	// go back to real user for config loads
 	saved_euid = geteuid();
@@ -351,20 +349,19 @@ int main (int argc, char **argv)
 	nostdout = Cvar_Get("nostdout", "0", 0);
 	if (!nostdout->value) {
 /* 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY); */
-		printf ("Sgi Quake 2 -- Version %0.3f\n", IRIX_VERSION);
+		printf("Sgi Quake 2 -- Version %0.3f\n", IRIX_VERSION);
 	}
 
-    oldtime = Sys_Milliseconds ();
-    while (1)
-    {
+	oldtime = Sys_Milliseconds();
+	while (1) {
 // find time spent rendering last frame
 		do {
-			newtime = Sys_Milliseconds ();
+			newtime = Sys_Milliseconds();
 			time = newtime - oldtime;
 		} while (time < 1);
-		Qcommon_Frame (time);
+		Qcommon_Frame(time);
 		oldtime = newtime;
-    }
+	}
 
 }
 
@@ -381,25 +378,28 @@ void Sys_CopyProtect(void)
 	if (checked)
 		return;
 
-        Com_Printf("XXX - Sys_CopyProtect disabled\n");
+	Com_Printf("XXX - Sys_CopyProtect disabled\n");
 	checked = true;
 	return;
 
 	if ((mnt = setmntent("/etc/mtab", "r")) == NULL)
-		Com_Error(ERR_FATAL, "Can't read mount table to determine mounted cd location.");
+		Com_Error(ERR_FATAL,
+			  "Can't read mount table to determine mounted cd location.");
 
 	while ((ent = getmntent(mnt)) != NULL) {
 		if (strcmp(ent->mnt_type, "iso9660") == 0) {
 			// found a cd file system
 			found_cd = true;
-			sprintf(path, "%s/%s", ent->mnt_dir, "install/data/quake2.exe");
+			sprintf(path, "%s/%s", ent->mnt_dir,
+				"install/data/quake2.exe");
 			if (stat(path, &st) == 0) {
 				// found it
 				checked = true;
 				endmntent(mnt);
 				return;
 			}
-			sprintf(path, "%s/%s", ent->mnt_dir, "Install/Data/quake2.exe");
+			sprintf(path, "%s/%s", ent->mnt_dir,
+				"Install/Data/quake2.exe");
 			if (stat(path, &st) == 0) {
 				// found it
 				checked = true;
@@ -418,9 +418,11 @@ void Sys_CopyProtect(void)
 	endmntent(mnt);
 
 	if (found_cd)
-		Com_Error (ERR_FATAL, "Could not find a Quake2 CD in your CD drive.");
-	Com_Error (ERR_FATAL, "Unable to find a mounted iso9660 file system.\n"
-		"You must mount the Quake2 CD in a cdrom drive in order to play.");
+		Com_Error(ERR_FATAL,
+			  "Could not find a Quake2 CD in your CD drive.");
+	Com_Error(ERR_FATAL,
+		  "Unable to find a mounted iso9660 file system.\n"
+		  "You must mount the Quake2 CD in a cdrom drive in order to play.");
 }
 
 #if 0
@@ -429,65 +431,65 @@ void Sys_CopyProtect(void)
 Sys_MakeCodeWriteable
 ================
 */
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
+void Sys_MakeCodeWriteable(unsigned long startaddr, unsigned long length)
 {
 
 	int r;
 	unsigned long addr;
 	int psize = getpagesize();
 
-	addr = (startaddr & ~(psize-1)) - psize;
+	addr = (startaddr & ~(psize - 1)) - psize;
 
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
+//      fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
+//                      addr, startaddr+length, length);
 
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
+	r = mprotect((char *)addr, length + startaddr - addr + psize, 7);
 
 	if (r < 0)
-    		Sys_Error("Protection change failed\n");
+		Sys_Error("Protection change failed\n");
 
 }
 
 #endif
 
-size_t verify_fread( void *ptr, size_t size, size_t nitems, FILE *fp )
+size_t verify_fread(void *ptr, size_t size, size_t nitems, FILE * fp)
 {
-  size_t ret;
-  int err;
+	size_t ret;
+	int err;
 
-  clearerr( fp );
-  ret = fread( ptr, size, nitems, fp );
-  err = errno;
-  if( ret != nitems ) {
-    printf( "verify_fread(...,%d,%d,...): return value: %d\n",
-	    size, nitems, ret );
-    if( ret == 0 && ferror( fp ) ) {
-      printf( "    error: %s\n", strerror( err ) );
-      printf( "    fileno=%d\n", fileno( fp ) );
-    }
-    /*    sleep( 5 );*/
-  }
+	clearerr(fp);
+	ret = fread(ptr, size, nitems, fp);
+	err = errno;
+	if (ret != nitems) {
+		printf("verify_fread(...,%d,%d,...): return value: %d\n",
+		       size, nitems, ret);
+		if (ret == 0 && ferror(fp)) {
+			printf("    error: %s\n", strerror(err));
+			printf("    fileno=%d\n", fileno(fp));
+		}
+		/*    sleep( 5 ); */
+	}
 
-  return ret;
+	return ret;
 }
 
-size_t verify_fwrite( void *ptr, size_t size, size_t nitems, FILE *fp )
+size_t verify_fwrite(void *ptr, size_t size, size_t nitems, FILE * fp)
 {
-  size_t ret;
-  int err;
+	size_t ret;
+	int err;
 
-  clearerr( fp );
-  ret = fwrite( ptr, size, nitems, fp );
-  err = errno;
-  if( ret != nitems ) {
-    printf( "verify_fwrite(...,%d,%d,...): return value: %d\n",
-	    size, nitems, ret );
-    if( ret == 0 && ferror( fp ) ) {
-      printf( "    error: %s\n", strerror( err ) );
-      printf( "    fileno=%d\n", fileno( fp ) );
-    }
-    /*    sleep( 5 );*/
-  }
+	clearerr(fp);
+	ret = fwrite(ptr, size, nitems, fp);
+	err = errno;
+	if (ret != nitems) {
+		printf("verify_fwrite(...,%d,%d,...): return value: %d\n",
+		       size, nitems, ret);
+		if (ret == 0 && ferror(fp)) {
+			printf("    error: %s\n", strerror(err));
+			printf("    fileno=%d\n", fileno(fp));
+		}
+		/*    sleep( 5 ); */
+	}
 
-  return ret;
+	return ret;
 }

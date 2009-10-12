@@ -52,96 +52,96 @@ long long sgisnd_lastframewritten = 0;
 
 qboolean SNDDMA_Init(void)
 {
-    ALconfig	ac = NULL;
-    ALpv	pvbuf[2];
+	ALconfig ac = NULL;
+	ALpv pvbuf[2];
 
-    s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE);
-    if ((int)s_loadas8bit->value)
-	dma.samplebits = 8;
-    else
-	dma.samplebits = 16;
+	s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE);
+	if ((int)s_loadas8bit->value)
+		dma.samplebits = 8;
+	else
+		dma.samplebits = 16;
 
-    if (dma.samplebits != 16) {
-	Com_Printf("Don't currently support %i-bit data.  Forcing 16-bit.\n",
-		   dma.samplebits);
-	dma.samplebits = 16;
-	Cvar_SetValue( "s_loadas8bit", false );
-    }
+	if (dma.samplebits != 16) {
+		Com_Printf
+		    ("Don't currently support %i-bit data.  Forcing 16-bit.\n",
+		     dma.samplebits);
+		dma.samplebits = 16;
+		Cvar_SetValue("s_loadas8bit", false);
+	}
 
-    s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
-    switch ((int)s_khz->value) {
-    case 48:
-	dma.speed = AL_RATE_48000;
-	break;
-    case 44:
-	dma.speed = AL_RATE_44100;
-	break;
-    case 32:
-	dma.speed = AL_RATE_32000;
-	break;
-    case 22:
-	dma.speed = AL_RATE_22050;
-	break;
-    case 16:
-	dma.speed = AL_RATE_16000;
-	break;
-    case 11:
-	dma.speed = AL_RATE_11025;
-	break;
-    case 8:
-	dma.speed = AL_RATE_8000;
-	break;
-    default:
-	dma.speed = AL_RATE_22050;
-	Com_Printf("Don't currently support %i kHz sample rate.  Using %i.\n",
-		   (int)s_khz->value, (int)(dma.speed/1000));
-    }
-    
-    sndchannels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
-    dma.channels = (int)sndchannels->value;
-    if (dma.channels != 2)
-	Com_Printf("Don't currently support %i sound channels.  Try 2.\n",
-		   sndchannels);
+	s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
+	switch ((int)s_khz->value) {
+	case 48:
+		dma.speed = AL_RATE_48000;
+		break;
+	case 44:
+		dma.speed = AL_RATE_44100;
+		break;
+	case 32:
+		dma.speed = AL_RATE_32000;
+		break;
+	case 22:
+		dma.speed = AL_RATE_22050;
+		break;
+	case 16:
+		dma.speed = AL_RATE_16000;
+		break;
+	case 11:
+		dma.speed = AL_RATE_11025;
+		break;
+	case 8:
+		dma.speed = AL_RATE_8000;
+		break;
+	default:
+		dma.speed = AL_RATE_22050;
+		Com_Printf
+		    ("Don't currently support %i kHz sample rate.  Using %i.\n",
+		     (int)s_khz->value, (int)(dma.speed / 1000));
+	}
+
+	sndchannels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
+	dma.channels = (int)sndchannels->value;
+	if (dma.channels != 2)
+		Com_Printf
+		    ("Don't currently support %i sound channels.  Try 2.\n",
+		     sndchannels);
 
     /***********************/
 
-    ac = alNewConfig();
-    alSetChannels( ac, AL_STEREO );
-    alSetSampFmt( ac, AL_SAMPFMT_TWOSCOMP );
-    alSetQueueSize( ac, QSND_BUFFER_FRAMES );
-    if (dma.samplebits == 8)
-	alSetWidth( ac, AL_SAMPLE_8 );
-    else
-	alSetWidth( ac, AL_SAMPLE_16 );
+	ac = alNewConfig();
+	alSetChannels(ac, AL_STEREO);
+	alSetSampFmt(ac, AL_SAMPFMT_TWOSCOMP);
+	alSetQueueSize(ac, QSND_BUFFER_FRAMES);
+	if (dma.samplebits == 8)
+		alSetWidth(ac, AL_SAMPLE_8);
+	else
+		alSetWidth(ac, AL_SAMPLE_16);
 
-    sgisnd_aport = alOpenPort( "Quake", "w", ac );
-    if (!sgisnd_aport)
-    {
-	printf( "failed to open audio port!\n" );
-    }
+	sgisnd_aport = alOpenPort("Quake", "w", ac);
+	if (!sgisnd_aport) {
+		printf("failed to open audio port!\n");
+	}
+	// set desired sample rate
+	pvbuf[0].param = AL_MASTER_CLOCK;
+	pvbuf[0].value.i = AL_CRYSTAL_MCLK_TYPE;
+	pvbuf[1].param = AL_RATE;
+	pvbuf[1].value.ll = alIntToFixed(dma.speed);
+	alSetParams(alGetResource(sgisnd_aport), pvbuf, 2);
+	if (pvbuf[1].sizeOut < 0)
+		printf("illegal sample rate %d\n", dma.speed);
 
-    // set desired sample rate
-    pvbuf[0].param = AL_MASTER_CLOCK;
-    pvbuf[0].value.i = AL_CRYSTAL_MCLK_TYPE;
-    pvbuf[1].param = AL_RATE;
-    pvbuf[1].value.ll = alIntToFixed( dma.speed );
-    alSetParams( alGetResource( sgisnd_aport ), pvbuf, 2 );
-    if (pvbuf[1].sizeOut < 0)
-	printf( "illegal sample rate %d\n", dma.speed );
+	sgisnd_frames_per_ns = dma.speed * 1.0e-9;
 
-    sgisnd_frames_per_ns = dma.speed * 1.0e-9;
+	dma.samples = sizeof(dma_buffer) / (dma.samplebits / 8);
+	dma.submission_chunk = 1;
 
-    dma.samples = sizeof(dma_buffer)/(dma.samplebits/8);
-    dma.submission_chunk = 1;
+	dma.buffer = (unsigned char *)dma_buffer;
 
-    dma.buffer = (unsigned char *)dma_buffer;
+	dma.samplepos = 0;
 
-    dma.samplepos = 0;
-
-    alFreeConfig( ac );
-    return true;
+	alFreeConfig(ac);
+	return true;
 }
-
 
 /*
 ==============
@@ -154,14 +154,16 @@ how many sample are required to fill it up.
 */
 int SNDDMA_GetDMAPos(void)
 {
-    long long ustFuture, ustNow;
-    if (!sgisnd_aport) return( 0 );
-    alGetFrameTime( sgisnd_aport, &sgisnd_startframe, &ustFuture );
-    dmGetUST( (unsigned long long *)&ustNow );
-    sgisnd_startframe -= (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);
-    sgisnd_startframe += 100;
+	long long ustFuture, ustNow;
+	if (!sgisnd_aport)
+		return (0);
+	alGetFrameTime(sgisnd_aport, &sgisnd_startframe, &ustFuture);
+	dmGetUST((unsigned long long *)&ustNow);
+	sgisnd_startframe -=
+	    (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);
+	sgisnd_startframe += 100;
 //printf( "frame %ld pos %d\n", frame, UST_TO_BUFFPOS( sgisnd_startframe ) );
-    return( UST_TO_BUFFPOS( sgisnd_startframe ) );
+	return (UST_TO_BUFFPOS(sgisnd_startframe));
 }
 
 /*
@@ -173,8 +175,9 @@ Reset the sound device for exiting
 */
 void SNDDMA_Shutdown(void)
 {
-    if (sgisnd_aport) alClosePort( sgisnd_aport ), sgisnd_aport = NULL;
-    return;
+	if (sgisnd_aport)
+		alClosePort(sgisnd_aport), sgisnd_aport = NULL;
+	return;
 }
 
 /*
@@ -189,53 +192,54 @@ extern int soundtime;
 
 void SNDDMA_Submit(void)
 {
-    int nFillable, nFilled, nPos;
-    int nFrames, nFramesLeft;
-    unsigned endtime;
+	int nFillable, nFilled, nPos;
+	int nFrames, nFramesLeft;
+	unsigned endtime;
 
-    if (!sgisnd_aport) return;
+	if (!sgisnd_aport)
+		return;
 
-    nFillable = alGetFillable( sgisnd_aport );
-    nFilled = QSND_BUFFER_FRAMES - nFillable;
+	nFillable = alGetFillable(sgisnd_aport);
+	nFilled = QSND_BUFFER_FRAMES - nFillable;
 
-    nFrames = dma.samples >> (dma.channels - 1);
+	nFrames = dma.samples >> (dma.channels - 1);
 
-    if (paintedtime - soundtime < nFrames)
-	nFrames = paintedtime - soundtime;
+	if (paintedtime - soundtime < nFrames)
+		nFrames = paintedtime - soundtime;
 
-    if (nFrames <= QSND_SKID) return;
+	if (nFrames <= QSND_SKID)
+		return;
 
-    nPos = UST_TO_BUFFPOS( sgisnd_startframe );
+	nPos = UST_TO_BUFFPOS(sgisnd_startframe);
 
-    // dump re-written contents of the buffer
-    if (sgisnd_lastframewritten > sgisnd_startframe)
-    {
-	alDiscardFrames( sgisnd_aport, sgisnd_lastframewritten - sgisnd_startframe );
-    }
-    else if ((int)(sgisnd_startframe - sgisnd_lastframewritten) >= QSND_BUFFER_FRAMES)
-    {
-	// blow away everything if we've underflowed
-	alDiscardFrames( sgisnd_aport, QSND_BUFFER_FRAMES );
-    }
+	// dump re-written contents of the buffer
+	if (sgisnd_lastframewritten > sgisnd_startframe) {
+		alDiscardFrames(sgisnd_aport,
+				sgisnd_lastframewritten - sgisnd_startframe);
+	} else if ((int)(sgisnd_startframe - sgisnd_lastframewritten) >=
+		   QSND_BUFFER_FRAMES) {
+		// blow away everything if we've underflowed
+		alDiscardFrames(sgisnd_aport, QSND_BUFFER_FRAMES);
+	}
+	// don't block
+	if (nFrames > nFillable)
+		nFrames = nFillable;
 
-    // don't block
-    if (nFrames > nFillable) nFrames = nFillable;
+	// account for stereo
+	nFramesLeft = nFrames;
+	if (nPos + nFrames * dma.channels > QSND_BUFFER_SIZE) {
+		int nFramesAtEnd =
+		    (QSND_BUFFER_SIZE - nPos) >> (dma.channels - 1);
 
-    // account for stereo
-    nFramesLeft = nFrames;
-    if (nPos + nFrames * dma.channels > QSND_BUFFER_SIZE)
-    {
-	int nFramesAtEnd = (QSND_BUFFER_SIZE - nPos) >> (dma.channels - 1);
-	
-	alWriteFrames( sgisnd_aport, &dma_buffer[nPos], nFramesAtEnd );
-	nPos = 0;
-	nFramesLeft -= nFramesAtEnd;
-    }
-    alWriteFrames( sgisnd_aport, &dma_buffer[nPos], nFramesLeft );
+		alWriteFrames(sgisnd_aport, &dma_buffer[nPos], nFramesAtEnd);
+		nPos = 0;
+		nFramesLeft -= nFramesAtEnd;
+	}
+	alWriteFrames(sgisnd_aport, &dma_buffer[nPos], nFramesLeft);
 
-    sgisnd_lastframewritten = sgisnd_startframe + nFrames;
+	sgisnd_lastframewritten = sgisnd_startframe + nFrames;
 }
 
-void SNDDMA_BeginPainting (void)
+void SNDDMA_BeginPainting(void)
 {
 }

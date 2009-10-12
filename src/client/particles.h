@@ -1,8 +1,7 @@
 
 //psychospaz's particle system
 
-typedef enum
-{
+typedef enum {
 	particle_generic,
 	particle_smoke,
 	particle_blood,
@@ -29,4 +28,3 @@ typedef enum
 	particle_footprint,
 	particle_shield
 } particle_type;
-

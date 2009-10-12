@@ -47,7 +47,7 @@ static int glob_match_after_star(char *pattern, char *text)
 	}
 }
 
-#if 0 /* Not used */
+#if 0				/* Not used */
 /* Return nonzero if PATTERN has any special globbing chars in it.  */
 static int glob_pattern_p(char *pattern)
 {
@@ -61,8 +61,8 @@ static int glob_pattern_p(char *pattern)
 		case '*':
 			return 1;
 
-		case '[':		/* Only accept an open brace if there is a close */
-			open++;		/* brace to match it.  Bracket expressions must be */
+		case '[':	/* Only accept an open brace if there is a close */
+			open++;	/* brace to match it.  Bracket expressions must be */
 			continue;	/* complete, according to Posix.2 */
 		case ']':
 			if (open)
@@ -159,7 +159,7 @@ int glob_match(char *pattern, char *text)
 					return 0;
 				break;
 
-			  match:
+ match:
 				/* Skip the rest of the [...] construct that already matched.  */
 				while (c != ']') {
 					if (c == '\0')
@@ -182,4 +182,3 @@ int glob_match(char *pattern, char *text)
 
 	return *t == '\0';
 }
-

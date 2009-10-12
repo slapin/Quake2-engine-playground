@@ -30,38 +30,38 @@
 #include "../client/client.h"
 #include "../client/snd_loc.h"
 
-static int  snd_inited;
+static int snd_inited;
 static dma_t *shm;
 
-static void
-paint_audio (void *unused, Uint8 * stream, int len)
+static void paint_audio(void *unused, Uint8 * stream, int len)
 {
 	if (shm) {
 		shm->buffer = stream;
 		shm->samplepos += len / (shm->samplebits / 4);
 		// Check for samplepos overflow?
-		S_PaintChannels (shm->samplepos);
+		S_PaintChannels(shm->samplepos);
 	}
 }
 
-qboolean
-SNDDMA_Init (void)
+qboolean SNDDMA_Init(void)
 {
 	SDL_AudioSpec desired, obtained;
 	int desired_bits, freq;
-	
+
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
 		if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
+			Com_Printf("Couldn't init SDL audio: %s\n",
+				   SDL_GetError());
 			return 0;
 		}
 	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
-			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
+			Com_Printf("Couldn't init SDL audio: %s\n",
+				   SDL_GetError());
 			return 0;
 		}
 	}
-	
+
 	snd_inited = 0;
 	desired_bits = (Cvar_Get("sndbits", "16", CVAR_ARCHIVE))->value;
 
@@ -73,64 +73,65 @@ SNDDMA_Init (void)
 		desired.freq = 22050;
 	else
 		desired.freq = 11025;
-	
+
 	switch (desired_bits) {
-		case 8:
-			desired.format = AUDIO_U8;
-			break;
-		case 16:
-			if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-				desired.format = AUDIO_S16MSB;
-			else
-				desired.format = AUDIO_S16LSB;
-			break;
-		default:
-			Com_Printf ("Unknown number of audio bits: %d\n", desired_bits);
-			return 0;
+	case 8:
+		desired.format = AUDIO_U8;
+		break;
+	case 16:
+		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+			desired.format = AUDIO_S16MSB;
+		else
+			desired.format = AUDIO_S16LSB;
+		break;
+	default:
+		Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
+		return 0;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
-	
+
 	if (desired.freq == 44100)
 		desired.samples = 2048;
 	else if (desired.freq == 22050)
 		desired.samples = 1024;
 	else
 		desired.samples = 512;
-	
+
 	desired.callback = paint_audio;
-	
+
 	/* Open the audio device */
-	if (SDL_OpenAudio (&desired, &obtained) < 0) {
-		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
+	if (SDL_OpenAudio(&desired, &obtained) < 0) {
+		Com_Printf("Couldn't open SDL audio: %s\n", SDL_GetError());
 		return 0;
 	}
 
 	/* Make sure we can support the audio format */
 	switch (obtained.format) {
-		case AUDIO_U8:
+	case AUDIO_U8:
+		/* Supported */
+		break;
+	case AUDIO_S16LSB:
+	case AUDIO_S16MSB:
+		if (((obtained.format == AUDIO_S16LSB) &&
+		     (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
+		    ((obtained.format == AUDIO_S16MSB) &&
+		     (SDL_BYTEORDER == SDL_BIG_ENDIAN))) {
 			/* Supported */
 			break;
-		case AUDIO_S16LSB:
-		case AUDIO_S16MSB:
-			if (((obtained.format == AUDIO_S16LSB) &&
-				 (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
-				((obtained.format == AUDIO_S16MSB) &&
-				 (SDL_BYTEORDER == SDL_BIG_ENDIAN))) {
-				/* Supported */
-				break;
-			}
-			/* Unsupported, fall through */ ;
-		default:
-			/* Not supported -- force SDL to do our bidding */
-			SDL_CloseAudio ();
-			if (SDL_OpenAudio (&desired, NULL) < 0) {
-				Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
-				return 0;
-			}
-			memcpy (&obtained, &desired, sizeof (desired));
-			break;
+		}
+		/* Unsupported, fall through */ ;
+	default:
+		/* Not supported -- force SDL to do our bidding */
+		SDL_CloseAudio();
+		if (SDL_OpenAudio(&desired, NULL) < 0) {
+			Com_Printf("Couldn't open SDL audio: %s\n",
+				   SDL_GetError());
+			return 0;
+		}
+		memcpy(&obtained, &desired, sizeof(desired));
+		break;
 	}
-	SDL_PauseAudio (0);
+	SDL_PauseAudio(0);
 
 	/* Fill the audio DMA information block */
 	shm = &dma;
@@ -146,17 +147,15 @@ SNDDMA_Init (void)
 	return 1;
 }
 
-int
-SNDDMA_GetDMAPos (void)
+int SNDDMA_GetDMAPos(void)
 {
 	return shm->samplepos;
 }
 
-void
-SNDDMA_Shutdown (void)
+void SNDDMA_Shutdown(void)
 {
 	if (snd_inited) {
-		SDL_CloseAudio ();
+		SDL_CloseAudio();
 		snd_inited = 0;
 	}
 
@@ -173,12 +172,10 @@ SNDDMA_Shutdown (void)
 	Send sound to device if buffer isn't really the dma buffer
 
 */
-void
-SNDDMA_Submit (void)
+void SNDDMA_Submit(void)
 {
 }
 
-
 void SNDDMA_BeginPainting(void)
-{    
+{
 }

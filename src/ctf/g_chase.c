@@ -19,8 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "g_local.h"
 
-
-void UpdateChaseCam(edict_t *ent)
+void UpdateChaseCam(edict_t * ent)
 {
 	vec3_t o, ownerv, goal;
 	edict_t *targ;
@@ -46,7 +45,7 @@ void UpdateChaseCam(edict_t *ent)
 	VectorCopy(targ->client->v_angle, angles);
 	if (angles[PITCH] > 56)
 		angles[PITCH] = 56;
-	AngleVectors (angles, forward, right, NULL);
+	AngleVectors(angles, forward, right, NULL);
 	VectorNormalize(forward);
 	VectorMA(ownerv, -30, forward, o);
 
@@ -83,8 +82,10 @@ void UpdateChaseCam(edict_t *ent)
 	ent->client->ps.pmove.pm_type = PM_FREEZE;
 
 	VectorCopy(goal, ent->s.origin);
-	for (i=0 ; i<3 ; i++)
-		ent->client->ps.pmove.delta_angles[i] = ANGLE2SHORT(targ->client->v_angle[i] - ent->client->resp.cmd_angles[i]);
+	for (i = 0; i < 3; i++)
+		ent->client->ps.pmove.delta_angles[i] =
+		    ANGLE2SHORT(targ->client->v_angle[i] -
+				ent->client->resp.cmd_angles[i]);
 
 	VectorCopy(targ->client->v_angle, ent->client->ps.viewangles);
 	VectorCopy(targ->client->v_angle, ent->client->v_angle);
@@ -94,21 +95,21 @@ void UpdateChaseCam(edict_t *ent)
 	gi.linkentity(ent);
 
 	if ((!ent->client->showscores && !ent->client->menu &&
-		!ent->client->showinventory && !ent->client->showhelp &&
-		!(level.framenum & 31)) || ent->client->update_chase) {
+	     !ent->client->showinventory && !ent->client->showhelp &&
+	     !(level.framenum & 31)) || ent->client->update_chase) {
 		char s[1024];
 
 		ent->client->update_chase = false;
 		sprintf(s, "xv 0 yb -68 string2 \"Chasing %s\"",
 			targ->client->pers.netname);
-		gi.WriteByte (svc_layout);
-		gi.WriteString (s);
+		gi.WriteByte(svc_layout);
+		gi.WriteString(s);
 		gi.unicast(ent, false);
 	}
 
 }
 
-void ChaseNext(edict_t *ent)
+void ChaseNext(edict_t * ent)
 {
 	int i;
 	edict_t *e;
@@ -132,7 +133,7 @@ void ChaseNext(edict_t *ent)
 	ent->client->update_chase = true;
 }
 
-void ChasePrev(edict_t *ent)
+void ChasePrev(edict_t * ent)
 {
 	int i;
 	edict_t *e;

@@ -82,47 +82,44 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * 
  */
 
-void fastscale (register char *b1, register char *b2, int x1, int x2, int y1, int y2)
+void fastscale(register char *b1, register char *b2, int x1, int x2, int y1,
+	       int y2)
 {
-  register int ex, spx = 0, ddx, ddx1;
-  int ddy1, ddy, spy = 0, ey;
-  int x;
-  char *bb1 = b1;
-  if (!x1 || !x2 || !y1 || !y2)
-    return;
-  ddx = x1 + x1;
-  ddx1 = x2 + x2;
-  if (ddx1 < ddx)
-    spx = ddx / ddx1, ddx %= ddx1;
-  ddy = y1 + y1;
-  ddy1 = y2 + y2;
-  if (ddy1 < ddy)
-    spy = (ddy / ddy1) * x1, ddy %= ddy1;
-  ey = -ddy1;
-  for (; y2; y2--)
-    {
-      ex = -ddx1;
-      for (x = x2; x; x--)
-        {
-          *b2 = *b1;
-          b2++;
-          b1 += spx;
-          ex += ddx;
-          if (ex > 0)
-            {
-              b1++;
-              ex -= ddx1;
-            }
-        }
-      bb1 += spy;
-      ey += ddy;
-      if (ey > 0)
-        {
-          bb1 += x1;
-          ey -= ddy1;
-        }
-      b1 = bb1;
-    }
+	register int ex, spx = 0, ddx, ddx1;
+	int ddy1, ddy, spy = 0, ey;
+	int x;
+	char *bb1 = b1;
+	if (!x1 || !x2 || !y1 || !y2)
+		return;
+	ddx = x1 + x1;
+	ddx1 = x2 + x2;
+	if (ddx1 < ddx)
+		spx = ddx / ddx1, ddx %= ddx1;
+	ddy = y1 + y1;
+	ddy1 = y2 + y2;
+	if (ddy1 < ddy)
+		spy = (ddy / ddy1) * x1, ddy %= ddy1;
+	ey = -ddy1;
+	for (; y2; y2--) {
+		ex = -ddx1;
+		for (x = x2; x; x--) {
+			*b2 = *b1;
+			b2++;
+			b1 += spx;
+			ex += ddx;
+			if (ex > 0) {
+				b1++;
+				ex -= ddx1;
+			}
+		}
+		bb1 += spy;
+		ey += ddy;
+		if (ey > 0) {
+			bb1 += x1;
+			ey -= ddy1;
+		}
+		b1 = bb1;
+	}
 }
 
 /* end of fastscale */
@@ -137,11 +134,11 @@ aa_palette mypalette;
 ** This routine is responsible for initializing the implementation
 ** specific stuff in a software rendering subsystem.
 */
-int SWimp_Init( void *hInstance, void *wndProc )
+int SWimp_Init(void *hInstance, void *wndProc)
 {
-  if (!dlopen("libaa.so", RTLD_LAZY))
-    fprintf(stderr, dlerror());
-  return true;
+	if (!dlopen("libaa.so", RTLD_LAZY))
+		fprintf(stderr, dlerror());
+	return true;
 }
 
 /*
@@ -154,15 +151,15 @@ int SWimp_Init( void *hInstance, void *wndProc )
 ** The necessary width and height parameters are grabbed from
 ** vid.width and vid.height.
 */
-static qboolean SWimp_InitGraphics( qboolean fullscreen )
+static qboolean SWimp_InitGraphics(qboolean fullscreen)
 {
 	SWimp_Shutdown();
 
 	// let the sound and input subsystems know about the new window
-	ri.Vid_NewWindow (vid.width, vid.height);
+	ri.Vid_NewWindow(vid.width, vid.height);
 
-//	Cvar_SetValue ("vid_mode", (float)modenum);
-	
+//      Cvar_SetValue ("vid_mode", (float)modenum);
+
 	vid.rowbytes = vid.width;
 
 // get goin'
@@ -170,7 +167,7 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 	aa_defparams.supported = (AA_DIM_MASK | AA_BOLD_MASK | AA_NORMAL_MASK
 				  | AA_EXTENDED);
 	aac = aa_autoinit(&aa_defparams);
-	aa_defrenderparams.bright=10;
+	aa_defrenderparams.bright = 10;
 	aa_defrenderparams.dither = AA_FLOYD_S;
 	aa_defparams.dimmul = 2.5;
 	aa_defparams.boldmul = 2.5;
@@ -180,14 +177,15 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 	if (!aa_image(aac))
 		Sys_Error("This mode isn't hapnin'\n");
 
-	ri.Con_Printf (PRINT_ALL, "AA driver: %s\n", aac->driver->name);
-	ri.Con_Printf (PRINT_ALL, "AA resolution: %d %d\n", aa_imgwidth(aac), aa_imgheight(aac));
+	ri.Con_Printf(PRINT_ALL, "AA driver: %s\n", aac->driver->name);
+	ri.Con_Printf(PRINT_ALL, "AA resolution: %d %d\n", aa_imgwidth(aac),
+		      aa_imgheight(aac));
 
 	vid.buffer = malloc(vid.rowbytes * vid.height);
 	if (!vid.buffer)
 		Sys_Error("Unabled to alloc vid.buffer!\n");
 
-	aa_resizehandler(aac, (void *) aa_resize);
+	aa_resizehandler(aac, (void *)aa_resize);
 
 	return true;
 }
@@ -199,36 +197,37 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 ** front buffer.  In the Win32 case it uses BitBlt or BltFast depending
 ** on whether we're using DIB sections/GDI or DDRAW.
 */
-void SWimp_EndFrame (void)
+void SWimp_EndFrame(void)
 {
-	fastscale(vid.buffer, aa_image(aac), vid.width, aa_imgwidth(aac), vid.height, aa_imgheight(aac));
-	aa_renderpalette(aac, mypalette, &aa_defrenderparams, 0, 0, aa_scrwidth (aac), aa_scrheight (aac));
+	fastscale(vid.buffer, aa_image(aac), vid.width, aa_imgwidth(aac),
+		  vid.height, aa_imgheight(aac));
+	aa_renderpalette(aac, mypalette, &aa_defrenderparams, 0, 0,
+			 aa_scrwidth(aac), aa_scrheight(aac));
 	aa_flush(aac);
 }
 
 /*
 ** SWimp_SetMode
 */
-rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+rserr_t SWimp_SetMode(int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
 	rserr_t retval = rserr_ok;
 
-	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
+	ri.Con_Printf(PRINT_ALL, "setting mode %d:", mode);
 
-	if ( !ri.Vid_GetModeInfo( pwidth, pheight, mode ) )
-	{
-		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
+	if (!ri.Vid_GetModeInfo(pwidth, pheight, mode)) {
+		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d\n", *pwidth, *pheight);
+	ri.Con_Printf(PRINT_ALL, " %d %d\n", *pwidth, *pheight);
 
-	if ( !SWimp_InitGraphics( false ) ) {
+	if (!SWimp_InitGraphics(false)) {
 		// failed to set a valid mode in windowed mode
 		return rserr_invalid_mode;
 	}
 
-	R_GammaCorrectAndSetPalette( ( const unsigned char * ) d_8to24table );
+	R_GammaCorrectAndSetPalette((const unsigned char *)d_8to24table);
 
 	return retval;
 }
@@ -240,18 +239,18 @@ rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen 
 ** to use the existing palette.  The palette is expected to be in
 ** a padded 4-byte xRGB format.
 */
-void SWimp_SetPalette( const unsigned char *palette )
+void SWimp_SetPalette(const unsigned char *palette)
 {
 	const unsigned char *pal;
 	int i;
 
-    if ( !palette )
-        palette = ( const unsigned char * ) sw_state.currentpalette;
+	if (!palette)
+		palette = (const unsigned char *)sw_state.currentpalette;
 
 	pal = palette;
- 
-	for (i=0 ; i < 256 ; i++, pal += 4) {
-//		aa_setpalette(mypalette, i, pal[0] >> 2, pal[1] >> 2, pal[2] >> 2);
+
+	for (i = 0; i < 256; i++, pal += 4) {
+//              aa_setpalette(mypalette, i, pal[0] >> 2, pal[1] >> 2, pal[2] >> 2);
 		aa_setpalette(mypalette, i, pal[0], pal[1], pal[2]);
 	}
 }
@@ -262,7 +261,7 @@ void SWimp_SetPalette( const unsigned char *palette )
 ** System specific graphics subsystem shutdown routine.  Destroys
 ** DIBs or DDRAW surfaces as appropriate.
 */
-void SWimp_Shutdown( void )
+void SWimp_Shutdown(void)
 {
 	if (vid.buffer) {
 		free(vid.buffer);
@@ -277,7 +276,7 @@ void SWimp_Shutdown( void )
 /*
 ** SWimp_AppActivate
 */
-void SWimp_AppActivate( qboolean active )
+void SWimp_AppActivate(qboolean active)
 {
 }
 
@@ -288,25 +287,24 @@ void SWimp_AppActivate( qboolean active )
 Sys_MakeCodeWriteable
 ================
 */
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
+void Sys_MakeCodeWriteable(unsigned long startaddr, unsigned long length)
 {
 
 	int r;
 	unsigned long addr;
 	int psize = getpagesize();
 
-	addr = (startaddr & ~(psize-1)) - psize;
+	addr = (startaddr & ~(psize - 1)) - psize;
 
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
+//      fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
+//                      addr, startaddr+length, length);
 
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
+	r = mprotect((char *)addr, length + startaddr - addr + psize, 7);
 
 	if (r < 0)
-    		Sys_Error("Protection change failed\n");
+		Sys_Error("Protection change failed\n");
 }
 
 /*
  * from aavga
  */
-

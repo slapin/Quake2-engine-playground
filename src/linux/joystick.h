@@ -1,7 +1,6 @@
 #ifndef __JOYSTICK_H__
 #define __JOYSTICK_H__
 
-
 #ifdef OPENGL
 #include "../ref_gl/gl_local.h"
 #else
@@ -45,7 +44,7 @@ extern int *axis_map;
 */
 // In joystick.c
 void RW_IN_InitJoystick();
-void Joy_AdvancedUpdate_f (void);
+void Joy_AdvancedUpdate_f(void);
 void RW_IN_JoystickCommands();
 void RW_IN_JoystickMove(usercmd_t *, qboolean, cvar_t *, cvar_t *);
 

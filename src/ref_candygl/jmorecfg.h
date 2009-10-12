@@ -10,7 +10,6 @@
  * optimizations.  Most users will not need to touch this file.
  */
 
-
 /*
  * Define BITS_IN_JSAMPLE as either
  *   8   for 8-bit sample values (the usual setting)
@@ -22,7 +21,6 @@
 
 #define BITS_IN_JSAMPLE  8	/* use 8 or 12 */
 
-
 /*
  * Maximum number of components (color channels) allowed in JPEG image.
  * To meet the letter of the JPEG spec, set this to 255.  However, darn
@@ -33,7 +31,6 @@
  */
 
 #define MAX_COMPONENTS  10	/* maximum number of image components */
-
 
 /*
  * Basic data types.
@@ -59,22 +56,21 @@
 typedef unsigned char JSAMPLE;
 #define GETJSAMPLE(value)  ((int) (value))
 
-#else /* not HAVE_UNSIGNED_CHAR */
+#else				/* not HAVE_UNSIGNED_CHAR */
 
 typedef char JSAMPLE;
 #ifdef CHAR_IS_UNSIGNED
 #define GETJSAMPLE(value)  ((int) (value))
 #else
 #define GETJSAMPLE(value)  ((int) (value) & 0xFF)
-#endif /* CHAR_IS_UNSIGNED */
+#endif				/* CHAR_IS_UNSIGNED */
 
-#endif /* HAVE_UNSIGNED_CHAR */
+#endif				/* HAVE_UNSIGNED_CHAR */
 
 #define MAXJSAMPLE	255
 #define CENTERJSAMPLE	128
 
-#endif /* BITS_IN_JSAMPLE == 8 */
-
+#endif				/* BITS_IN_JSAMPLE == 8 */
 
 #if BITS_IN_JSAMPLE == 12
 /* JSAMPLE should be the smallest type that will hold the values 0..4095.
@@ -87,8 +83,7 @@ typedef short JSAMPLE;
 #define MAXJSAMPLE	4095
 #define CENTERJSAMPLE	2048
 
-#endif /* BITS_IN_JSAMPLE == 12 */
-
+#endif				/* BITS_IN_JSAMPLE == 12 */
 
 /* Representation of a DCT frequency coefficient.
  * This should be a signed value of at least 16 bits; "short" is usually OK.
@@ -97,7 +92,6 @@ typedef short JSAMPLE;
  */
 
 typedef short JCOEF;
-
 
 /* Compressed datastreams are represented as arrays of JOCTET.
  * These must be EXACTLY 8 bits wide, at least once they are written to
@@ -110,17 +104,16 @@ typedef short JCOEF;
 typedef unsigned char JOCTET;
 #define GETJOCTET(value)  (value)
 
-#else /* not HAVE_UNSIGNED_CHAR */
+#else				/* not HAVE_UNSIGNED_CHAR */
 
 typedef char JOCTET;
 #ifdef CHAR_IS_UNSIGNED
 #define GETJOCTET(value)  (value)
 #else
 #define GETJOCTET(value)  ((value) & 0xFF)
-#endif /* CHAR_IS_UNSIGNED */
+#endif				/* CHAR_IS_UNSIGNED */
 
-#endif /* HAVE_UNSIGNED_CHAR */
-
+#endif				/* HAVE_UNSIGNED_CHAR */
 
 /* These typedefs are used for various table entries and so forth.
  * They must be at least as wide as specified; but making them too big
@@ -133,21 +126,21 @@ typedef char JOCTET;
 
 #ifdef HAVE_UNSIGNED_CHAR
 typedef unsigned char UINT8;
-#else /* not HAVE_UNSIGNED_CHAR */
+#else				/* not HAVE_UNSIGNED_CHAR */
 #ifdef CHAR_IS_UNSIGNED
 typedef char UINT8;
-#else /* not CHAR_IS_UNSIGNED */
+#else				/* not CHAR_IS_UNSIGNED */
 typedef short UINT8;
-#endif /* CHAR_IS_UNSIGNED */
-#endif /* HAVE_UNSIGNED_CHAR */
+#endif				/* CHAR_IS_UNSIGNED */
+#endif				/* HAVE_UNSIGNED_CHAR */
 
 /* UINT16 must hold at least the values 0..65535. */
 
 #ifdef HAVE_UNSIGNED_SHORT
 typedef unsigned short UINT16;
-#else /* not HAVE_UNSIGNED_SHORT */
+#else				/* not HAVE_UNSIGNED_SHORT */
 typedef unsigned int UINT16;
-#endif /* HAVE_UNSIGNED_SHORT */
+#endif				/* HAVE_UNSIGNED_SHORT */
 
 /* INT16 must hold at least the values -32768..32767. */
 
@@ -170,8 +163,7 @@ typedef long INT32;
 
 typedef unsigned int JDIMENSION;
 
-#define JPEG_MAX_DIMENSION  65500L  /* a tad under 64K to prevent overflows */
-
+#define JPEG_MAX_DIMENSION  65500L	/* a tad under 64K to prevent overflows */
 
 /* These macros are used in all function definitions and extern declarations.
  * You could modify them if you need to change function linkage conventions;
@@ -189,7 +181,6 @@ typedef unsigned int JDIMENSION;
 /* a reference to a GLOBAL function: */
 #define EXTERN(type)		extern type
 
-
 /* This macro is used to declare a "method", that is, a function pointer.
  * We want to supply prototype parameters if the compiler can cope.
  * Note that the arglist parameter must be parenthesized!
@@ -202,7 +193,6 @@ typedef unsigned int JDIMENSION;
 #define JMETHOD(type,methodname,arglist)  type (*methodname) ()
 #endif
 
-
 /* Here is the pseudo-keyword for declaring pointers that must be "far"
  * on 80x86 machines.  Most of the specialized coding for 80x86 is handled
  * by just saying "FAR *" where such a pointer is needed.  In a few places
@@ -214,7 +204,6 @@ typedef unsigned int JDIMENSION;
 #else
 #define FAR
 #endif
-
 
 /*
  * On a few systems, type boolean and/or its values FALSE, TRUE may appear
@@ -233,7 +222,6 @@ typedef int boolean;
 #define TRUE	1
 #endif
 
-
 /*
  * The remaining options affect code selection within the JPEG library,
  * but they don't need to be visible to most applications using the library.
@@ -246,7 +234,6 @@ typedef int boolean;
 #endif
 
 #ifdef JPEG_INTERNAL_OPTIONS
-
 
 /*
  * These defines indicate whether to include various optional functions.
@@ -266,10 +253,10 @@ typedef int boolean;
 
 /* Encoder capability options: */
 
-#undef  C_ARITH_CODING_SUPPORTED    /* Arithmetic coding back end? */
-#define C_MULTISCAN_FILES_SUPPORTED /* Multiple-scan JPEG files? */
-#define C_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN)*/
-#define ENTROPY_OPT_SUPPORTED	    /* Optimization of entropy coding parms? */
+#undef  C_ARITH_CODING_SUPPORTED	/* Arithmetic coding back end? */
+#define C_MULTISCAN_FILES_SUPPORTED	/* Multiple-scan JPEG files? */
+#define C_PROGRESSIVE_SUPPORTED	/* Progressive JPEG? (Requires MULTISCAN) */
+#define ENTROPY_OPT_SUPPORTED	/* Optimization of entropy coding parms? */
 /* Note: if you selected 12-bit data precision, it is dangerous to turn off
  * ENTROPY_OPT_SUPPORTED.  The standard Huffman tables are only good for 8-bit
  * precision, so jchuff.c normally uses entropy optimization to compute
@@ -278,23 +265,22 @@ typedef int boolean;
  * The exact same statements apply for progressive JPEG: the default tables
  * don't work for progressive mode.  (This may get fixed, however.)
  */
-#define INPUT_SMOOTHING_SUPPORTED   /* Input image smoothing option? */
+#define INPUT_SMOOTHING_SUPPORTED	/* Input image smoothing option? */
 
 /* Decoder capability options: */
 
-#undef  D_ARITH_CODING_SUPPORTED    /* Arithmetic coding back end? */
-#define D_MULTISCAN_FILES_SUPPORTED /* Multiple-scan JPEG files? */
-#define D_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN)*/
-#define SAVE_MARKERS_SUPPORTED	    /* jpeg_save_markers() needed? */
-#define BLOCK_SMOOTHING_SUPPORTED   /* Block smoothing? (Progressive only) */
-#define IDCT_SCALING_SUPPORTED	    /* Output rescaling via IDCT? */
-#undef  UPSAMPLE_SCALING_SUPPORTED  /* Output rescaling at upsample stage? */
-#define UPSAMPLE_MERGING_SUPPORTED  /* Fast path for sloppy upsampling? */
-#define QUANT_1PASS_SUPPORTED	    /* 1-pass color quantization? */
-#define QUANT_2PASS_SUPPORTED	    /* 2-pass color quantization? */
+#undef  D_ARITH_CODING_SUPPORTED	/* Arithmetic coding back end? */
+#define D_MULTISCAN_FILES_SUPPORTED	/* Multiple-scan JPEG files? */
+#define D_PROGRESSIVE_SUPPORTED	/* Progressive JPEG? (Requires MULTISCAN) */
+#define SAVE_MARKERS_SUPPORTED	/* jpeg_save_markers() needed? */
+#define BLOCK_SMOOTHING_SUPPORTED	/* Block smoothing? (Progressive only) */
+#define IDCT_SCALING_SUPPORTED	/* Output rescaling via IDCT? */
+#undef  UPSAMPLE_SCALING_SUPPORTED	/* Output rescaling at upsample stage? */
+#define UPSAMPLE_MERGING_SUPPORTED	/* Fast path for sloppy upsampling? */
+#define QUANT_1PASS_SUPPORTED	/* 1-pass color quantization? */
+#define QUANT_2PASS_SUPPORTED	/* 2-pass color quantization? */
 
 /* more capability options later, no doubt */
-
 
 /*
  * Ordering of RGB data in scanlines passed to or from the application.
@@ -316,9 +302,7 @@ typedef int boolean;
 #define RGB_BLUE	2	/* Offset of Blue */
 #define RGB_PIXELSIZE	3	/* JSAMPLEs per RGB scanline element */
 
-
 /* Definitions for speed-related optimizations. */
-
 
 /* If your compiler supports inline functions, define INLINE
  * as the inline keyword; otherwise define it as empty.
@@ -333,7 +317,6 @@ typedef int boolean;
 #endif
 #endif
 
-
 /* On some machines (notably 68000 series) "int" is 32 bits, but multiplying
  * two 16-bit shorts is faster than multiplying two ints.  Define MULTIPLIER
  * as short on such a machine.  MULTIPLIER must be at least 16 bits wide.
@@ -342,7 +325,6 @@ typedef int boolean;
 #ifndef MULTIPLIER
 #define MULTIPLIER  int		/* type for fastest integer multiply */
 #endif
-
 
 /* FAST_FLOAT should be either float or double, whichever is done faster
  * by your compiler.  (Note that this type is only used in the floating point
@@ -360,4 +342,4 @@ typedef int boolean;
 #endif
 #endif
 
-#endif /* JPEG_INTERNAL_OPTIONS */
+#endif				/* JPEG_INTERNAL_OPTIONS */

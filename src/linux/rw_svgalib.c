@@ -52,11 +52,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*****************************************************************************/
 
-int		VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes, VGA_planar;
-byte	*VGA_pagebase;
-byte	*framebuffer_ptr;
+int VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes, VGA_planar;
+byte *VGA_pagebase;
+byte *framebuffer_ptr;
 
-void VGA_UpdatePlanarScreen (void *srcbuffer);
+void VGA_UpdatePlanarScreen(void *srcbuffer);
 
 int num_modes;
 vga_modeinfo *modes;
@@ -69,31 +69,31 @@ int current_mode;
 void VID_InitModes(void)
 {
 
-int i;
+	int i;
 
 	// get complete information on all modes
 
-	num_modes = vga_lastmodenumber()+1;
+	num_modes = vga_lastmodenumber() + 1;
 	modes = malloc(num_modes * sizeof(vga_modeinfo));
-	for (i=0 ; i<num_modes ; i++)
-	{
+	for (i = 0; i < num_modes; i++) {
 		if (vga_hasmode(i))
-			memcpy(&modes[i], vga_getmodeinfo(i), sizeof (vga_modeinfo));
+			memcpy(&modes[i], vga_getmodeinfo(i),
+			       sizeof(vga_modeinfo));
 		else
-			modes[i].width = 0; // means not available
+			modes[i].width = 0;	// means not available
 	}
 
 	// filter for modes i don't support
 
-	for (i=0 ; i<num_modes ; i++)
-	{
-		if (modes[i].bytesperpixel != 1 && modes[i].colors != 256) 
+	for (i = 0; i < num_modes; i++) {
+		if (modes[i].bytesperpixel != 1 && modes[i].colors != 256)
 			modes[i].width = 0;
 	}
 
 	for (i = 0; i < num_modes; i++)
 		if (modes[i].width)
-			ri.Con_Printf(PRINT_ALL, "mode %d: %d %d\n", i, modes[i].width, modes[i].height);
+			ri.Con_Printf(PRINT_ALL, "mode %d: %d %d\n", i,
+				      modes[i].width, modes[i].height);
 
 }
 
@@ -103,7 +103,7 @@ int i;
 ** This routine is responsible for initializing the implementation
 ** specific stuff in a software rendering subsystem.
 */
-int SWimp_Init( void *hInstance, void *wndProc )
+int SWimp_Init(void *hInstance, void *wndProc)
 {
 	vga_init();
 
@@ -117,12 +117,12 @@ int get_mode(int width, int height)
 
 	int i;
 
-	for (i=0 ; i<num_modes ; i++)
+	for (i = 0; i < num_modes; i++)
 		if (modes[i].width &&
-			modes[i].width == width && modes[i].height == height)
-				break;
-	if (i==num_modes)
-		return -1; // not found
+		    modes[i].width == width && modes[i].height == height)
+			break;
+	if (i == num_modes)
+		return -1;	// not found
 
 	return i;
 }
@@ -137,24 +137,24 @@ int get_mode(int width, int height)
 ** The necessary width and height parameters are grabbed from
 ** vid.width and vid.height.
 */
-static qboolean SWimp_InitGraphics( qboolean fullscreen )
+static qboolean SWimp_InitGraphics(qboolean fullscreen)
 {
 	SWimp_Shutdown();
 
 	current_mode = get_mode(vid.width, vid.height);
 
 	if (current_mode < 0) {
-		ri.Con_Printf (PRINT_ALL, "Mode %d %d not found\n", vid.width, vid.height);
-		return false; // mode not found
+		ri.Con_Printf(PRINT_ALL, "Mode %d %d not found\n", vid.width,
+			      vid.height);
+		return false;	// mode not found
 	}
-
 	// let the sound and input subsystems know about the new window
-	ri.Vid_NewWindow (vid.width, vid.height);
+	ri.Vid_NewWindow(vid.width, vid.height);
 
-	ri.Con_Printf (PRINT_ALL, "Setting VGAMode: %d\n", current_mode );
+	ri.Con_Printf(PRINT_ALL, "Setting VGAMode: %d\n", current_mode);
 
-//	Cvar_SetValue ("vid_mode", (float)modenum);
-	
+//      Cvar_SetValue ("vid_mode", (float)modenum);
+
 	VGA_width = modes[current_mode].width;
 	VGA_height = modes[current_mode].height;
 	VGA_planar = modes[current_mode].bytesperpixel == 0;
@@ -164,16 +164,15 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 
 	if (VGA_planar) {
 		VGA_bufferrowbytes = modes[current_mode].linewidth * 4;
-		vid.rowbytes = modes[current_mode].linewidth*4;
+		vid.rowbytes = modes[current_mode].linewidth * 4;
 	}
-
 // get goin'
 
 	vga_setmode(current_mode);
 
 	VGA_pagebase = framebuffer_ptr = vga_getgraphmem();
-//		if (vga_setlinearaddressing()>0)
-//			framebuffer_ptr = (char *) vga_getgraphmem();
+//              if (vga_setlinearaddressing()>0)
+//                      framebuffer_ptr = (char *) vga_getgraphmem();
 	if (!framebuffer_ptr)
 		Sys_Error("This mode isn't hapnin'\n");
 
@@ -193,53 +192,53 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 ** front buffer.  In the Win32 case it uses BitBlt or BltFast depending
 ** on whether we're using DIB sections/GDI or DDRAW.
 */
-void SWimp_EndFrame (void)
+void SWimp_EndFrame(void)
 {
 	if (!vga_oktowrite())
-		return; // can't update screen if it's not active
+		return;		// can't update screen if it's not active
 
-//	if (vid_waitforrefresh.value)
-//		vga_waitretrace();
+//      if (vid_waitforrefresh.value)
+//              vga_waitretrace();
 
 	if (VGA_planar)
-		VGA_UpdatePlanarScreen (vid.buffer);
+		VGA_UpdatePlanarScreen(vid.buffer);
 
 	else {
 		int total = vid.rowbytes * vid.height;
 		int offset;
 
-		for (offset=0;offset<total;offset+=0x10000) {
-			vga_setpage(offset/0x10000);
+		for (offset = 0; offset < total; offset += 0x10000) {
+			vga_setpage(offset / 0x10000);
 			memcpy(framebuffer_ptr,
-					vid.buffer + offset,
-					((total-offset>0x10000)?0x10000:(total-offset)));
+			       vid.buffer + offset,
+			       ((total - offset >
+				 0x10000) ? 0x10000 : (total - offset)));
 		}
-	} 
+	}
 }
 
 /*
 ** SWimp_SetMode
 */
-rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+rserr_t SWimp_SetMode(int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
 	rserr_t retval = rserr_ok;
 
-	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
+	ri.Con_Printf(PRINT_ALL, "setting mode %d:", mode);
 
-	if ( !ri.Vid_GetModeInfo( pwidth, pheight, mode ) )
-	{
-		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
+	if (!ri.Vid_GetModeInfo(pwidth, pheight, mode)) {
+		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d\n", *pwidth, *pheight);
+	ri.Con_Printf(PRINT_ALL, " %d %d\n", *pwidth, *pheight);
 
-	if ( !SWimp_InitGraphics( false ) ) {
+	if (!SWimp_InitGraphics(false)) {
 		// failed to set a valid mode in windowed mode
 		return rserr_invalid_mode;
 	}
 
-	R_GammaCorrectAndSetPalette( ( const unsigned char * ) d_8to24table );
+	R_GammaCorrectAndSetPalette((const unsigned char *)d_8to24table);
 
 	return retval;
 }
@@ -251,22 +250,21 @@ rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen 
 ** to use the existing palette.  The palette is expected to be in
 ** a padded 4-byte xRGB format.
 */
-void SWimp_SetPalette( const unsigned char *palette )
+void SWimp_SetPalette(const unsigned char *palette)
 {
-	static int tmppal[256*3];
+	static int tmppal[256 * 3];
 	const unsigned char *pal;
 	int *tp;
 	int i;
 
-    if ( !palette )
-        palette = ( const unsigned char * ) sw_state.currentpalette;
- 
-	if (vga_getcolors() == 256)
-	{
+	if (!palette)
+		palette = (const unsigned char *)sw_state.currentpalette;
+
+	if (vga_getcolors() == 256) {
 		tp = tmppal;
 		pal = palette;
 
-		for (i=0 ; i < 256 ; i++, pal += 4, tp += 3) {
+		for (i = 0; i < 256; i++, pal += 4, tp += 3) {
 			tp[0] = pal[0] >> 2;
 			tp[1] = pal[1] >> 2;
 			tp[2] = pal[2] >> 2;
@@ -283,7 +281,7 @@ void SWimp_SetPalette( const unsigned char *palette )
 ** System specific graphics subsystem shutdown routine.  Destroys
 ** DIBs or DDRAW surfaces as appropriate.
 */
-void SWimp_Shutdown( void )
+void SWimp_Shutdown(void)
 {
 	if (vid.buffer) {
 		free(vid.buffer);
@@ -295,7 +293,7 @@ void SWimp_Shutdown( void )
 /*
 ** SWimp_AppActivate
 */
-void SWimp_AppActivate( qboolean active )
+void SWimp_AppActivate(qboolean active)
 {
 }
 
@@ -306,21 +304,20 @@ void SWimp_AppActivate( qboolean active )
 Sys_MakeCodeWriteable
 ================
 */
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
+void Sys_MakeCodeWriteable(unsigned long startaddr, unsigned long length)
 {
 
 	int r;
 	unsigned long addr;
 	int psize = getpagesize();
 
-	addr = (startaddr & ~(psize-1)) - psize;
+	addr = (startaddr & ~(psize - 1)) - psize;
 
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
+//      fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
+//                      addr, startaddr+length, length);
 
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
+	r = mprotect((char *)addr, length + startaddr - addr + psize, 7);
 
 	if (r < 0)
-    		Sys_Error("Protection change failed\n");
+		Sys_Error("Protection change failed\n");
 }
-

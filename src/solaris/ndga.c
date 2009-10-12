@@ -31,14 +31,12 @@
 #define DBG(x)
 #endif
 
-int
-ndga_get_eventmask(void)
+int ndga_get_eventmask(void)
 {
 	return (VisibilityChangeMask | ExposureMask | StructureNotifyMask);
 }
 
-void
-ndga_destroy(struct ndga_state * sp)
+void ndga_destroy(struct ndga_state *sp)
 {
 	if (sp) {
 		if (sp->session && sp->sent_clip) {
@@ -53,17 +51,16 @@ ndga_destroy(struct ndga_state * sp)
 	}
 }
 
-struct ndga_state *
-ndga_new(Display *display, Window window, nvSession session, 
-	int xalign, int yalign)
+struct ndga_state *ndga_new(Display * display, Window window, nvSession session,
+			    int xalign, int yalign)
 {
 	struct ndga_state *sp;
-	Window	       *children;
-	int		nchildren;
+	Window *children;
+	int nchildren;
 	XWindowAttributes attr;
-	int		retval;
+	int retval;
 
-	sp = (struct ndga_state *) malloc(sizeof(*sp));
+	sp = (struct ndga_state *)malloc(sizeof(*sp));
 	if (sp == NULL)
 		return (NULL);
 	memset(sp, 0, sizeof(*sp));
@@ -88,7 +85,7 @@ ndga_new(Display *display, Window window, nvSession session,
 	sp->session = session;
 
 	XQueryTree(sp->display, sp->window, &sp->root, &sp->parent,
-	    &children, &nchildren);
+		   &children, &nchildren);
 
 	retval = XGetWindowAttributes(sp->display, sp->root, &attr);
 	if (retval == 0) {
@@ -106,25 +103,23 @@ ndga_new(Display *display, Window window, nvSession session,
 	sp->screenRect.y = attr.y;
 	sp->screenRect.width = attr.width;
 	sp->screenRect.height = attr.height;
-	DBG(fprintf(stderr, "screen %d,%d %dx%d\n", 
-		sp->screenRect.x, sp->screenRect.y,
-		sp->screenRect.width, sp->screenRect.height));
+	DBG(fprintf(stderr, "screen %d,%d %dx%d\n",
+		    sp->screenRect.x, sp->screenRect.y,
+		    sp->screenRect.width, sp->screenRect.height));
 	NUnionRectWithRegion(&sp->screenRect, sp->screenArea, sp->screenArea);
 
 	return (sp);
 }
 
-static void
-get_win_info(struct ndga_state * sp)
+static void get_win_info(struct ndga_state *sp)
 {
-	int		depth;
-	int		xr, yr, wr, hr, border;
-	Window		w, root, parent, *children;
-	int		nchildren;
-	int		x, y;
+	int depth;
+	int xr, yr, wr, hr, border;
+	Window w, root, parent, *children;
+	int nchildren;
+	int x, y;
 	XWindowAttributes attr;
-	int		retval;
-
+	int retval;
 
 	DBG(fprintf(stderr, "get_win_info()\n"));
 	retval = XGetWindowAttributes(sp->display, sp->window, &attr);
@@ -148,7 +143,7 @@ get_win_info(struct ndga_state * sp)
 	w = sp->parent;
 	while (w && w != sp->root) {
 		XGetGeometry(sp->display, w, &root, &xr, &yr, &wr, &hr,
-		    &border, &depth);
+			     &border, &depth);
 		x += xr + border;
 		y += yr + border;
 		XQueryTree(sp->display, w, &root, &w, &children, &nchildren);
@@ -163,20 +158,18 @@ get_win_info(struct ndga_state * sp)
 	sp->visRect.height = sp->h;
 
 	DBG(fprintf(stderr, "X %d Y %d W %d H %d\n", sp->x, sp->y,
-		sp->w, sp->h));
+		    sp->w, sp->h));
 }
 
-static void
-rdump(void *a, int x, int y, int w, int h)
+static void rdump(void *a, int x, int y, int w, int h)
 {
-	struct ndga_state *s = (struct ndga_state *) a;
+	struct ndga_state *s = (struct ndga_state *)a;
 	fprintf(stderr, "%d,%d %dx%d\n", x, y, w, h);
 }
 
-static void
-ndga_handle_change(struct ndga_state *sp)
+static void ndga_handle_change(struct ndga_state *sp)
 {
-	NRectangle	rectangle;
+	NRectangle rectangle;
 
 	get_win_info(sp);
 	if (sp->is_open && sp->is_unobscured && !sp->was_unobscured) {
@@ -186,8 +179,7 @@ ndga_handle_change(struct ndga_state *sp)
 		rectangle.height = sp->h;
 		NDestroyRegion(sp->region);
 		sp->region = NCreateRegion();
-		NUnionRectWithRegion(&rectangle, sp->region,
-		    sp->region);
+		NUnionRectWithRegion(&rectangle, sp->region, sp->region);
 
 		DBG(fprintf(stderr, "Full clip\n"));
 	} else if (!sp->is_open || !sp->is_visible) {
@@ -199,15 +191,15 @@ ndga_handle_change(struct ndga_state *sp)
 	NOffsetRegion(sp->clip, sp->x, sp->y);
 	NIntersectRegion(sp->clip, sp->screenArea, sp->clip);
 	if (sp->xalign > 1 || sp->yalign > 1) {
-		NAlignRegion(sp->clip, sp->clip, sp->x, sp->xalign, sp->y, 
-			sp->yalign);
+		NAlignRegion(sp->clip, sp->clip, sp->x, sp->xalign, sp->y,
+			     sp->yalign);
 	}
 
-	if (sp->x < sp->screenRect.x || 
-	    sp->y < sp->screenRect.y || 
+	if (sp->x < sp->screenRect.x ||
+	    sp->y < sp->screenRect.y ||
 	    sp->x + sp->w > sp->screenRect.x + sp->screenRect.width ||
 	    sp->y + sp->h > sp->screenRect.y + sp->screenRect.height) {
-		(void) NClipBox(sp->clip, &sp->visRect);
+		(void)NClipBox(sp->clip, &sp->visRect);
 	} else {
 		sp->visRect.x = sp->x;
 		sp->visRect.y = sp->y;
@@ -226,8 +218,7 @@ ndga_handle_change(struct ndga_state *sp)
 /*
  * Keep the session manager informed
  */
-static void
-update_clip(struct ndga_state *sp)
+static void update_clip(struct ndga_state *sp)
 {
 	if (!NEqualRegion(sp->clip, sp->lastclip)) {
 		NUnionRegion(sp->clip, sp->clip, sp->lastclip);
@@ -249,13 +240,12 @@ int fix_visibility = -1;
  *
  * Expected to be fixed by Solaris 2.8
  */
-static void
-ndga_workaround(struct ndga_state * sp)
+static void ndga_workaround(struct ndga_state *sp)
 {
 	char *s;
 
 	if (fix_visibility == -1) {
-		if ((s = getenv("CORONA_VISIBILITY_FIX")) != NULL && 
+		if ((s = getenv("CORONA_VISIBILITY_FIX")) != NULL &&
 		    (*s == 'T' || *s == 't' || *s == '1')) {
 			fix_visibility = 1;
 		} else {
@@ -271,11 +261,11 @@ ndga_workaround(struct ndga_state * sp)
 
 		now = gethrtime();
 		if (now - last > NS_PER_SEC) {
-			Window		w;
+			Window w;
 
 			DBG(fprintf(stderr, "Poll for clip\n"));
 			w = XCreateSimpleWindow(sp->display, sp->window,
-			    0, 0, 30000, 30000, 0, 0, 0);
+						0, 0, 30000, 30000, 0, 0, 0);
 			XMapWindow(sp->display, w);
 			XFlush(sp->display);
 			XDestroyWindow(sp->display, w);
@@ -289,7 +279,7 @@ ndga_workaround(struct ndga_state * sp)
 		}
 	}
 }
-#endif /* X_VISIBILITY_BUG */
+#endif				/* X_VISIBILITY_BUG */
 
 /*
  * attempt to start direct io; returns 1 if visible and sets the
@@ -300,16 +290,14 @@ ndga_workaround(struct ndga_state * sp)
  *
  * Returns 0 if the window is not visible.
  */
-int
-ndga_start(struct ndga_state * sp,
-    int *xp,			/* x */
-    int *yp,			/* y */
-    int *wp,			/* width */
-    int *hp,			/* height */
-    int *is_unobscured,		/* 1 if clipped, 0 if not */
-    int *clipEvent		/* clip event count */)
+int ndga_start(struct ndga_state *sp, int *xp,	/* x */
+	       int *yp,		/* y */
+	       int *wp,		/* width */
+	       int *hp,		/* height */
+	       int *is_unobscured,	/* 1 if clipped, 0 if not */
+	       int *clipEvent /* clip event count */ )
 {
-	char	       *loc;
+	char *loc;
 
 	if (!sp)
 		return (0);
@@ -327,9 +315,9 @@ ndga_start(struct ndga_state * sp,
 	 * If fully visible or if partially visible and the client is
 	 * expecting to handle clipping, allow it to go through
 	 */
-	if (sp->is_open && sp->is_visible && 
-	    (sp->is_unobscured || 
-	    (clipEvent != NULL && is_unobscured != NULL))) {
+	if (sp->is_open && sp->is_visible &&
+	    (sp->is_unobscured ||
+	     (clipEvent != NULL && is_unobscured != NULL))) {
 		if (sp->session && sp->sent_clip == 0) {
 			nvSessionClipRegion(sp->session, sp->clip);
 			sp->sent_clip = 1;
@@ -382,8 +370,7 @@ ndga_start(struct ndga_state * sp,
  * it. If the clip argument is NULL, a new region is allocated. It
  * is the responsibility of the caller to free the clip.
  */
-NRegion
-ndga_clip(struct ndga_state * sp, NRegion clip)
+NRegion ndga_clip(struct ndga_state * sp, NRegion clip)
 {
 	if (!clip)
 		clip = NCreateRegion();
@@ -391,12 +378,11 @@ ndga_clip(struct ndga_state * sp, NRegion clip)
 	/*
 	 * Use union as copy
 	 */
-	(void) NUnionRegion(sp->clip, sp->clip, clip);
-	return(clip);
+	(void)NUnionRegion(sp->clip, sp->clip, clip);
+	return (clip);
 }
 
-void
-ndga_done(struct ndga_state * sp)
+void ndga_done(struct ndga_state *sp)
 {
 	if (!sp)
 		return;
@@ -414,13 +400,12 @@ ndga_done(struct ndga_state * sp)
 
 #ifdef X_VISIBILITY_BUG
 	ndga_workaround(sp);
-#endif /* X_VISIBILITY_BUG */
+#endif				/* X_VISIBILITY_BUG */
 }
 
-void
-ndga_process_event(struct ndga_state * sp, XEvent * event)
+void ndga_process_event(struct ndga_state *sp, XEvent * event)
 {
-	NRectangle	rectangle;
+	NRectangle rectangle;
 
 	if (!sp)
 		return;
@@ -432,7 +417,7 @@ ndga_process_event(struct ndga_state * sp, XEvent * event)
 			sp->region = NCreateRegion();
 			sp->clearOnExpose = 0;
 		}
-#endif /* X_VISIBILITY_BUG */
+#endif				/* X_VISIBILITY_BUG */
 		rectangle.x = event->xexpose.x;
 		rectangle.y = event->xexpose.y;
 		rectangle.width = event->xexpose.width;
@@ -440,10 +425,9 @@ ndga_process_event(struct ndga_state * sp, XEvent * event)
 		NUnionRectWithRegion(&rectangle, sp->region, sp->region);
 
 		DBG(fprintf(stderr, "Expose: %d,%d %dx%d\n",
-			event->xexpose.x,
-			event->xexpose.y,
-			event->xexpose.width,
-			event->xexpose.height));
+			    event->xexpose.x,
+			    event->xexpose.y,
+			    event->xexpose.width, event->xexpose.height));
 		if (event->xexpose.count == 0) {
 			/*
 			 * Handle the last in a sequence of expose events.
@@ -457,26 +441,27 @@ ndga_process_event(struct ndga_state * sp, XEvent * event)
 		    (event->xvisibility.state == VisibilityUnobscured);
 		sp->is_changed = 1;
 		DBG(fprintf(stderr, "Visiblility: %s\n",
-			(event->xvisibility.state == VisibilityUnobscured) ?
-			"Unobscured" :
-			((event->xvisibility.state == VisibilityFullyObscured) ?
-			    "FullyObscured" : "PartuallyObscured")));
+			    (event->xvisibility.state == VisibilityUnobscured) ?
+			    "Unobscured" :
+			    ((event->xvisibility.state ==
+			      VisibilityFullyObscured) ? "FullyObscured" :
+			     "PartuallyObscured")));
 		if (event->xvisibility.state == VisibilityPartiallyObscured) {
-			Window		w;
+			Window w;
 			DBG(fprintf(stderr, "Request full clip\n"));
 
 			NDestroyRegion(sp->region);
 			sp->region = NCreateRegion();
 
 			w = XCreateSimpleWindow(sp->display, sp->window,
-			    0, 0, 30000, 30000, 0, 0, 0);
+						0, 0, 30000, 30000, 0, 0, 0);
 			XMapWindow(sp->display, w);
 			XFlush(sp->display);
 			XDestroyWindow(sp->display, w);
 			XFlush(sp->display);
 			/*
 			 * sync so we will get expose events all together
-			 */ 
+			 */
 			XSync(sp->display, False);
 		}
 	} else if (event->xany.type == UnmapNotify) {
@@ -526,8 +511,7 @@ ndga_process_event(struct ndga_state * sp, XEvent * event)
 	}
 }
 
-int
-ndga_isvisible(ndga_t sp)
+int ndga_isvisible(ndga_t sp)
 {
 	if (!sp) {
 		/*
@@ -544,11 +528,10 @@ ndga_isvisible(ndga_t sp)
 	if (!sp->busy && sp->new_clip) {
 		update_clip(sp);
 	}
-
 #ifdef X_VISIBILITY_BUG
 	ndga_workaround(sp);
-#endif /* X_VISIBILITY_BUG */
+#endif				/* X_VISIBILITY_BUG */
 
-	DBG(fprintf(stderr, "is_visible %d\n",  sp->is_open && sp->is_visible));
+	DBG(fprintf(stderr, "is_visible %d\n", sp->is_open && sp->is_visible));
 	return (sp->is_open && sp->is_visible);
 }

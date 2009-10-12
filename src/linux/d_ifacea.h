@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ALIAS_ONSEAM				0x0020
 
 // !!! if this is changed, it must be changed in d_iface.h too !!!
-#define TURB_TEX_SIZE	64		// base turbulent texture size
+#define TURB_TEX_SIZE	64	// base turbulent texture size
 
 // !!! if this is changed, it must be changed in d_iface.h too !!!
 #define	CYCLE	128
@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAXHEIGHT	1024
 
 // !!! if this is changed, it must be changed in quakedef.h too !!!
-#define CACHE_SIZE	32		// used to align key data structures
+#define CACHE_SIZE	32	// used to align key data structures
 
 // particle_t structure
 // !!! if this is changed, it must be changed in d_iface.h too !!!
@@ -68,14 +68,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define fv_size				32
 #define fv_shift			5
 
-
 // stvert_t structure
 // !!! if this is changed, it must be changed in modelgen.h too !!!
 #define stv_onseam	0
 #define stv_s		4
 #define stv_t		8
 #define stv_size	12
-
 
 // trivertx_t structure
 // !!! if this is changed, it must be changed in modelgen.h too !!!
@@ -95,4 +93,3 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define atd_drawtype		28
 #define atd_seamfixupX16	32
 #define atd_size			36
-

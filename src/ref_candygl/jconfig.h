@@ -21,12 +21,11 @@ typedef unsigned char boolean;
 #endif
 #define HAVE_BOOLEAN		/* prevent jmorecfg.h from redefining it */
 
-
 #ifdef JPEG_INTERNALS
 
 #undef RIGHT_SHIFT_IS_UNSIGNED
 
-#endif /* JPEG_INTERNALS */
+#endif				/* JPEG_INTERNALS */
 
 #ifdef JPEG_CJPEG_DJPEG
 
@@ -42,4 +41,4 @@ typedef unsigned char boolean;
 #undef DONT_USE_B_MODE
 #undef PROGRESS_REPORT		/* optional */
 
-#endif /* JPEG_CJPEG_DJPEG */
+#endif				/* JPEG_CJPEG_DJPEG */

@@ -9,7 +9,7 @@
  */
 typedef void *ndga_t;
 
-#else 
+#else
 /*
  * This is implementaion private
  *
@@ -37,8 +37,8 @@ struct ndga_state {
 	int yalign;
 	nvSession session;
 
-	void (* on_open)();
-	void (* on_close)();
+	void (*on_open) ();
+	void (*on_close) ();
 
 	Display *display;
 	Window window;
@@ -52,29 +52,27 @@ struct ndga_state {
 	NRectangle screenRect;
 	NRectangle visRect;
 
-	int	clipEvent;
+	int clipEvent;
 
-	int	clearOnExpose;
+	int clearOnExpose;
 };
 
 typedef struct ndga_state *ndga_t;
 
-#endif /* NDGA_IMPLEMENTATION */
+#endif				/* NDGA_IMPLEMENTATION */
 
-
-ndga_t ndga_new(Display *display, Window window, nvSession session, 
-	int xalign, int yalign);
+ndga_t ndga_new(Display * display, Window window, nvSession session,
+		int xalign, int yalign);
 
 void ndga_destroy(ndga_t sp);
 
-int ndga_start(ndga_t sp,
-	int *xp,	/* x */
-	int *yp,	/* y */
-	int *wp,	/* width */
-	int *hp,	/* height */
-	int *is_unobscured, /* 1 if unobscured 0 if clipped */
-	int *clipEvent	/* clip event number */
-	);
+int ndga_start(ndga_t sp, int *xp,	/* x */
+	       int *yp,		/* y */
+	       int *wp,		/* width */
+	       int *hp,		/* height */
+	       int *is_unobscured,	/* 1 if unobscured 0 if clipped */
+	       int *clipEvent	/* clip event number */
+    );
 
 /*
  * update the argument to hold the current clip-list and and return
@@ -88,6 +86,6 @@ void ndga_done(ndga_t sp);
 int ndga_isvisible(ndga_t sp);
 
 int ndga_get_eventmask(void);
-void ndga_process_event(ndga_t sp, XEvent *event);
+void ndga_process_event(ndga_t sp, XEvent * event);
 
 #endif

@@ -22,12 +22,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __GL_GLX_SOLARIS_H__
 
 //GLX Functions
-XVisualInfo * (APIENTRY * qglXChooseVisual)( Display *dpy, int screen, int *attribList );
-GLXContext (APIENTRY * qglXCreateContext)( Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct );
-void (APIENTRY * qglXDestroyContext)( Display *dpy, GLXContext ctx );
-Bool (APIENTRY * qglXMakeCurrent)( Display *dpy, GLXDrawable drawable, GLXContext ctx);
-void (APIENTRY * qglXCopyContext)( Display *dpy, GLXContext src, GLXContext dst, GLuint mask );
-void (APIENTRY * qglXSwapBuffers)( Display *dpy, GLXDrawable drawable );
-int (APIENTRY * qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
+XVisualInfo *(APIENTRY * qglXChooseVisual) (Display * dpy, int screen,
+					    int *attribList);
+GLXContext(APIENTRY * qglXCreateContext) (Display * dpy, XVisualInfo * vis,
+					  GLXContext shareList, Bool direct);
+void (APIENTRY * qglXDestroyContext) (Display * dpy, GLXContext ctx);
+Bool(APIENTRY * qglXMakeCurrent) (Display * dpy, GLXDrawable drawable,
+				  GLXContext ctx);
+void (APIENTRY * qglXCopyContext) (Display * dpy, GLXContext src,
+				   GLXContext dst, GLuint mask);
+void (APIENTRY * qglXSwapBuffers) (Display * dpy, GLXDrawable drawable);
+int (APIENTRY * qglXGetConfig) (Display * dpy, XVisualInfo * vis, int attrib,
+				int *value);
 
 #endif

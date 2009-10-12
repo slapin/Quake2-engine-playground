@@ -52,8 +52,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 glwstate_t glw_state;
 
-static qboolean GLimp_SwitchFullscreen( int width, int height );
-qboolean GLimp_InitGL (void);
+static qboolean GLimp_SwitchFullscreen(int width, int height);
+qboolean GLimp_InitGL(void);
 qboolean have_stencil = false;
 
 extern cvar_t *vid_fullscreen;
@@ -62,46 +62,49 @@ extern cvar_t *vid_ref;
 static fxMesaContext fc = NULL;
 
 //FX Mesa Functions
-fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);
-fxMesaContext (*qfxMesaCreateBestContext)(GLuint win, GLint width, GLint height, const GLint attribList[]);
-void (*qfxMesaDestroyContext)(fxMesaContext ctx);
-void (*qfxMesaMakeCurrent)(fxMesaContext ctx);
-fxMesaContext (*qfxMesaGetCurrentContext)(void);
-void (*qfxMesaSwapBuffers)(void);
-
+fxMesaContext(*qfxMesaCreateContext) (GLuint win, GrScreenResolution_t,
+				      GrScreenRefresh_t,
+				      const GLint attribList[]);
+fxMesaContext(*qfxMesaCreateBestContext) (GLuint win, GLint width, GLint height,
+					  const GLint attribList[]);
+void (*qfxMesaDestroyContext) (fxMesaContext ctx);
+void (*qfxMesaMakeCurrent) (fxMesaContext ctx);
+fxMesaContext(*qfxMesaGetCurrentContext) (void);
+void (*qfxMesaSwapBuffers) (void);
 
 #define NUM_RESOLUTIONS 16
 
-static resolutions[NUM_RESOLUTIONS][3]={ 
-	{ 320,200,  GR_RESOLUTION_320x200 },
-	{ 320,240,  GR_RESOLUTION_320x240 },
-	{ 400,256,  GR_RESOLUTION_400x256 },
-	{ 400,300,  GR_RESOLUTION_400x300 },
-	{ 512,384,  GR_RESOLUTION_512x384 },
-	{ 640,200,  GR_RESOLUTION_640x200 },
-	{ 640,350,  GR_RESOLUTION_640x350 },
-	{ 640,400,  GR_RESOLUTION_640x400 },
-	{ 640,480,  GR_RESOLUTION_640x480 },
-	{ 800,600,  GR_RESOLUTION_800x600 },
-	{ 960,720,  GR_RESOLUTION_960x720 },
-	{ 856,480,  GR_RESOLUTION_856x480 },
-	{ 512,256,  GR_RESOLUTION_512x256 },
-	{ 1024,768, GR_RESOLUTION_1024x768 },
-	{ 1280,1024,GR_RESOLUTION_1280x1024 },
-	{ 1600,1200,GR_RESOLUTION_1600x1200 }
+static resolutions[NUM_RESOLUTIONS][3] = {
+	{320, 200, GR_RESOLUTION_320x200},
+	{320, 240, GR_RESOLUTION_320x240},
+	{400, 256, GR_RESOLUTION_400x256},
+	{400, 300, GR_RESOLUTION_400x300},
+	{512, 384, GR_RESOLUTION_512x384},
+	{640, 200, GR_RESOLUTION_640x200},
+	{640, 350, GR_RESOLUTION_640x350},
+	{640, 400, GR_RESOLUTION_640x400},
+	{640, 480, GR_RESOLUTION_640x480},
+	{800, 600, GR_RESOLUTION_800x600},
+	{960, 720, GR_RESOLUTION_960x720},
+	{856, 480, GR_RESOLUTION_856x480},
+	{512, 256, GR_RESOLUTION_512x256},
+	{1024, 768, GR_RESOLUTION_1024x768},
+	{1280, 1024, GR_RESOLUTION_1280x1024},
+	{1600, 1200, GR_RESOLUTION_1600x1200}
 };
 
 static int findres(int *width, int *height)
 {
 	int i;
 
-	for(i=0;i<NUM_RESOLUTIONS;i++)
-		if((*width<=resolutions[i][0]) && (*height<=resolutions[i][1])) {
+	for (i = 0; i < NUM_RESOLUTIONS; i++)
+		if ((*width <= resolutions[i][0])
+		    && (*height <= resolutions[i][1])) {
 			*width = resolutions[i][0];
 			*height = resolutions[i][1];
 			return resolutions[i][2];
 		}
-        
+
 	*width = 640;
 	*height = 480;
 	return GR_RESOLUTION_640x480;
@@ -130,25 +133,24 @@ static void InitSig(void)
 /*
 ** GLimp_SetMode
 */
-int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+int GLimp_SetMode(int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
 	int width, height;
 	GLint attribs[32];
 
-	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
+	ri.Con_Printf(PRINT_ALL, "Initializing OpenGL display\n");
 
-	ri.Con_Printf (PRINT_ALL, "...setting mode %d:", mode );
+	ri.Con_Printf(PRINT_ALL, "...setting mode %d:", mode);
 
-	if ( !ri.Vid_GetModeInfo( &width, &height, mode ) )
-	{
-		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
+	if (!ri.Vid_GetModeInfo(&width, &height, mode)) {
+		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d\n", width, height );
+	ri.Con_Printf(PRINT_ALL, " %d %d\n", width, height);
 
 	// destroy the existing window
-	GLimp_Shutdown ();
+	GLimp_Shutdown();
 
 	// set fx attribs
 	attribs[0] = FXMESA_DOUBLEBUFFER;
@@ -158,8 +160,8 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	attribs[4] = 1;
 	attribs[5] = FXMESA_NONE;
 
-	fc = qfxMesaCreateContext(0, findres(&width, &height), GR_REFRESH_75Hz, 
-		attribs);
+	fc = qfxMesaCreateContext(0, findres(&width, &height), GR_REFRESH_75Hz,
+				  attribs);
 	if (!fc)
 		return rserr_invalid_mode;
 
@@ -167,7 +169,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	*pheight = height;
 
 	// let the sound and input subsystems know about the new window
-	ri.Vid_NewWindow (width, height);
+	ri.Vid_NewWindow(width, height);
 
 	qfxMesaMakeCurrent(fc);
 
@@ -183,7 +185,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 ** for the window.  The state structure is also nulled out.
 **
 */
-void GLimp_Shutdown( void )
+void GLimp_Shutdown(void)
 {
 	if (fc) {
 		qfxMesaDestroyContext(fc);
@@ -196,7 +198,7 @@ void GLimp_Shutdown( void )
 	qfxMesaMakeCurrent           = NULL;
 	qfxMesaGetCurrentContext     = NULL;
 	qfxMesaSwapBuffers           = NULL;
-*/		
+*/
 }
 
 /*
@@ -205,30 +207,30 @@ void GLimp_Shutdown( void )
 ** This routine is responsible for initializing the OS specific portions
 ** of OpenGL.  
 */
-int GLimp_Init( void *hinstance, void *wndproc )
+int GLimp_Init(void *hinstance, void *wndproc)
 {
 	InitSig();
 
-	if ( glw_state.OpenGLLib ) {
-		#define GPA( a ) dlsym( glw_state.OpenGLLib, a )
-		
-		qfxMesaCreateContext         =  GPA("fxMesaCreateContext");
-		qfxMesaCreateBestContext     =  GPA("fxMesaCreateBestContext");
-		qfxMesaDestroyContext        =  GPA("fxMesaDestroyContext");
-		qfxMesaMakeCurrent           =  GPA("fxMesaMakeCurrent");
-		qfxMesaGetCurrentContext     =  GPA("fxMesaGetCurrentContext");
-		qfxMesaSwapBuffers           =  GPA("fxMesaSwapBuffers");
-		
+	if (glw_state.OpenGLLib) {
+#define GPA( a ) dlsym( glw_state.OpenGLLib, a )
+
+		qfxMesaCreateContext = GPA("fxMesaCreateContext");
+		qfxMesaCreateBestContext = GPA("fxMesaCreateBestContext");
+		qfxMesaDestroyContext = GPA("fxMesaDestroyContext");
+		qfxMesaMakeCurrent = GPA("fxMesaMakeCurrent");
+		qfxMesaGetCurrentContext = GPA("fxMesaGetCurrentContext");
+		qfxMesaSwapBuffers = GPA("fxMesaSwapBuffers");
+
 		return true;
 	}
-	
+
 	return false;
 }
 
 /*
 ** GLimp_BeginFrame
 */
-void GLimp_BeginFrame( float camera_seperation )
+void GLimp_BeginFrame(float camera_seperation)
 {
 }
 
@@ -239,7 +241,7 @@ void GLimp_BeginFrame( float camera_seperation )
 ** as yet to be determined.  Probably better not to make this a GLimp
 ** function and instead do a call to GLimp_SwapBuffers.
 */
-void GLimp_EndFrame (void)
+void GLimp_EndFrame(void)
 {
 	qglFlush();
 	qfxMesaSwapBuffers();
@@ -248,25 +250,24 @@ void GLimp_EndFrame (void)
 /*
 ** GLimp_AppActivate
 */
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate(qboolean active)
 {
 }
 
-void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
-                             GLsizei width, GLenum format, GLenum type,
-                             const GLvoid *table )
+void Fake_glColorTableEXT(GLenum target, GLenum internalformat,
+			  GLsizei width, GLenum format, GLenum type,
+			  const GLvoid * table)
 {
 	byte temptable[256][4];
 	byte *intbl;
 	int i;
 
-	for (intbl = (byte *)table, i = 0; i < 256; i++) {
+	for (intbl = (byte *) table, i = 0; i < 256; i++) {
 		temptable[i][2] = *intbl++;
 		temptable[i][1] = *intbl++;
 		temptable[i][0] = *intbl++;
 		temptable[i][3] = 255;
 	}
-	qglEnable( GL_SHARED_TEXTURE_PALETTE_EXT );
-	qgl3DfxSetPaletteEXT((GLuint *)temptable);
+	qglEnable(GL_SHARED_TEXTURE_PALETTE_EXT);
+	qgl3DfxSetPaletteEXT((GLuint *) temptable);
 }
-

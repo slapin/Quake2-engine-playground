@@ -10,7 +10,7 @@
 //
 
 // !!! if this is changed, it must be changed in d_iface.h too !!!
-#define TURB_TEX_SIZE	64		// base turbulent texture size
+#define TURB_TEX_SIZE	64	// base turbulent texture size
 
 // !!! if this is changed, it must be changed in d_iface.h too !!!
 #define	CYCLE	128
@@ -19,7 +19,7 @@
 #define	MAXHEIGHT	1200
 
 // !!! if this is changed, it must be changed in qcommon.h too !!!
-#define CACHE_SIZE	32		// used to align key data structures
+#define CACHE_SIZE	32	// used to align key data structures
 
 // particle_t structure
 // !!! if this is changed, it must be changed in d_iface.h too !!!
@@ -46,14 +46,12 @@
 #define fv_size				32
 #define fv_shift			5
 
-
 // stvert_t structure
 // !!! if this is changed, it must be changed in modelgen.h too !!!
 #define stv_onseam	0
 #define stv_s		4
 #define stv_t		8
 #define stv_size	12
-
 
 // trivertx_t structure
 // !!! if this is changed, it must be changed in modelgen.h too !!!
@@ -73,4 +71,3 @@
 #define atd_drawtype		28
 #define atd_seamfixupX16	32
 #define atd_size			36
-

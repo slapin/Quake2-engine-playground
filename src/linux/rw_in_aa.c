@@ -78,29 +78,29 @@ void KBD_Update(void)
 {
 	int ev;
 	int down;
-	
+
 	while (ev = aa_getevent(aac, 0)) {
 		down = 1;
-release:
+ release:
 		switch (ev) {
-			case AA_UP:
-				Key_Event_fp(K_UPARROW, down);
-				break;
-			case AA_DOWN:
-				Key_Event_fp(K_DOWNARROW, down);
-				break;
-			case AA_LEFT:
-				Key_Event_fp(K_LEFTARROW, down);
-				break;
-			case AA_RIGHT:
-				Key_Event_fp(K_RIGHTARROW, down);
-				break;
-			case AA_BACKSPACE:
-				Key_Event_fp(K_BACKSPACE, down);
-				break;
-			case AA_ESC:
-				Key_Event_fp(K_ESCAPE, down);
-				break;
+		case AA_UP:
+			Key_Event_fp(K_UPARROW, down);
+			break;
+		case AA_DOWN:
+			Key_Event_fp(K_DOWNARROW, down);
+			break;
+		case AA_LEFT:
+			Key_Event_fp(K_LEFTARROW, down);
+			break;
+		case AA_RIGHT:
+			Key_Event_fp(K_RIGHTARROW, down);
+			break;
+		case AA_BACKSPACE:
+			Key_Event_fp(K_BACKSPACE, down);
+			break;
+		case AA_ESC:
+			Key_Event_fp(K_ESCAPE, down);
+			break;
 		}
 		if (ev < 256) {
 			Key_Event_fp(ev, down);
@@ -126,7 +126,7 @@ void KBD_Close(void)
 
 // this is inside the renderer shared lib, so these are called from vid_so
 
-void RW_IN_Init(in_state_t *in_state_p)
+void RW_IN_Init(in_state_t * in_state_p)
 {
 }
 
@@ -139,7 +139,7 @@ void RW_IN_Shutdown(void)
 IN_Commands
 ===========
 */
-void RW_IN_Commands (void)
+void RW_IN_Commands(void)
 {
 }
 
@@ -148,17 +148,14 @@ void RW_IN_Commands (void)
 IN_Move
 ===========
 */
-void RW_IN_Move (usercmd_t *cmd)
+void RW_IN_Move(usercmd_t * cmd)
 {
 }
 
-void RW_IN_Frame (void)
+void RW_IN_Frame(void)
 {
 }
 
 void RW_IN_Activate(void)
 {
 }
-
-
-

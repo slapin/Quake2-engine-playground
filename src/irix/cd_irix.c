@@ -24,42 +24,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void CDAudio_Play(int track, qboolean looping)
 {
-        Com_Printf("XXX - CDAudio_Play %i (%i)\n", track, looping);
+	Com_Printf("XXX - CDAudio_Play %i (%i)\n", track, looping);
 }
-
 
 void CDAudio_RandomPlay(void)
 {
-        Com_Printf("XXX - CDAudio_RandomPlay\n");
+	Com_Printf("XXX - CDAudio_RandomPlay\n");
 }
-
 
 void CDAudio_Stop(void)
 {
-        Com_Printf("XXX - CDAudio_Stop\n");
+	Com_Printf("XXX - CDAudio_Stop\n");
 }
-
 
 void CDAudio_Resume(void)
 {
-        Com_Printf("XXX - CDAudio_Resume\n");
+	Com_Printf("XXX - CDAudio_Resume\n");
 }
-
 
 void CDAudio_Update(void)
 {
 /*         Com_Printf("XXX - CDAudio_Update\n"); */
 }
 
-
 int CDAudio_Init(void)
 {
-        Com_Printf("XXX - CDAudio_Init\n");
+	Com_Printf("XXX - CDAudio_Init\n");
 	return 0;
 }
 
-
 void CDAudio_Shutdown(void)
 {
-        Com_Printf("XXX - CDAudio_Shutdown\n");
+	Com_Printf("XXX - CDAudio_Shutdown\n");
 }

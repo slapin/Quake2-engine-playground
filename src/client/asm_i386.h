@@ -78,4 +78,3 @@
 #define TRANSPARENT_COLOR	255
 
 #endif
-

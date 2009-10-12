@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define C(label) _##label
 #endif
 
-
-//#define GLQUAKE	1
+//#define GLQUAKE       1
 
 #if defined(_WIN32) && !defined(WINDED)
 
@@ -47,246 +46,205 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TRANSPARENT_COLOR	255
 
 #ifndef GLQUAKE
-	.extern C(d_zistepu)
-	.extern C(d_pzbuffer)
-	.extern C(d_zistepv)
-	.extern C(d_zrowbytes)
-	.extern C(d_ziorigin)
-	.extern C(r_turb_s)
-	.extern C(r_turb_t)
-	.extern C(r_turb_pdest)
-	.extern C(r_turb_spancount)
-	.extern C(r_turb_turb)
-	.extern C(r_turb_pbase)
-	.extern C(r_turb_sstep)
-	.extern C(r_turb_tstep)
-	.extern	C(r_bmodelactive)
-	.extern	C(d_sdivzstepu)
-	.extern	C(d_tdivzstepu)
-	.extern	C(d_sdivzstepv)
-	.extern	C(d_tdivzstepv)
-	.extern	C(d_sdivzorigin)
-	.extern	C(d_tdivzorigin)
-	.extern	C(sadjust)
-	.extern	C(tadjust)
-	.extern	C(bbextents)
-	.extern	C(bbextentt)
-	.extern	C(cacheblock)
-	.extern	C(d_viewbuffer)
-	.extern	C(cachewidth)
-	.extern	C(d_pzbuffer)
-	.extern	C(d_zrowbytes)
-	.extern	C(d_zwidth)
-	.extern C(d_scantable)
-	.extern C(r_lightptr)
-	.extern C(r_numvblocks)
-	.extern C(prowdestbase)
-	.extern C(pbasesource)
-	.extern C(r_lightwidth)
-	.extern C(lightright)
-	.extern C(lightrightstep)
-	.extern C(lightdeltastep)
-	.extern C(lightdelta)
-	.extern C(lightright)
-	.extern C(lightdelta)
-	.extern C(sourcetstep)
-	.extern C(surfrowbytes)
-	.extern C(lightrightstep)
-	.extern C(lightdeltastep)
-	.extern C(r_sourcemax)
-	.extern C(r_stepback)
-	.extern C(colormap)
-	.extern C(blocksize)
-	.extern C(sourcesstep)
-	.extern C(lightleft)
-	.extern C(blockdivshift)
-	.extern C(blockdivmask)
-	.extern C(lightleftstep)
-	.extern C(r_origin)
-	.extern C(r_ppn)
-	.extern C(r_pup)
-	.extern C(r_pright)
-	.extern C(ycenter)
-	.extern C(xcenter)
-	.extern C(d_vrectbottom_particle)
-	.extern C(d_vrectright_particle)
-	.extern C(d_vrecty)
-	.extern C(d_vrectx)
-	.extern C(d_pix_shift)
-	.extern C(d_pix_min)
-	.extern C(d_pix_max)
-	.extern C(d_y_aspect_shift)
-	.extern C(screenwidth)
-	.extern C(r_leftclipped)
-	.extern C(r_leftenter)
-	.extern C(r_rightclipped)
-	.extern C(r_rightenter)
-	.extern C(modelorg)
-	.extern C(xscale)
-	.extern C(r_refdef)
-	.extern C(yscale)
-	.extern C(r_leftexit)
-	.extern C(r_rightexit)
-	.extern C(r_lastvertvalid)
-	.extern C(cacheoffset)
-	.extern C(newedges)
-	.extern C(removeedges)
-	.extern C(r_pedge)
-	.extern C(r_framecount)
-	.extern C(r_u1)
-	.extern C(r_emitted)
-	.extern C(edge_p)
-	.extern C(surface_p)
-	.extern C(surfaces)
-	.extern C(r_lzi1)
-	.extern C(r_v1)
-	.extern C(r_ceilv1)
-	.extern C(r_nearzi)
-	.extern C(r_nearzionly)
-	.extern C(edge_aftertail)
-	.extern C(edge_tail)
-	.extern C(current_iv)
-	.extern C(edge_head_u_shift20)
-	.extern C(span_p)
-	.extern C(edge_head)
-	.extern C(fv)
-	.extern C(edge_tail_u_shift20)
-	.extern C(r_apverts)
-	.extern C(r_anumverts)
-	.extern C(aliastransform)
-	.extern C(r_avertexnormals)
-	.extern C(r_plightvec)
-	.extern C(r_ambientlight)
-	.extern C(r_shadelight)
-	.extern C(aliasxcenter)
-	.extern C(aliasycenter)
-	.extern C(a_sstepxfrac)
-	.extern C(r_affinetridesc)
-	.extern C(acolormap)
-	.extern C(d_pcolormap)
-	.extern C(r_affinetridesc)
-	.extern C(d_sfrac)
-	.extern C(d_ptex)
-	.extern C(d_pedgespanpackage)
-	.extern C(d_tfrac)
-	.extern C(d_light)
-	.extern C(d_zi)
-	.extern C(d_pdest)
-	.extern C(d_pz)
-	.extern C(d_aspancount)
-	.extern C(erroradjustup)
-	.extern C(errorterm)
-	.extern C(d_xdenom)
-	.extern C(r_p0)
-	.extern C(r_p1)
-	.extern C(r_p2)
-	.extern C(a_tstepxfrac)
-	.extern C(r_sstepx)
-	.extern C(r_tstepx)
-	.extern C(a_ststepxwhole)
-	.extern C(zspantable)
-	.extern C(skintable)
-	.extern C(r_zistepx)
-	.extern C(erroradjustdown)
-	.extern C(d_countextrastep)
-	.extern C(ubasestep)
-	.extern C(a_ststepxwhole)
-	.extern C(a_tstepxfrac)
-	.extern C(r_lstepx)
-	.extern C(a_spans)
-	.extern C(erroradjustdown)
-	.extern C(d_pdestextrastep)
-	.extern C(d_pzextrastep)
-	.extern C(d_sfracextrastep)
-	.extern C(d_ptexextrastep)
-	.extern C(d_countextrastep)
-	.extern C(d_tfracextrastep)
-	.extern C(d_lightextrastep)
-	.extern C(d_ziextrastep)
-	.extern C(d_pdestbasestep)
-	.extern C(d_pzbasestep)
-	.extern C(d_sfracbasestep)
-	.extern C(d_ptexbasestep)
-	.extern C(ubasestep)
-	.extern C(d_tfracbasestep)
-	.extern C(d_lightbasestep)
-	.extern C(d_zibasestep)
-	.extern C(zspantable)
-	.extern C(r_lstepy)
-	.extern C(r_sstepy)
-	.extern C(r_tstepy)
-	.extern C(r_zistepy)
-	.extern C(D_PolysetSetEdgeTable)
-	.extern C(D_RasterizeAliasPolySmooth)
+.extern C(d_zistepu)
+.extern C(d_pzbuffer)
+.extern C(d_zistepv)
+.extern C(d_zrowbytes)
+.extern C(d_ziorigin)
+.extern C(r_turb_s)
+.extern C(r_turb_t)
+.extern C(r_turb_pdest)
+.extern C(r_turb_spancount)
+.extern C(r_turb_turb)
+.extern C(r_turb_pbase)
+.extern C(r_turb_sstep)
+.extern C(r_turb_tstep)
+.extern C(r_bmodelactive)
+.extern C(d_sdivzstepu)
+.extern C(d_tdivzstepu)
+.extern C(d_sdivzstepv)
+.extern C(d_tdivzstepv)
+.extern C(d_sdivzorigin)
+.extern C(d_tdivzorigin)
+.extern C(sadjust)
+.extern C(tadjust)
+.extern C(bbextents)
+.extern C(bbextentt)
+.extern C(cacheblock)
+.extern C(d_viewbuffer)
+.extern C(cachewidth)
+.extern C(d_pzbuffer)
+.extern C(d_zrowbytes)
+.extern C(d_zwidth)
+.extern C(d_scantable)
+.extern C(r_lightptr)
+.extern C(r_numvblocks)
+.extern C(prowdestbase)
+.extern C(pbasesource)
+.extern C(r_lightwidth)
+.extern C(lightright)
+.extern C(lightrightstep)
+.extern C(lightdeltastep)
+.extern C(lightdelta)
+.extern C(lightright)
+.extern C(lightdelta)
+.extern C(sourcetstep)
+.extern C(surfrowbytes)
+.extern C(lightrightstep)
+.extern C(lightdeltastep)
+.extern C(r_sourcemax)
+.extern C(r_stepback)
+.extern C(colormap)
+.extern C(blocksize)
+.extern C(sourcesstep)
+.extern C(lightleft)
+.extern C(blockdivshift)
+.extern C(blockdivmask)
+.extern C(lightleftstep)
+.extern C(r_origin)
+.extern C(r_ppn)
+.extern C(r_pup)
+.extern C(r_pright)
+.extern C(ycenter)
+.extern C(xcenter)
+.extern C(d_vrectbottom_particle)
+.extern C(d_vrectright_particle)
+.extern C(d_vrecty)
+.extern C(d_vrectx)
+.extern C(d_pix_shift)
+.extern C(d_pix_min)
+.extern C(d_pix_max)
+.extern C(d_y_aspect_shift)
+.extern C(screenwidth)
+.extern C(r_leftclipped)
+.extern C(r_leftenter)
+.extern C(r_rightclipped)
+.extern C(r_rightenter)
+.extern C(modelorg)
+.extern C(xscale)
+.extern C(r_refdef)
+.extern C(yscale)
+.extern C(r_leftexit)
+.extern C(r_rightexit)
+.extern C(r_lastvertvalid)
+.extern C(cacheoffset)
+.extern C(newedges)
+.extern C(removeedges)
+.extern C(r_pedge)
+.extern C(r_framecount)
+.extern C(r_u1)
+.extern C(r_emitted)
+.extern C(edge_p)
+.extern C(surface_p)
+.extern C(surfaces)
+.extern C(r_lzi1)
+.extern C(r_v1)
+.extern C(r_ceilv1)
+.extern C(r_nearzi)
+.extern C(r_nearzionly)
+.extern C(edge_aftertail)
+.extern C(edge_tail)
+.extern C(current_iv)
+.extern C(edge_head_u_shift20)
+.extern C(span_p)
+.extern C(edge_head)
+.extern C(fv)
+.extern C(edge_tail_u_shift20)
+.extern C(r_apverts)
+.extern C(r_anumverts)
+.extern C(aliastransform)
+.extern C(r_avertexnormals)
+.extern C(r_plightvec)
+.extern C(r_ambientlight)
+.extern C(r_shadelight)
+.extern C(aliasxcenter)
+.extern C(aliasycenter)
+.extern C(a_sstepxfrac)
+.extern C(r_affinetridesc)
+.extern C(acolormap)
+.extern C(d_pcolormap)
+.extern C(r_affinetridesc)
+.extern C(d_sfrac)
+.extern C(d_ptex)
+.extern C(d_pedgespanpackage)
+.extern C(d_tfrac)
+.extern C(d_light)
+.extern C(d_zi)
+.extern C(d_pdest)
+.extern C(d_pz)
+.extern C(d_aspancount)
+.extern C(erroradjustup)
+.extern C(errorterm)
+.extern C(d_xdenom)
+.extern C(r_p0)
+.extern C(r_p1)
+.extern C(r_p2)
+.extern C(a_tstepxfrac)
+.extern C(r_sstepx)
+.extern C(r_tstepx)
+.extern C(a_ststepxwhole)
+.extern C(zspantable)
+.extern C(skintable)
+.extern C(r_zistepx)
+.extern C(erroradjustdown)
+.extern C(d_countextrastep)
+.extern C(ubasestep)
+.extern C(a_ststepxwhole)
+.extern C(a_tstepxfrac)
+.extern C(r_lstepx)
+.extern C(a_spans)
+.extern C(erroradjustdown)
+.extern C(d_pdestextrastep)
+.extern C(d_pzextrastep)
+.extern C(d_sfracextrastep)
+.extern C(d_ptexextrastep)
+.extern C(d_countextrastep)
+.extern C(d_tfracextrastep)
+.extern C(d_lightextrastep)
+.extern C(d_ziextrastep)
+.extern C(d_pdestbasestep)
+.extern C(d_pzbasestep)
+.extern C(d_sfracbasestep)
+.extern C(d_ptexbasestep)
+.extern C(ubasestep)
+.extern C(d_tfracbasestep)
+.extern C(d_lightbasestep)
+.extern C(d_zibasestep)
+.extern C(zspantable)
+.extern C(r_lstepy)
+.extern C(r_sstepy)
+.extern C(r_tstepy)
+.extern C(r_zistepy)
+.extern C(D_PolysetSetEdgeTable)
+.extern C(D_RasterizeAliasPolySmooth)
 
-	.extern float_point5
-	.extern Float2ToThe31nd
-	.extern izistep
-	.extern izi
-	.extern FloatMinus2ToThe31nd
-	.extern float_1
-	.extern float_particle_z_clip
-	.extern float_minus_1
-	.extern float_0
-	.extern fp_16
-	.extern fp_64k
-	.extern fp_1m
-	.extern fp_1m_minus_1
-	.extern fp_8 
-	.extern entryvec_table
-	.extern advancetable
-	.extern sstep
-	.extern tstep
-	.extern pspantemp
-	.extern counttemp
-	.extern jumptemp
-	.extern reciprocal_table
-	.extern DP_Count
-	.extern DP_u
-	.extern DP_v
-	.extern DP_32768
-	.extern DP_Color
-	.extern DP_Pix
-	.extern DP_EntryTable
-	.extern	pbase
-	.extern s
-	.extern t
-	.extern sfracf
-	.extern tfracf
-	.extern snext
-	.extern tnext
-	.extern	spancountminus1
-	.extern zi16stepu
-	.extern sdivz16stepu
-	.extern tdivz16stepu
-	.extern	zi8stepu
-	.extern sdivz8stepu
-	.extern tdivz8stepu
-	.extern reciprocal_table_16
-	.extern entryvec_table_16
-	.extern ceil_cw
-	.extern single_cw
-	.extern fp_64kx64k
-	.extern pz
-	.extern spr8entryvec_table
+.extern float_point5.extern Float2ToThe31nd.extern izistep.extern izi.
+    extern FloatMinus2ToThe31nd.extern float_1.extern float_particle_z_clip.
+    extern float_minus_1.extern float_0.extern fp_16.extern fp_64k.extern fp_1m.
+    extern fp_1m_minus_1.extern fp_8.extern entryvec_table.extern advancetable.
+    extern sstep.extern tstep.extern pspantemp.extern counttemp.extern jumptemp.
+    extern reciprocal_table.extern DP_Count.extern DP_u.extern DP_v.
+    extern DP_32768.extern DP_Color.extern DP_Pix.extern DP_EntryTable.
+    extern pbase.extern s.extern t.extern sfracf.extern tfracf.extern snext.
+    extern tnext.extern spancountminus1.extern zi16stepu.extern sdivz16stepu.
+    extern tdivz16stepu.extern zi8stepu.extern sdivz8stepu.extern tdivz8stepu.
+    extern reciprocal_table_16.extern entryvec_table_16.extern ceil_cw.
+    extern single_cw.extern fp_64kx64k.extern pz.extern spr8entryvec_table
 #endif
-
-	.extern C(snd_scaletable)
-	.extern C(paintbuffer)
-	.extern C(snd_linear_count)
-	.extern C(snd_p)
-	.extern C(snd_vol)
-	.extern C(snd_out)
-	.extern C(vright)
-	.extern C(vup)
-	.extern C(vpn)
-	.extern C(BOPS_Error)
-
+.extern C(snd_scaletable)
+.extern C(paintbuffer)
+.extern C(snd_linear_count)
+.extern C(snd_p)
+.extern C(snd_vol)
+.extern C(snd_out)
+.extern C(vright)
+.extern C(vup)
+.extern C(vpn)
+.extern C(BOPS_Error)
 //
 // !!! note that this file must match the corresponding C structures at all
 // times !!!
 //
-
 // plane_t structure
 // !!! if this is changed, it must be changed in model.h too !!!
 // !!! if the size of this is changed, the array lookup in SV_HullPointContents
@@ -297,7 +255,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define pl_signbits	17
 #define pl_pad		18
 #define pl_size		20
-
 // hull_t structure
 // !!! if this is changed, it must be changed in model.h too !!!
 #define	hu_clipnodes		0
@@ -307,7 +264,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	hu_clip_mins		16
 #define	hu_clip_maxs		28
 #define hu_size  			40
-
 // dnode_t structure
 // !!! if this is changed, it must be changed in bspfile.h too !!!
 #define	nd_planenum		0
@@ -317,7 +273,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	nd_firstface	32
 #define	nd_numfaces		36
 #define nd_size			40
-
 // sfxcache_t structure
 // !!! if this is changed, it much be changed in sound.h too !!!
 #define sfxc_length		0
@@ -326,7 +281,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define sfxc_width		12
 #define sfxc_stereo		16
 #define sfxc_data		20
-
 // channel_t structure
 // !!! if this is changed, it much be changed in sound.h too !!!
 #define ch_sfx			0
@@ -341,25 +295,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ch_dist_mult	44
 #define ch_master_vol	48
 #define ch_size			52
-
 // portable_samplepair_t structure
 // !!! if this is changed, it much be changed in sound.h too !!!
 #define psp_left		0
 #define psp_right		4
 #define psp_size		8
-
-
 //
 // !!! note that this file must match the corresponding C structures at all
 // times !!!
 //
-
 // !!! if this is changed, it must be changed in r_local.h too !!!
 #define	NEAR_CLIP	0.01
-
 // !!! if this is changed, it must be changed in r_local.h too !!!
 #define	CYCLE	128
-
 // espan_t structure
 // !!! if this is changed, it must be changed in r_shared.h too !!!
 #define espan_t_u    	0
@@ -367,14 +315,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define espan_t_count   8
 #define espan_t_pnext	12
 #define espan_t_size    16
-
 // sspan_t structure
 // !!! if this is changed, it must be changed in d_local.h too !!!
 #define sspan_t_u    	0
 #define sspan_t_v	    4
 #define sspan_t_count   8
 #define sspan_t_size    12
-
 // spanpackage_t structure
 // !!! if this is changed, it must be changed in d_polyset.c too !!!
 #define spanpackage_t_pdest				0
@@ -385,8 +331,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define spanpackage_t_tfrac				20
 #define spanpackage_t_light				24
 #define spanpackage_t_zi				28
-#define spanpackage_t_size				32 
-
+#define spanpackage_t_size				32
 // edge_t structure
 // !!! if this is changed, it must be changed in r_shared.h too !!!
 #define et_u			0
@@ -398,7 +343,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define et_nearzi		24
 #define et_owner		28
 #define et_size			32
-
 // surf_t structure
 // !!! if this is changed, it must be changed in r_shared.h too !!!
 #define SURF_T_SHIFT	6
@@ -418,7 +362,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define st_d_zistepv	52
 #define st_pad			56
 #define st_size			64
-
 // clipplane_t structure
 // !!! if this is changed, it must be changed in r_local.h too !!!
 #define cp_normal		0
@@ -428,18 +371,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define cp_rightedge	21
 #define cp_reserved		22
 #define cp_size			24
-
 // medge_t structure
 // !!! if this is changed, it must be changed in model.h too !!!
 #define me_v				0
 #define me_cachededgeoffset	4
 #define me_size				8
-
 // mvertex_t structure
 // !!! if this is changed, it must be changed in model.h too !!!
 #define mv_position		0
 #define mv_size			12
-
 // refdef_t structure
 // !!! if this is changed, it must be changed in render.h too !!!
 #define rd_vrect					0
@@ -466,7 +406,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define rd_viewangles				124
 #define rd_ambientlight				136
 #define rd_size						140
-
 // mtriangle_t structure
 // !!! if this is changed, it must be changed in model.h too !!!
 #define mtri_facesfront		0
@@ -474,5 +413,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define mtri_size			16	// !!! if this changes, array indexing in !!!
 								// !!! d_polysa.s must be changed to match !!!
 #define mtri_shift			4
-
 #endif

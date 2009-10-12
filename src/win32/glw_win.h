@@ -24,14 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GLW_WIN_H__
 #define __GLW_WIN_H__
 
-typedef struct
-{
-	HINSTANCE	hInstance;
-	void	*wndproc;
+typedef struct {
+	HINSTANCE hInstance;
+	void *wndproc;
 
-	HDC     hDC;			// handle to device context
-	HWND    hWnd;			// handle to window
-	HGLRC   hGLRC;			// handle to GL rendering context
+	HDC hDC;		// handle to device context
+	HWND hWnd;		// handle to window
+	HGLRC hGLRC;		// handle to GL rendering context
 
 	HINSTANCE hinstOpenGL;	// HINSTANCE for the OpenGL library
 
