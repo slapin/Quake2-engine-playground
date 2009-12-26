@@ -1,7 +1,7 @@
 #!/bin/sh
 ARCH=i386
 rm -Rf testdir
-make $*
+make BUILD_AA=YES BUILD_SDLGL=NO BUILD_GLX=NO $*
 mkdir testdir
 mkdir testdir/baseq2
 cp debug${ARCH}/quake2 testdir
