@@ -556,7 +556,7 @@ typedef struct {
 } field_t;
 
 extern field_t fields[];
-extern gitem_t itemlist[];
+extern gitem_t *itemlist;
 
 //
 // g_cmds.c

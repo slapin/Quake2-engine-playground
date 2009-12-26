@@ -798,6 +798,7 @@ GAME_OBJS = \
 	$(BUILDDIR)/game/g_combat.o \
 	$(BUILDDIR)/game/g_func.o \
 	$(BUILDDIR)/game/g_items.o \
+	$(BUILDDIR)/game/item_data.o \
 	$(BUILDDIR)/game/g_main.o \
 	$(BUILDDIR)/game/g_misc.o \
 	$(BUILDDIR)/game/g_monster.o \
@@ -864,6 +865,9 @@ $(BUILDDIR)/game/g_func.o :      $(GAME_DIR)/g_func.c
 	$(DO_SHLIB_CC)
 
 $(BUILDDIR)/game/g_items.o :     $(GAME_DIR)/g_items.c
+	$(DO_SHLIB_CC)
+
+$(BUILDDIR)/game/item_data.o :     $(GAME_DIR)/item_data.c
 	$(DO_SHLIB_CC)
 
 $(BUILDDIR)/game/g_main.o :      $(GAME_DIR)/g_main.c
