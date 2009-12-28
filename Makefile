@@ -841,7 +841,7 @@ GAME_OBJS = \
 	$(BUILDDIR)/game/m_flash.o
 
 $(BUILDDIR)/game$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
-	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS)
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS) $(shell pkg-config lua5.1 --libs)
 
 $(BUILDDIR)/game/g_ai.o :        $(GAME_DIR)/g_ai.c
 	$(DO_SHLIB_CC)
@@ -868,7 +868,7 @@ $(BUILDDIR)/game/g_items.o :     $(GAME_DIR)/g_items.c
 	$(DO_SHLIB_CC)
 
 $(BUILDDIR)/game/item_data.o :     $(GAME_DIR)/item_data.c
-	$(DO_SHLIB_CC)
+	$(CC) $(CFLAGS) $(shell pkg-config lua5.1 --cflags) $(SHLIBCFLAGS) -o $@ -c $<
 
 $(BUILDDIR)/game/g_main.o :      $(GAME_DIR)/g_main.c
 	$(DO_SHLIB_CC)
