@@ -97,7 +97,8 @@ void BeginIntermission(edict_t * targ)
 					continue;
 				// strip players of all keys between units
 				for (n = 0; n < MAX_ITEMS; n++) {
-					if (itemlist[n].flags & IT_KEY)
+					gitem_t *it = GetItemByIndex(n);
+					if (it->flags & IT_KEY)
 						client->client->pers.
 						    inventory[n] = 0;
 				}
@@ -371,7 +372,7 @@ void G_SetStats(edict_t * ent)
 		ent->client->ps.stats[STAT_AMMO_ICON] = 0;
 		ent->client->ps.stats[STAT_AMMO] = 0;
 	} else {
-		item = &itemlist[ent->client->ammo_index];
+		item = GetItemByIndex(ent->client->ammo_index);
 		ent->client->ps.stats[STAT_AMMO_ICON] =
 		    gi.imageindex(item->icon);
 		ent->client->ps.stats[STAT_AMMO] =
@@ -452,10 +453,11 @@ void G_SetStats(edict_t * ent)
 	//
 	if (ent->client->pers.selected_item == -1)
 		ent->client->ps.stats[STAT_SELECTED_ICON] = 0;
-	else
+	else {
+		gitem_t *it = GetItemByIndex(ent->client->pers.selected_item);
 		ent->client->ps.stats[STAT_SELECTED_ICON] =
-		    gi.imageindex(itemlist[ent->client->pers.selected_item].
-				  icon);
+		    gi.imageindex(it->icon);
+	}
 
 	ent->client->ps.stats[STAT_SELECTED_ITEM] =
 	    ent->client->pers.selected_item;

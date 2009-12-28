@@ -268,7 +268,7 @@ void WriteField1(FILE * f, field_t * field, byte * base)
 		if (*(edict_t **) p == NULL)
 			index = -1;
 		else
-			index = *(gitem_t **) p - itemlist;
+			index = ITEM_INDEX(*(gitem_t **) p);
 		*(int *)p = index;
 		break;
 
@@ -366,7 +366,7 @@ void ReadField(FILE * f, field_t * field, byte * base)
 		if (index == -1)
 			*(gitem_t **) p = NULL;
 		else
-			*(gitem_t **) p = &itemlist[index];
+			*(gitem_t **) p = GetItemByIndex(index);
 		break;
 
 		//relative to code segment

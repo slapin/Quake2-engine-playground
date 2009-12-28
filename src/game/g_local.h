@@ -556,7 +556,6 @@ typedef struct {
 } field_t;
 
 extern field_t fields[];
-extern gitem_t *itemlist;
 
 //
 // g_cmds.c
@@ -572,7 +571,8 @@ void InitItems(void);
 void SetItemNames(void);
 gitem_t *FindItem(char *pickup_name);
 gitem_t *FindItemByClassname(char *classname);
-#define	ITEM_INDEX(x) ((x)-itemlist)
+#define ITEM_INDEX(item) ItemIndex(item)
+int ItemIndex(gitem_t *it);
 edict_t *Drop_Item(edict_t * ent, gitem_t * item);
 void SetRespawn(edict_t * ent, float delay);
 void ChangeWeapon(edict_t * ent);

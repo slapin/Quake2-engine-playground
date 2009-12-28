@@ -283,7 +283,10 @@ void ED_CallSpawn(edict_t * ent)
 		return;
 	}
 	// check item spawn functions
-	for (i = 0, item = itemlist; i < game.num_items; i++, item++) {
+	for (i = 0; i < game.num_items; i++) {
+		item = GetItemByIndex(i);
+		if (!item)
+			continue;
 		if (!item->classname)
 			continue;
 		if (!strcmp(item->classname, ent->classname)) {	// found it

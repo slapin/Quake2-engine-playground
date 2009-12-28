@@ -17,7 +17,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+#include <lua.h>
 #include "g_local.h"
+
+static lua_State *L;
 
 #define DPICKUP(name)	qboolean name (edict_t * ent, edict_t * other)
 #define DUSE(name)	void name (edict_t * ent, gitem_t * item)
@@ -1080,5 +1083,11 @@ tank commander's head
 	// end of list marker
 	{NULL}
 };
-gitem_t *itemlist = tag_itemlist;
+gitem_t *itemlist;
+
+void item_init(void)
+{
+	itemlist = tag_itemlist;
+	L = lua_open();
+}
 

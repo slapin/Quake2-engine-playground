@@ -50,6 +50,7 @@ static int power_shield_index;
 
 void Use_Quad(edict_t * ent, gitem_t * item);
 static int quad_drop_timeout_hack;
+extern gitem_t *itemlist;
 
 //======================================================================
 
@@ -1188,7 +1189,16 @@ void SP_item_health_mega(edict_t * self)
 
 void InitItems(void)
 {
-	game.num_items = sizeof(itemlist) / sizeof(itemlist[0]) - 1;
+	extern void item_init(void);
+	gitem_t *it;
+	int count = 0;
+	item_init();
+	it = itemlist + 1;
+	while(it->pickup_name) {
+		it++;
+		count++;
+	}
+	game.num_items = count + 1;
 }
 
 /*
@@ -1214,3 +1224,9 @@ void SetItemNames(void)
 	power_screen_index = ITEM_INDEX(FindItem("Power Screen"));
 	power_shield_index = ITEM_INDEX(FindItem("Power Shield"));
 }
+
+int ItemIndex(gitem_t *it)
+{
+	return it - itemlist;
+}
+

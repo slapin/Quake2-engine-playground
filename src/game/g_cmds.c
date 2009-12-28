@@ -76,7 +76,9 @@ void SelectNextItem(edict_t * ent, int itflags)
 		index = (cl->pers.selected_item + i) % MAX_ITEMS;
 		if (!cl->pers.inventory[index])
 			continue;
-		it = &itemlist[index];
+		it = GetItemByIndex(index);
+		if (!it)
+			continue;
 		if (!it->use)
 			continue;
 		if (!(it->flags & itflags))
@@ -106,7 +108,9 @@ void SelectPrevItem(edict_t * ent, int itflags)
 		index = (cl->pers.selected_item + MAX_ITEMS - i) % MAX_ITEMS;
 		if (!cl->pers.inventory[index])
 			continue;
-		it = &itemlist[index];
+		it = GetItemByIndex(index);
+		if (!it)
+			continue;
 		if (!it->use)
 			continue;
 		if (!(it->flags & itflags))
@@ -173,7 +177,9 @@ void Cmd_Give_f(edict_t * ent)
 
 	if (give_all || Q_stricmp(name, "weapons") == 0) {
 		for (i = 0; i < game.num_items; i++) {
-			it = itemlist + i;
+			it = GetItemByIndex(i);
+			if (!it)
+				continue;
 			if (!it->pickup)
 				continue;
 			if (!(it->flags & IT_WEAPON))
@@ -186,7 +192,9 @@ void Cmd_Give_f(edict_t * ent)
 
 	if (give_all || Q_stricmp(name, "ammo") == 0) {
 		for (i = 0; i < game.num_items; i++) {
-			it = itemlist + i;
+			it = GetItemByIndex(i);
+			if (!it)
+				continue;
 			if (!it->pickup)
 				continue;
 			if (!(it->flags & IT_AMMO))
@@ -229,7 +237,9 @@ void Cmd_Give_f(edict_t * ent)
 
 	if (give_all) {
 		for (i = 0; i < game.num_items; i++) {
-			it = itemlist + i;
+			it = GetItemByIndex(i);
+			if (!it)
+				continue;
 			if (!it->pickup)
 				continue;
 			if (it->flags & (IT_ARMOR | IT_WEAPON | IT_AMMO))
@@ -464,8 +474,8 @@ void Cmd_InvUse_f(edict_t * ent)
 		return;
 	}
 
-	it = &itemlist[ent->client->pers.selected_item];
-	if (!it->use) {
+	it = GetItemByIndex(ent->client->pers.selected_item);
+	if (!it || !it->use) {
 		gi.cprintf(ent, PRINT_HIGH, "Item is not usable.\n");
 		return;
 	}
@@ -496,7 +506,9 @@ void Cmd_WeapPrev_f(edict_t * ent)
 		index = (selected_weapon + i) % MAX_ITEMS;
 		if (!cl->pers.inventory[index])
 			continue;
-		it = &itemlist[index];
+		it = GetItemByIndex(index);
+		if (!it)
+			continue;
 		if (!it->use)
 			continue;
 		if (!(it->flags & IT_WEAPON))
@@ -531,7 +543,9 @@ void Cmd_WeapNext_f(edict_t * ent)
 		index = (selected_weapon + MAX_ITEMS - i) % MAX_ITEMS;
 		if (!cl->pers.inventory[index])
 			continue;
-		it = &itemlist[index];
+		it = GetItemByIndex(index);
+		if (!it)
+			continue;
 		if (!it->use)
 			continue;
 		if (!(it->flags & IT_WEAPON))
@@ -561,7 +575,9 @@ void Cmd_WeapLast_f(edict_t * ent)
 	index = ITEM_INDEX(cl->pers.lastweapon);
 	if (!cl->pers.inventory[index])
 		return;
-	it = &itemlist[index];
+	it = GetItemByIndex(index);
+	if (!it)
+		return;
 	if (!it->use)
 		return;
 	if (!(it->flags & IT_WEAPON))
@@ -585,8 +601,8 @@ void Cmd_InvDrop_f(edict_t * ent)
 		return;
 	}
 
-	it = &itemlist[ent->client->pers.selected_item];
-	if (!it->drop) {
+	it = GetItemByIndex(ent->client->pers.selected_item);
+	if (!it || !it->drop) {
 		gi.cprintf(ent, PRINT_HIGH, "Item is not dropable.\n");
 		return;
 	}
